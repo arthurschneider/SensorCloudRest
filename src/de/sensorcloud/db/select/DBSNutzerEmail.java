@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import de.sensorcloud.db.connection.Verbindung;
+import de.sensorcloud.entitaet.NutzerEmail;
 
 public class DBSNutzerEmail {
 	
@@ -21,7 +22,7 @@ public class DBSNutzerEmail {
 			con = verb.connect();
 	        Statement Stmt = con.createStatement();
 	            
-	        String CQL = "SELECT * FROM NutzerEmail WHERE NutEmaAdr = '"+email+"'";
+	        String CQL = "SELECT NutEmaNutStaID FROM NutzerEmail WHERE NutEmaAdr = '"+email+"'";
 	           
 	        ResultSet RS   = Stmt.executeQuery(CQL);
 	       
@@ -39,6 +40,36 @@ public class DBSNutzerEmail {
 		
 		return emailList;
 		
+	}
+	
+	public static ArrayList<NutzerEmail> getNutzerEmailByNutStaID(String tabelleName, String nutStaID) throws SQLException{
+		ArrayList<NutzerEmail> nutzerEmailList = new ArrayList<NutzerEmail>();
+		
+		try {
+		      
+			con = verb.connect();
+	        Statement Stmt = con.createStatement();
+	            
+	        String CQL = "SELECT * FROM '"+tabelleName+"' WHERE NutEmaNutStaID = '"+nutStaID+"'";
+	           
+	        ResultSet RS   = Stmt.executeQuery(CQL);
+	       
+	        while (RS.next()) {
+	        	NutzerEmail nutzerEmail = new NutzerEmail();
+	        	nutzerEmail.setNutEmaID(RS.getString("KEY"));
+	        	nutzerEmail.setNutEmaNutStaID(nutStaID);
+	        	nutzerEmail.setNutEmaAdr(RS.getString("NutEmaAdr"));
+	        	nutzerEmail.setNutEmaBez(RS.getString("NutEmaBez"));
+	        	nutzerEmailList.add(nutzerEmail);
+	        }
+	         
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally{
+			con.close();
+		}
+
+		return nutzerEmailList;
 	}
 
 }

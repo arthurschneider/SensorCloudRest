@@ -39,7 +39,7 @@ public class Login{
 	public String authetifizieren( MultivaluedMap<String, String> loginParams) {
 		JsonElement jsonObj = null;
 		ArrayList<String>  nutStaIDList;
-		String loginErfolg = "fehler";
+		String nutzerID = "";
 		
 		String email = loginParams.getFirst(EMAIL);
 	    String passwort = loginParams.getFirst(PASSWORT);
@@ -50,11 +50,11 @@ public class Login{
 			
 			for (String nutStaID : nutStaIDList) {
 				
-				String nutsicPas = DBSNutzerSicherheit.getNutSicPasbyNutStaID(nutStaID);
+				String nutsicPas = DBSNutzerSicherheit.getNutSicPasByNutStaID(nutStaID);
 				
 				if (nutsicPas.equals(passwort)) {
 					
-					loginErfolg =  "erfolg";
+					nutzerID =  nutStaID;
 					
 				}
 			}
@@ -64,7 +64,7 @@ public class Login{
 		}
 	    
 	    Gson gson = new Gson();
-	    jsonObj = gson.toJsonTree(loginErfolg);
+	    jsonObj = gson.toJsonTree(nutzerID);
         System.out.println("JSON STRING "+jsonObj);
 	    return jsonObj.toString();
 		

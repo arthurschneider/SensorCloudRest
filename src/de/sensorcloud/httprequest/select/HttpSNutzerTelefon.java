@@ -1,6 +1,7 @@
 package de.sensorcloud.httprequest.select;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -11,36 +12,36 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
-import de.sensorcloud.db.select.DBSNutzerStammdaten;
-import de.sensorcloud.entitaet.NutzerStammdaten;
+import de.sensorcloud.db.select.DBSNutzerTelefon;
+import de.sensorcloud.entitaet.NutzerTelefon;
 
-@Path("/nutSta")
-public class HttpSNutzerStammdaten {
+@Path("/nutTel")
+public class HttpSNutzerTelefon {
 	
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
 		
 		return "Enthaelt die Methode(n) :\n\n"
-				+ "public String authetifizieren( MultivaluedMap<String, String> loginParams)\n";
+				+ " public String getNutzerTelefonByID( @PathParam(\"tabelleName\") String tabelleName, @PathParam(\"nutStaID\") String nutStaID)\n";
 	}
 	
 	
 	@GET
     @Path("/{tabelleName}/id/{nutStaID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getNutzerStammdatenByID( @PathParam("tabelleName") String tabelleName, @PathParam("nutStaID") String nutStaID) {
-		NutzerStammdaten nutzerStammdaten = new NutzerStammdaten();
+    public String getNutzerTelefonByID(@PathParam("tabelleName") String tabelleName, @PathParam("nutStaID") String nutStaID) {
+		ArrayList<NutzerTelefon> nutzerTelefon = new ArrayList<NutzerTelefon>();
 		JsonElement jsonElement = null;
 		try {
-			nutzerStammdaten = DBSNutzerStammdaten.getNutzerStammdatenByID(tabelleName, nutStaID);
+			nutzerTelefon = DBSNutzerTelefon.getNutzerTelefonByNutStaID(tabelleName, nutStaID);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Gson gson = new Gson();
         //creates json from messwertListe object
-		jsonElement = gson.toJsonTree(nutzerStammdaten);
+		jsonElement = gson.toJsonTree(nutzerTelefon);
         System.out.println("JSON STRING "+jsonElement);
         //create a new JSON object
         return jsonElement.toString();
