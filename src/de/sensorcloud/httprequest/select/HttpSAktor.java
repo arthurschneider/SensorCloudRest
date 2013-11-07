@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
-import de.sensorcloud.db.select.DBSAktor;
+import de.sensorcloud.db.DBAktor;
 import de.sensorcloud.entitaet.Aktor;
 
 @Path("/aktor")
@@ -34,7 +34,7 @@ public class HttpSAktor {
 		ArrayList<Aktor> aktorList = new ArrayList<Aktor>();
 		JsonElement jsonElement = null;
 		try {
-			aktorList = DBSAktor.getAktorByNutStaID(nutStaID);
+			aktorList = DBAktor.getAktorByNutStaID(nutStaID);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

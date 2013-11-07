@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
-import de.sensorcloud.db.select.DBSNutzerSicherheit;
+import de.sensorcloud.db.DBNutzerSicherheit;
 import de.sensorcloud.entitaet.NutzerSicherheit;
 
 @Path("/nutSic")
@@ -35,7 +35,7 @@ public class HttpSNutzerSicherheit {
 		ArrayList<NutzerSicherheit> nutzerSicherheit = new ArrayList<NutzerSicherheit>();
 		JsonElement jsonElement = null;
 		try {
-			nutzerSicherheit = DBSNutzerSicherheit.getNutzerSicherheitByNutStaID(tabelleName, nutStaID);
+			nutzerSicherheit = DBNutzerSicherheit.getNutzerSicherheitByNutStaID(tabelleName, nutStaID);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

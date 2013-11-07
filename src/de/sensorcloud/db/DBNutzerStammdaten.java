@@ -1,19 +1,22 @@
-package de.sensorcloud.db.select;
+package de.sensorcloud.db;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import de.sensorcloud.db.connection.Verbindung;
 import de.sensorcloud.entitaet.NutzerStammdaten;
 
-public class DBSNutzerStammdaten {
+public class DBNutzerStammdaten {
 	
 	static Verbindung verb = new Verbindung();
 	static Connection con;
 	
-	public static NutzerStammdaten getNutzerStammdatenByID(String tabelleName, String nutStaID) throws SQLException{
+	public static NutzerStammdaten getNutzerStammdatenByID(String nutStaID) throws SQLException{
 		NutzerStammdaten nutzerStammdaten = new NutzerStammdaten();
 		
 		try {
@@ -21,7 +24,7 @@ public class DBSNutzerStammdaten {
 			con = verb.connect();
 	        Statement Stmt = con.createStatement();
 	            
-	        String CQL = "SELECT * FROM '"+tabelleName+"' WHERE KEY = '"+nutStaID+"'";
+	        String CQL = "SELECT * FROM NutzerStammdaten WHERE KEY = '"+nutStaID+"'";
 	           
 	        ResultSet RS   = Stmt.executeQuery(CQL);
 	       
@@ -43,6 +46,25 @@ public class DBSNutzerStammdaten {
 		}
 		
 		return nutzerStammdaten;
+	}
+	
+	public static void updateNutzerStammdaten(NutzerStammdaten nutzerStammdaten) throws SQLException{
+		
+		try {
+	      con = verb.connect();
+	      Statement stmt = con.createStatement();
+	          
+           String CQL = "UPDATE NutzerStammdaten SET NutStaAnr = '"+nutzerStammdaten.getNutStaAnr()+"', "
+           				+ "NutStaAdrID = '"+nutzerStammdaten.getNutStaAdrID()+"', NutStaFir = '"+nutzerStammdaten.getNutStaFir()+"', "
+           				+ "NutStaNam = '"+nutzerStammdaten.getNutStaNam()+"', NutStaVor = '"+nutzerStammdaten.getNutStaVor()+"', "
+           				+ "NutStaDatEin = '"+nutzerStammdaten.getNutStaDatEin()+"', NutStaID = '"+nutzerStammdaten.getNutStaID()+"' WHERE KEY = "+nutzerStammdaten.getNutStaID();
+          stmt.executeUpdate(CQL);
+	    } catch (SQLException ex) {
+	      ex.printStackTrace();
+	    }finally {
+	    	con.close();
+	    }
+		 
 	}
 
 }

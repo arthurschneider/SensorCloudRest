@@ -14,15 +14,14 @@ import javax.ws.rs.core.MultivaluedMap;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
-import de.sensorcloud.db.select.DBSNutzerEmail;
-import de.sensorcloud.db.select.DBSNutzerSicherheit;
+import de.sensorcloud.db.DBNutzerEmail;
+import de.sensorcloud.db.DBNutzerSicherheit;
+import de.sensorcloud.entitaet.Login;
+import de.sensorcloud.entitaet.NutzerStammdaten;
 
 
 @Path("/login")
-public class Login{
-	
-	    private final static String PASSWORT = "passwort";
-	    private final static String EMAIL = "email";
+public class HttpSLogin{
 	
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
@@ -36,23 +35,23 @@ public class Login{
 	@Path("/authetifizieren")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	public String authetifizieren( MultivaluedMap<String, String> loginParams) {
+	public String authetifizieren(String data) {
 		JsonElement jsonObj = null;
 		ArrayList<String>  nutStaIDList;
 		String nutzerID = "";
 		
-		String email = loginParams.getFirst(EMAIL);
-	    String passwort = loginParams.getFirst(PASSWORT);
+		Gson gson = new Gson();
+        Login login = gson.fromJson(data, Login.class);
 	    
 	    try {
 	    	
-			nutStaIDList = DBSNutzerEmail.getNutEmaNutStaIDbyNutEmaBez(email);
+			nutStaIDList = DBNutzerEmail.getNutEmaNutStaIDbyNutEmaBez(login.getEmail());
 			
 			for (String nutStaID : nutStaIDList) {
 				
-				String nutsicPas = DBSNutzerSicherheit.getNutSicPasByNutStaID(nutStaID);
+				String nutsicPas = DBNutzerSicherheit.getNutSicPasByNutStaID(nutStaID);
 				
-				if (nutsicPas.equals(passwort)) {
+				if (nutsicPas.equals(login.getPasswort())) {
 					
 					nutzerID =  nutStaID;
 					
@@ -63,7 +62,7 @@ public class Login{
 			e.printStackTrace();
 		}
 	    
-	    Gson gson = new Gson();
+	   
 	    jsonObj = gson.toJsonTree(nutzerID);
         System.out.println("JSON STRING "+jsonObj);
 	    return jsonObj.toString();

@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
-import de.sensorcloud.db.select.DBSNutzerStammdaten;
+import de.sensorcloud.db.DBNutzerStammdaten;
 import de.sensorcloud.entitaet.NutzerStammdaten;
 
 @Path("/nutSta")
@@ -27,13 +27,13 @@ public class HttpSNutzerStammdaten {
 	
 	
 	@GET
-    @Path("/{tabelleName}/id/{nutStaID}")
+    @Path("nutzerID/{nutStaID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getNutzerStammdatenByID( @PathParam("tabelleName") String tabelleName, @PathParam("nutStaID") String nutStaID) {
+    public String getNutzerStammdatenByID(@PathParam("nutStaID") String nutStaID) {
 		NutzerStammdaten nutzerStammdaten = new NutzerStammdaten();
 		JsonElement jsonElement = null;
 		try {
-			nutzerStammdaten = DBSNutzerStammdaten.getNutzerStammdatenByID(tabelleName, nutStaID);
+			nutzerStammdaten = DBNutzerStammdaten.getNutzerStammdatenByID(nutStaID);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

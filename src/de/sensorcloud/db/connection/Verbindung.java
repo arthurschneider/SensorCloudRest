@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Verbindung {
-	
+
 	public Connection connect() throws SQLException{
         String treiber;
 
@@ -29,5 +29,6 @@ public class Verbindung {
             System.out.println(e.getMessage());
         }
         return con;
-    }
+    }  
+	
 }

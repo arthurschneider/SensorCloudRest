@@ -1,4 +1,4 @@
-package de.sensorcloud.db.select;
+package de.sensorcloud.db;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import de.sensorcloud.db.connection.Verbindung;
 import de.sensorcloud.entitaet.NutzerEmail;
 
-public class DBSNutzerEmail {
+public class DBNutzerEmail {
 	
 	static Verbindung verb = new Verbindung();
 	static Connection con;

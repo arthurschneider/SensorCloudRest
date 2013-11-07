@@ -1,4 +1,4 @@
-package de.sensorcloud.db.select;
+package de.sensorcloud.db;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import de.sensorcloud.db.connection.Verbindung;
 import de.sensorcloud.entitaet.Aktor;
 
-public class DBSAktor {
+public class DBAktor {
 	
 	static Verbindung verb = new Verbindung();
 	static Connection con;
@@ -50,6 +50,44 @@ public class DBSAktor {
 		}
 
 		return aktorList;
+		
+	} 
+	
+	
+	public static Aktor getAktorByAktID(String aktID) throws SQLException {
+		
+		Aktor aktsor = new Aktor();
+		try {
+		      
+			con = verb.connect();
+	        Statement Stmt = con.createStatement();
+	            
+	        String CQL = "SELECT * FROM Aktor WHERE AktID = '"+aktID+"'";
+	           
+	        ResultSet RS   = Stmt.executeQuery(CQL);
+	       
+	        while (RS.next()) {
+	        	
+	        	aktsor.setAktID(aktID);
+	        	aktsor.setAktNutStaID(RS.getString("AktNutStaID"));
+	        	aktsor.setAktAktProID(RS.getString("AktAktProID"));
+	        	aktsor.setAktAktTypID(RS.getString("AktAktTypID"));
+	        	aktsor.setAktRauID(RS.getString("AktRauID"));
+	        	aktsor.setAktLocMasID(RS.getString("AktLocMasID"));
+	        	aktsor.setAktSouID(RS.getString("AktSouID"));
+	        	aktsor.setAktBez(RS.getString("AktBez"));
+	        	aktsor.setAktPos(RS.getString("AktPos"));
+	        	aktsor.setAktDatEin(RS.getString("AktDatEin"));
+	        
+	        }
+	         
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally{
+			con.close();
+		}
+
+		return aktsor;
 		
 	} 
 

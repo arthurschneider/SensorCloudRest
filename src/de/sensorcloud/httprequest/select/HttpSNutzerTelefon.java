@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
-import de.sensorcloud.db.select.DBSNutzerTelefon;
+import de.sensorcloud.db.DBNutzerTelefon;
 import de.sensorcloud.entitaet.NutzerTelefon;
 
 @Path("/nutTel")
@@ -34,7 +34,7 @@ public class HttpSNutzerTelefon {
 		ArrayList<NutzerTelefon> nutzerTelefon = new ArrayList<NutzerTelefon>();
 		JsonElement jsonElement = null;
 		try {
-			nutzerTelefon = DBSNutzerTelefon.getNutzerTelefonByNutStaID(tabelleName, nutStaID);
+			nutzerTelefon = DBNutzerTelefon.getNutzerTelefonByNutStaID(tabelleName, nutStaID);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
