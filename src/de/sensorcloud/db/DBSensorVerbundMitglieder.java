@@ -6,26 +6,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import de.sensorcloud.db.connection.Verbindung;
+import de.sensorcloud.db.connection.Cassandra;
 import de.sensorcloud.entitaet.Sensor;
 
 public class DBSensorVerbundMitglieder {
 	
-	static Verbindung verb = new Verbindung();
-	static Connection con;
 	
-	public static ArrayList<String> getSenVerMitSenVerIDBySenID(String senID) throws SQLException {
+	public static ArrayList<String> getSenVerMitSenVerIDBySenID(String senID) {
 		
 		ArrayList<String> senVerMitSenVerID = new ArrayList<String>();
+		String CQL = "SELECT SenVerMitSenVerID FROM SensorVerbundMitglieder WHERE SenVerMitSenID = '"+senID+"'";
 		
 		try {
 		      
-			con = verb.connect();
-	        Statement Stmt = con.createStatement();
-	            
-	        String CQL = "SELECT SenVerMitSenVerID FROM SensorVerbundMitglieder WHERE SenVerMitSenID = '"+senID+"'";
-	           
-	        ResultSet RS   = Stmt.executeQuery(CQL);
+	        ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
 	        	
@@ -35,26 +29,20 @@ public class DBSensorVerbundMitglieder {
 	         
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-		} finally{
-			con.close();
-		}
-
+		} 
+		
 		return senVerMitSenVerID;
 		
 	}
 	
-	public static ArrayList<String> getSenIDBySenVerID(String senVerID) throws SQLException {
+	public static ArrayList<String> getSenIDBySenVerID(String senVerID) {
 		
 		ArrayList<String> senIDList = new ArrayList<String>();
+		String CQL = "SELECT SenVerMitSenID FROM SensorVerbundMitglieder WHERE SenVerMitSenVerID = '"+senVerID+"'";
 		
 		try {
 		      
-			con = verb.connect();
-	        Statement Stmt = con.createStatement();
-	            
-	        String CQL = "SELECT SenVerMitSenID FROM SensorVerbundMitglieder WHERE SenVerMitSenVerID = '"+senVerID+"'";
-	           
-	        ResultSet RS   = Stmt.executeQuery(CQL);
+	        ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
 	        	
@@ -64,8 +52,6 @@ public class DBSensorVerbundMitglieder {
 	         
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-		} finally{
-			con.close();
 		}
 
 		return senIDList;

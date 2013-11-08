@@ -33,17 +33,11 @@ public class HttpSNutzerTelefon {
     public String getNutzerTelefonByID(@PathParam("tabelleName") String tabelleName, @PathParam("nutStaID") String nutStaID) {
 		ArrayList<NutzerTelefon> nutzerTelefon = new ArrayList<NutzerTelefon>();
 		JsonElement jsonElement = null;
-		try {
-			nutzerTelefon = DBNutzerTelefon.getNutzerTelefonByNutStaID(tabelleName, nutStaID);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		nutzerTelefon = DBNutzerTelefon.getNutzerTelefonByNutStaID(tabelleName, nutStaID);
+		
 		Gson gson = new Gson();
-        //creates json from messwertListe object
 		jsonElement = gson.toJsonTree(nutzerTelefon);
-        System.out.println("JSON STRING "+jsonElement);
-        //create a new JSON object
         return jsonElement.toString();
 	}
 

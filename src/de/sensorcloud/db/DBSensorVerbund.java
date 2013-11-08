@@ -6,26 +6,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import de.sensorcloud.db.connection.Verbindung;
+import de.sensorcloud.db.connection.Cassandra;
 import de.sensorcloud.entitaet.SensorVerbund;
 
 public class DBSensorVerbund {
 	
-	static Verbindung verb = new Verbindung();
-	static Connection con;
-	
-	public static SensorVerbund getSenVerbBezBySenVerMitSenVerID(String senVerMitSenVerID) throws SQLException {
+	public static SensorVerbund getSenVerbBezBySenVerMitSenVerID(String senVerMitSenVerID) {
 		
 		SensorVerbund senVerb = new SensorVerbund();
+		String CQL = "SELECT * FROM SensorVerbund WHERE SenVerID = '"+senVerMitSenVerID+"'";
 		
-		try {
-		      
-			con = verb.connect();
-	        Statement Stmt = con.createStatement();
-	            
-	        String CQL = "SELECT * FROM SensorVerbund WHERE SenVerID = '"+senVerMitSenVerID+"'";
-	           
-	        ResultSet RS   = Stmt.executeQuery(CQL);
+		try { 
+	      
+	        ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
 	        	
@@ -35,9 +28,7 @@ public class DBSensorVerbund {
 	         
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-		} finally{
-			con.close();
-		}
+		} 
 
 		return senVerb;
 		

@@ -30,20 +30,14 @@ public class HttpSSensor {
 	@GET
     @Path("/id/{nutStaID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getSensorByNutStaID(@PathParam("nutStaID") String nutStaID) {
+    public String getSensorListByNutStaID(@PathParam("nutStaID") String nutStaID) {
 		ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
 		JsonElement jsonElement = null;
-		try {
-			sensorList = DBSensor.getSensorByNutStaID(nutStaID);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		sensorList = DBSensor.getSensorListByNutStaID(nutStaID);
+		
 		Gson gson = new Gson();
-        //creates json from messwertListe object
 		jsonElement = gson.toJsonTree(sensorList);
-        System.out.println("JSON STRING "+jsonElement);
-        //create a new JSON object
         return jsonElement.toString();
 	}
 

@@ -32,17 +32,11 @@ public class HttpSNutzerStammdaten {
     public String getNutzerStammdatenByID(@PathParam("nutStaID") String nutStaID) {
 		NutzerStammdaten nutzerStammdaten = new NutzerStammdaten();
 		JsonElement jsonElement = null;
-		try {
-			nutzerStammdaten = DBNutzerStammdaten.getNutzerStammdatenByID(nutStaID);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		nutzerStammdaten = DBNutzerStammdaten.getNutzerStammdatenByID(nutStaID);
+		
 		Gson gson = new Gson();
-        //creates json from messwertListe object
 		jsonElement = gson.toJsonTree(nutzerStammdaten);
-        System.out.println("JSON STRING "+jsonElement);
-        //create a new JSON object
         return jsonElement.toString();
 	}
 

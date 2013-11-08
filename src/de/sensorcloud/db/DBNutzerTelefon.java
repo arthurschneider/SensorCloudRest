@@ -1,30 +1,24 @@
 package de.sensorcloud.db;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
-import de.sensorcloud.db.connection.Verbindung;
+import de.sensorcloud.db.connection.Cassandra;
 import de.sensorcloud.entitaet.NutzerTelefon;
 
 public class DBNutzerTelefon {
 	
-	static Verbindung verb = new Verbindung();
-	static Connection con;
-	
-	public static ArrayList<NutzerTelefon> getNutzerTelefonByNutStaID(String tabelleName, String nutStaID) throws SQLException{
+	public static ArrayList<NutzerTelefon> getNutzerTelefonByNutStaID(String tabelleName, String nutStaID) {
+		
 		ArrayList<NutzerTelefon> nutzerTelefonList = new ArrayList<NutzerTelefon>();
+		String CQL = "SELECT * FROM '"+tabelleName+"' WHERE NutTelNutStaID = '"+nutStaID+"'";
 		
 		try {
-		      
-			con = verb.connect();
-	        Statement Stmt = con.createStatement();
-	            
-	        String CQL = "SELECT * FROM '"+tabelleName+"' WHERE NutTelNutStaID = '"+nutStaID+"'";
+		   
+	        
 	           
-	        ResultSet RS   = Stmt.executeQuery(CQL);
+	        ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
 	        	NutzerTelefon nutzerTelefon = new NutzerTelefon();
@@ -37,11 +31,27 @@ public class DBNutzerTelefon {
 	         
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-		} finally{
-			con.close();
 		}
 
 		return nutzerTelefonList;
+	}
+	
+	public static void updateNutzerTelefon(NutzerTelefon nutzerTelefon) {
+
+		String CQL = "UPDATE NutzerTelefon SET "
+					+ "NutTelID = '" + nutzerTelefon.getNutTelID() + "', "
+					+ "NutTelNutStaID = '" + nutzerTelefon.getNutTelNutStaID() + "', "
+					+ "NutTelNum = '" + nutzerTelefon.getNutTelNum() + "', "
+					+ "NutTelBez = '" + nutzerTelefon.getNutTelBez() + "' "
+					+ "WHERE KEY = " + nutzerTelefon.getNutTelID();
+		
+		try {
+			Cassandra.update(CQL);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }

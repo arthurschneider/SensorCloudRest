@@ -33,12 +33,7 @@ public class HttpSAktor {
     public String getAktorByNutStaID(@PathParam("nutStaID") String nutStaID) {
 		ArrayList<Aktor> aktorList = new ArrayList<Aktor>();
 		JsonElement jsonElement = null;
-		try {
-			aktorList = DBAktor.getAktorByNutStaID(nutStaID);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		aktorList = DBAktor.getAktorByNutStaID(nutStaID);
 		Gson gson = new Gson();
         //creates json from messwertListe object
 		jsonElement = gson.toJsonTree(aktorList);

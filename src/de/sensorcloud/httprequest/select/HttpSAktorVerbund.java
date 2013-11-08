@@ -43,26 +43,23 @@ public class HttpSAktorVerbund {
 		HashSet<AktorVerbund> aktVerbundSet = new HashSet<AktorVerbund>();
 		JsonElement jsonElement = null;
 		
-		try {
-			aktorList = DBAktor.getAktorByNutStaID(nutStaID);
+	
+		aktorList = DBAktor.getAktorByNutStaID(nutStaID);
+		
+		for (Aktor aktor : aktorList) {
 			
-			for (Aktor aktor : aktorList) {
+			aktVerbundMitgldrList = DBAktorVerbundMitglieder.getAktVerMitAktVerIDByAktID(aktor.getAktID());
+			
+			for (String aktVerMitAktVerID : aktVerbundMitgldrList) {
 				
-				aktVerbundMitgldrList = DBAktorVerbundMitglieder.getAktVerMitAktVerIDByAktID(aktor.getAktID());
+				AktorVerbund aktVerb = DBAktorVerbund.getAktVerbBezByAktVerMitAktVerID(aktVerMitAktVerID);
 				
-				for (String aktVerMitAktVerID : aktVerbundMitgldrList) {
-					
-					AktorVerbund aktVerb = DBAktorVerbund.getAktVerbBezByAktVerMitAktVerID(aktVerMitAktVerID);
-					
-					if (!Helper.checkObjectAktorInSet(aktVerb, aktVerbundSet)) {
-						aktVerbundSet.add(aktVerb);
-					}
+				if (!Helper.checkObjectInSet(aktVerb, aktVerbundSet)) {
+					aktVerbundSet.add(aktVerb);
 				}
 			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
+			
 		
 		Gson gson = new Gson();
 		jsonElement = gson.toJsonTree(aktVerbundSet);
@@ -79,16 +76,10 @@ public class HttpSAktorVerbund {
 		ArrayList<String> aktIDList = new ArrayList<String>();
 		JsonElement jsonElement = null;
 	
-		try {
-			
-			aktIDList = DBAktorVerbundMitglieder.getAktIDByAktVerID(verbundID);
-			
-			for (String aktID : aktIDList) {
-				aktorList.add(DBAktor.getAktorByAktID(aktID));
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
+		aktIDList = DBAktorVerbundMitglieder.getAktIDByAktVerID(verbundID);
+		
+		for (String aktID : aktIDList) {
+			aktorList.add(DBAktor.getAktorByAktID(aktID));
 		}
 		
 		Gson gson = new Gson();

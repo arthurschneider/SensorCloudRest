@@ -22,7 +22,7 @@ public class HttpUNutzerStammdaten {
 	public String test() {
 
 		return "Enthaelt die Methode(n) :\n\n"
-				+ "public String authetifizieren( MultivaluedMap<String, String> loginParams)\n";
+				+ "public String updateNutzerStammdaten(String data)\n";
 	}
 
 	@POST

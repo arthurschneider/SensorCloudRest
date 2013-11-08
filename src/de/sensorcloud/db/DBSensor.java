@@ -5,27 +5,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashSet;
 
-import de.sensorcloud.db.connection.Verbindung;
+import de.sensorcloud.db.connection.Cassandra;
 import de.sensorcloud.entitaet.Sensor;
 
 public class DBSensor {
 	
-	static Verbindung verb = new Verbindung();
+	static Cassandra verb = new Cassandra();
 	static Connection con;
 	
-	public static ArrayList<Sensor> getSensorByNutStaID(String nutStaID) throws SQLException {
+	public static ArrayList<Sensor> getSensorListByNutStaID(String nutStaID){
 		
 		ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
+		String CQL = "SELECT * FROM Sensor WHERE SenNutStaID = '"+nutStaID+"'";
 		
 		try {
-		      
-			con = verb.connect();
-	        Statement Stmt = con.createStatement();
-	            
-	        String CQL = "SELECT * FROM Sensor WHERE SenNutStaID = '"+nutStaID+"'";
-	           
-	        ResultSet RS   = Stmt.executeQuery(CQL);
+		   
+	        ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
 	        	Sensor sensor = new Sensor();
@@ -44,25 +41,23 @@ public class DBSensor {
 	         
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-		} finally{
-			con.close();
 		}
 
 		return sensorList;
 		
 	} 
 	
-public static Sensor getSensorBySenID(String senID) throws SQLException {
+	public static Sensor getSensorBySenID(String senID) {
 		
 		Sensor sensor = new Sensor();
+		String CQL = "SELECT * FROM Sensor WHERE SenID = '"+senID+"'";
+		
 		try {
 		      
-			con = verb.connect();
-	        Statement Stmt = con.createStatement();
-	            
-	        String CQL = "SELECT * FROM Sensor WHERE SenID = '"+senID+"'";
+			
+	        
 	           
-	        ResultSet RS   = Stmt.executeQuery(CQL);
+	        ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
 	        	
@@ -81,12 +76,57 @@ public static Sensor getSensorBySenID(String senID) throws SQLException {
 	         
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-		} finally{
-			con.close();
-		}
+		} 
 
 		return sensor;
 		
 	} 
+
+
+	public static String getSenProIDBySenID(String senID) {
+
+		String senSenProID = "";
+		String CQL = "SELECT SenSenProID FROM Sensor WHERE SenID = '"+ senID + "'";
+		ResultSet RS;
+		
+		try {
+			
+			RS = Cassandra.select(CQL);
+			
+			while (RS.next()) {
+				
+				senSenProID = RS.getString("SenSenProID");
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return senSenProID;
+
+	}
+	
+	public static HashSet<String> getSensorIDListByNutStaID(String senID) {
+		HashSet<String> senIDLIst = new HashSet<String>();
+		String CQL = "SELECT SenID FROM Sensor WHERE SenNutStaID = '"+ senID + "'";
+		
+		try {
+			ResultSet RS = Cassandra.select(CQL);
+			while (RS.next()) {
+				
+				senIDLIst.add(RS.getString("SenID"));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return senIDLIst;
+
+	}
 
 }

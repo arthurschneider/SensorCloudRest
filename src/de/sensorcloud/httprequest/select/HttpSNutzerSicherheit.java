@@ -34,17 +34,11 @@ public class HttpSNutzerSicherheit {
     public String getNutzerSicherheitByID( @PathParam("tabelleName") String tabelleName, @PathParam("nutStaID") String nutStaID) {
 		ArrayList<NutzerSicherheit> nutzerSicherheit = new ArrayList<NutzerSicherheit>();
 		JsonElement jsonElement = null;
-		try {
-			nutzerSicherheit = DBNutzerSicherheit.getNutzerSicherheitByNutStaID(tabelleName, nutStaID);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		nutzerSicherheit = DBNutzerSicherheit.getNutzerSicherheitByNutStaID(tabelleName, nutStaID);
+		
 		Gson gson = new Gson();
-        //creates json from messwertListe object
 		jsonElement = gson.toJsonTree(nutzerSicherheit);
-        System.out.println("JSON STRING "+jsonElement);
-        //create a new JSON object
         return jsonElement.toString();
 	}
 

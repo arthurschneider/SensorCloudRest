@@ -6,25 +6,23 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import de.sensorcloud.db.connection.Verbindung;
+import de.sensorcloud.db.connection.Cassandra;
 import de.sensorcloud.entitaet.NutzerEmail;
 
 public class DBNutzerEmail {
 	
-	static Verbindung verb = new Verbindung();
 	static Connection con;
 	
-	public static ArrayList<String> getNutEmaNutStaIDbyNutEmaBez(String email) throws SQLException {
+	public static ArrayList<String> getNutEmaNutStaIDbyNutEmaBez(String email) {
+		
 		ArrayList<String> emailList = new ArrayList<String>();
-		 
+		String CQL = "SELECT NutEmaNutStaID FROM NutzerEmail WHERE NutEmaAdr = '"+email+"'";
 		try {
 		      
-			con = verb.connect();
-	        Statement Stmt = con.createStatement();
-	            
-	        String CQL = "SELECT NutEmaNutStaID FROM NutzerEmail WHERE NutEmaAdr = '"+email+"'";
+			
+	       
 	           
-	        ResultSet RS   = Stmt.executeQuery(CQL);
+	        ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
 	        	
@@ -34,25 +32,23 @@ public class DBNutzerEmail {
 	                 
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-		} finally{
-			con.close();
-		}
+		} 
 		
 		return emailList;
 		
 	}
 	
-	public static ArrayList<NutzerEmail> getNutzerEmailByNutStaID(String tabelleName, String nutStaID) throws SQLException{
+	
+	public static ArrayList<NutzerEmail> getNutzerEmailByNutStaID(String tabelleName, String nutStaID) {
+		
 		ArrayList<NutzerEmail> nutzerEmailList = new ArrayList<NutzerEmail>();
+		String CQL = "SELECT * FROM '"+tabelleName+"' WHERE NutEmaNutStaID = '"+nutStaID+"'";
 		
 		try {
-		      
-			con = verb.connect();
-	        Statement Stmt = con.createStatement();
-	            
-	        String CQL = "SELECT * FROM '"+tabelleName+"' WHERE NutEmaNutStaID = '"+nutStaID+"'";
+		     
+	       
 	           
-	        ResultSet RS   = Stmt.executeQuery(CQL);
+	        ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
 	        	NutzerEmail nutzerEmail = new NutzerEmail();
@@ -65,11 +61,27 @@ public class DBNutzerEmail {
 	         
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-		} finally{
-			con.close();
-		}
+		} 
 
 		return nutzerEmailList;
+	}
+	
+	public static void updateNutzerEmail(NutzerEmail nutzerEmail) {
+
+		String CQL = "UPDATE NutzerEmail SET "
+					+ "NutEmaID = '" + nutzerEmail.getNutEmaID() + "', "
+					+ "NutEmaNutStaID = '" + nutzerEmail.getNutEmaNutStaID() + "', "
+					+ "NutEmaAdr = '" + nutzerEmail.getNutEmaAdr() + "', "
+					+ "NutEmaBez = '" + nutzerEmail.getNutEmaBez() + "' "
+					+ "WHERE KEY = " + nutzerEmail.getNutEmaID();
+		
+		try {
+			Cassandra.update(CQL);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }

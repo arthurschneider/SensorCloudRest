@@ -1,45 +1,35 @@
 package de.sensorcloud.db;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-import de.sensorcloud.db.connection.Verbindung;
+import de.sensorcloud.db.connection.Cassandra;
 import de.sensorcloud.entitaet.AktorVerbund;
 
 public class DBAktorVerbund {
-	
-	static Verbindung verb = new Verbindung();
-	static Connection con;
-	
-	public static AktorVerbund getAktVerbBezByAktVerMitAktVerID(String aktVerMitAktVerID) throws SQLException {
-		
+
+	public static AktorVerbund getAktVerbBezByAktVerMitAktVerID(String aktVerMitAktVerID) {
+
 		AktorVerbund aktVerb = new AktorVerbund();
-		
+
+		String CQL = "SELECT * FROM AktorVerbund WHERE AktVerID = '" + aktVerMitAktVerID + "'";
+
 		try {
-		      
-			con = verb.connect();
-	        Statement Stmt = con.createStatement();
-	            
-	        String CQL = "SELECT * FROM AktorVerbund WHERE AktVerID = '"+aktVerMitAktVerID+"'";
-	           
-	        ResultSet RS   = Stmt.executeQuery(CQL);
-	       
-	        while (RS.next()) {
-	        	
-	        	aktVerb.setAktVerBez(RS.getString("AktVerBez"));
-	        	aktVerb.setAktVerID(RS.getString("AktVerID"));
-	        }
-	         
+
+			ResultSet RS = Cassandra.select(CQL);
+
+			while (RS.next()) {
+
+				aktVerb.setAktVerBez(RS.getString("AktVerBez"));
+				aktVerb.setAktVerID(RS.getString("AktVerID"));
+			}
+
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-		} finally{
-			con.close();
 		}
 
 		return aktVerb;
-		
+
 	}
 
 }

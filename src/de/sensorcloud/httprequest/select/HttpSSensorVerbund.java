@@ -44,25 +44,20 @@ public class HttpSSensorVerbund {
 		HashSet<SensorVerbund> senVerbundSet = new HashSet<SensorVerbund>();
 		JsonElement jsonElement = null;
 		
-		try {
-			sensorList = DBSensor.getSensorByNutStaID(nutStaID);
+		sensorList = DBSensor.getSensorListByNutStaID(nutStaID);
+		
+		for (Sensor sensor : sensorList) {
 			
-			for (Sensor sensor : sensorList) {
+			senVerbundMitgldrList = DBSensorVerbundMitglieder.getSenVerMitSenVerIDBySenID(sensor.getSenID());
+			
+			for (String senVerMitSenVerID : senVerbundMitgldrList) {
 				
-				senVerbundMitgldrList = DBSensorVerbundMitglieder.getSenVerMitSenVerIDBySenID(sensor.getSenID());
+				SensorVerbund senVerb = DBSensorVerbund.getSenVerbBezBySenVerMitSenVerID(senVerMitSenVerID);
 				
-				for (String senVerMitSenVerID : senVerbundMitgldrList) {
-					
-					SensorVerbund senVerb = DBSensorVerbund.getSenVerbBezBySenVerMitSenVerID(senVerMitSenVerID);
-					
-					if (!Helper.checkObjectSensorInSet(senVerb, senVerbundSet)) {
-						senVerbundSet.add(senVerb);
-					}
+				if (!Helper.checkObjectInSet(senVerb, senVerbundSet)) {
+					senVerbundSet.add(senVerb);
 				}
 			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 		
 		Gson gson = new Gson();
@@ -80,16 +75,10 @@ public class HttpSSensorVerbund {
 		ArrayList<String> senIDList = new ArrayList<String>();
 		JsonElement jsonElement = null;
 	
-		try {
-			
-			senIDList = DBSensorVerbundMitglieder.getSenIDBySenVerID(verbundID);
-			
-			for (String senID : senIDList) {
-				sensorList.add(DBSensor.getSensorBySenID(senID));
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
+		senIDList = DBSensorVerbundMitglieder.getSenIDBySenVerID(verbundID);
+		
+		for (String senID : senIDList) {
+			sensorList.add(DBSensor.getSensorBySenID(senID));
 		}
 		
 		Gson gson = new Gson();

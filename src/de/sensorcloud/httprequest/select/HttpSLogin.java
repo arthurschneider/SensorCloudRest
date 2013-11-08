@@ -43,28 +43,20 @@ public class HttpSLogin{
 		Gson gson = new Gson();
         Login login = gson.fromJson(data, Login.class);
 	    
-	    try {
-	    	
-			nutStaIDList = DBNutzerEmail.getNutEmaNutStaIDbyNutEmaBez(login.getEmail());
+		nutStaIDList = DBNutzerEmail.getNutEmaNutStaIDbyNutEmaBez(login.getEmail());
+		
+		for (String nutStaID : nutStaIDList) {
 			
-			for (String nutStaID : nutStaIDList) {
+			String nutsicPas = DBNutzerSicherheit.getNutSicPasByNutStaID(nutStaID);
+			
+			if (nutsicPas.equals(login.getPasswort())) {
 				
-				String nutsicPas = DBNutzerSicherheit.getNutSicPasByNutStaID(nutStaID);
+				nutzerID =  nutStaID;
 				
-				if (nutsicPas.equals(login.getPasswort())) {
-					
-					nutzerID =  nutStaID;
-					
-				}
 			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
-	    
-	   
+		
 	    jsonObj = gson.toJsonTree(nutzerID);
-        System.out.println("JSON STRING "+jsonObj);
 	    return jsonObj.toString();
 		
 	}

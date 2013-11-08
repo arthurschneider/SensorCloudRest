@@ -6,25 +6,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import de.sensorcloud.db.connection.Verbindung;
+import de.sensorcloud.db.connection.Cassandra;
 
 public class DBAktorVerbundMitglieder {
 	
-	static Verbindung verb = new Verbindung();
-	static Connection con;
-	
-	public static ArrayList<String> getAktVerMitAktVerIDByAktID(String aktID) throws SQLException {
+	public static ArrayList<String> getAktVerMitAktVerIDByAktID(String aktID) {
 		
 		ArrayList<String> aktVerMitAktVerID = new ArrayList<String>();
-		
+		String CQL = "SELECT AktVerMitAktVerID FROM AktorVerbundMitglieder WHERE AktVerMitAktID = '"+aktID+"'";
+	
 		try {
-		      
-			con = verb.connect();
-	        Statement Stmt = con.createStatement();
-	            
-	        String CQL = "SELECT AktVerMitAktVerID FROM AktorVerbundMitglieder WHERE AktVerMitAktID = '"+aktID+"'";
-	           
-	        ResultSet RS   = Stmt.executeQuery(CQL);
+			
+			ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
 	        	
@@ -34,26 +27,20 @@ public class DBAktorVerbundMitglieder {
 	         
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-		} finally{
-			con.close();
 		}
 
 		return aktVerMitAktVerID;
 		
 	}
 	
-	public static ArrayList<String> getAktIDByAktVerID(String aktVerID) throws SQLException {
+	public static ArrayList<String> getAktIDByAktVerID(String aktVerID){
 		
 		ArrayList<String> aktIDList = new ArrayList<String>();
-		
+		String CQL = "SELECT AktVerMitAktID FROM AktorVerbundMitglieder WHERE AktVerMitAktVerID = '"+aktVerID+"'";
+        
 		try {
-		      
-			con = verb.connect();
-	        Statement Stmt = con.createStatement();
-	            
-	        String CQL = "SELECT AktVerMitAktID FROM AktorVerbundMitglieder WHERE AktVerMitAktVerID = '"+aktVerID+"'";
 	           
-	        ResultSet RS   = Stmt.executeQuery(CQL);
+	        ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
 	        	
@@ -63,9 +50,7 @@ public class DBAktorVerbundMitglieder {
 	         
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-		} finally{
-			con.close();
-		}
+		} 
 
 		return aktIDList;
 		
