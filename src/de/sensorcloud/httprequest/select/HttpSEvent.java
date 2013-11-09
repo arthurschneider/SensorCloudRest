@@ -1,6 +1,5 @@
 package de.sensorcloud.httprequest.select;
 
-import java.sql.SQLException;
 import java.util.HashSet;
 
 import javax.ws.rs.GET;
@@ -12,15 +11,14 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
-import de.sensorcloud.db.DBAktor;
-import de.sensorcloud.db.DBEvent;
-import de.sensorcloud.db.DBEventMitglieder;
-import de.sensorcloud.db.DBSensor;
-import de.sensorcloud.db.DBSensorEvent;
+import de.sensorcloud.db.crud.DBEvent;
+import de.sensorcloud.db.crud.DBEventMitglieder;
+import de.sensorcloud.db.crud.DBSensor;
+import de.sensorcloud.db.crud.DBSensorEvent;
 import de.sensorcloud.entitaet.Event;
 import de.sensorcloud.helper.Helper;
 
-@Path("/event")
+@Path("/Event")
 public class HttpSEvent {
 	
 	@GET
@@ -33,7 +31,7 @@ public class HttpSEvent {
 	
 	
 	@GET
-    @Path("/nutzerID/{nutStaID}")
+    @Path("/NutStaID/{nutStaID}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getEventObjectListByNutStaID(@PathParam("nutStaID") String nutStaID) {
 		

@@ -1,6 +1,5 @@
 package de.sensorcloud.httprequest.select;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -13,14 +12,14 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
-import de.sensorcloud.db.DBAktor;
-import de.sensorcloud.db.DBAktorVerbund;
-import de.sensorcloud.db.DBAktorVerbundMitglieder;
+import de.sensorcloud.db.crud.DBAktor;
+import de.sensorcloud.db.crud.DBAktorVerbund;
+import de.sensorcloud.db.crud.DBAktorVerbundMitglieder;
 import de.sensorcloud.entitaet.Aktor;
 import de.sensorcloud.entitaet.AktorVerbund;
 import de.sensorcloud.helper.Helper;
 
-@Path("/aktorVerb")
+@Path("/AktorVerbund")
 public class HttpSAktorVerbund {
 	
 	@GET
@@ -34,7 +33,7 @@ public class HttpSAktorVerbund {
 	
 	
 	@GET
-    @Path("/nutzerID/{nutStaID}")
+    @Path("/NutStaID/{nutStaID}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getAktorVerbundByNutStaID(@PathParam("nutStaID") String nutStaID) {
 	
@@ -69,14 +68,14 @@ public class HttpSAktorVerbund {
 	
 	
 	@GET
-    @Path("/verbundID/{verbundID}")
+    @Path("/AktVerID/{aktVerID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getAktorByAktorVerbundID(@PathParam("verbundID") String verbundID) {
+    public String getAktorByAktVerID(@PathParam("aktVerID") String aktVerID) {
 		ArrayList<Aktor> aktorList = new ArrayList<Aktor>();
 		ArrayList<String> aktIDList = new ArrayList<String>();
 		JsonElement jsonElement = null;
 	
-		aktIDList = DBAktorVerbundMitglieder.getAktIDByAktVerID(verbundID);
+		aktIDList = DBAktorVerbundMitglieder.getAktIDByAktVerID(aktVerID);
 		
 		for (String aktID : aktIDList) {
 			aktorList.add(DBAktor.getAktorByAktID(aktID));

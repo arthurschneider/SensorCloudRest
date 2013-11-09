@@ -1,6 +1,5 @@
 package de.sensorcloud.httprequest.select;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.ws.rs.GET;
@@ -12,10 +11,10 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
-import de.sensorcloud.db.DBNutzerTelefon;
+import de.sensorcloud.db.crud.DBNutzerTelefon;
 import de.sensorcloud.entitaet.NutzerTelefon;
 
-@Path("/nutTel")
+@Path("/NutzerTelefon")
 public class HttpSNutzerTelefon {
 	
 	@GET
@@ -28,13 +27,13 @@ public class HttpSNutzerTelefon {
 	
 	
 	@GET
-    @Path("/{tabelleName}/id/{nutStaID}")
+    @Path("/NutStaID/{nutStaID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getNutzerTelefonByID(@PathParam("tabelleName") String tabelleName, @PathParam("nutStaID") String nutStaID) {
+    public String getNutzerTelefonByNutStaID(@PathParam("nutStaID") String nutStaID) {
 		ArrayList<NutzerTelefon> nutzerTelefon = new ArrayList<NutzerTelefon>();
 		JsonElement jsonElement = null;
 		
-		nutzerTelefon = DBNutzerTelefon.getNutzerTelefonByNutStaID(tabelleName, nutStaID);
+		nutzerTelefon = DBNutzerTelefon.getNutzerTelefonByNutStaID(nutStaID);
 		
 		Gson gson = new Gson();
 		jsonElement = gson.toJsonTree(nutzerTelefon);

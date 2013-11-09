@@ -1,7 +1,5 @@
 package de.sensorcloud.httprequest.select;
 
-import java.sql.SQLException;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -11,10 +9,10 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
-import de.sensorcloud.db.DBNutzerStammdaten;
+import de.sensorcloud.db.crud.DBNutzerStammdaten;
 import de.sensorcloud.entitaet.NutzerStammdaten;
 
-@Path("/nutSta")
+@Path("/NutzerStammdaten")
 public class HttpSNutzerStammdaten {
 	
 	@GET
@@ -22,12 +20,12 @@ public class HttpSNutzerStammdaten {
 	public String test(){
 		
 		return "Enthaelt die Methode(n) :\n\n"
-				+ "public String authetifizieren( MultivaluedMap<String, String> loginParams)\n";
+				+ "public String getNutzerStammdatenByID(@PathParam(\"nutStaID\") String nutStaID)\n";
 	}
 	
 	
 	@GET
-    @Path("nutzerID/{nutStaID}")
+    @Path("NutStaID/{nutStaID}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getNutzerStammdatenByID(@PathParam("nutStaID") String nutStaID) {
 		NutzerStammdaten nutzerStammdaten = new NutzerStammdaten();

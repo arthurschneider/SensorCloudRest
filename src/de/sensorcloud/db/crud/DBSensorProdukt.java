@@ -1,4 +1,4 @@
-package de.sensorcloud.db;
+package de.sensorcloud.db.crud;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

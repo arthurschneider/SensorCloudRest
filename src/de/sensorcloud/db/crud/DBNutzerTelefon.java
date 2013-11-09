@@ -1,4 +1,4 @@
-package de.sensorcloud.db;
+package de.sensorcloud.db.crud;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,15 +9,13 @@ import de.sensorcloud.entitaet.NutzerTelefon;
 
 public class DBNutzerTelefon {
 	
-	public static ArrayList<NutzerTelefon> getNutzerTelefonByNutStaID(String tabelleName, String nutStaID) {
+	public static ArrayList<NutzerTelefon> getNutzerTelefonByNutStaID(String nutStaID) {
 		
 		ArrayList<NutzerTelefon> nutzerTelefonList = new ArrayList<NutzerTelefon>();
-		String CQL = "SELECT * FROM '"+tabelleName+"' WHERE NutTelNutStaID = '"+nutStaID+"'";
+		String CQL = "SELECT * FROM NutzerTelefon WHERE NutTelNutStaID = '"+nutStaID+"'";
 		
 		try {
 		   
-	        
-	           
 	        ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {

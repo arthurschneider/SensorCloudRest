@@ -6,7 +6,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-@Path("/messwert")
+@Path("/Messwert")
 public class HttpSMesswert {
 	
 
@@ -14,19 +14,18 @@ public class HttpSMesswert {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
 		
-		return "Enthaelt die Methode(n) :\n\n"
-				+ " public String getSensorByNutStaID(@PathParam(\"nutStaID\") String nutStaID)\n";
+		return "Messwerte können hier abgefragt werden !";
 	}
 	
 	
 	@GET
-    @Path("/senID/{senID}/phyName/{phyName}/jahr/{jahr}/monat/{monat}/tag/{tag}")
+    @Path("/SenID/{senID}/MesWerNam/{mesWerNam}/MesWerTimYea/{mesWerTimYea}/MesWerTimMon/{mesWerTimMon}/MesWerTimDay/{MesWerTimDay}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getMesswerteBySenIDAndDay(@PathParam("senID") String senID,
-    									  @PathParam("phyName") String phyName,
-    									  @PathParam("jahr") String jahr,
-    									  @PathParam("monat") String monat,
-    									  @PathParam("tag") String tag) {
+    public String getMesswerteBySenIDForDay(@PathParam("senID") String senID,
+    									  @PathParam("mesWerNam") String mesWerNam,
+    									  @PathParam("mesWerTimYea") String mesWerTimYea,
+    									  @PathParam("mesWerTimMon") String mesWerTimMon,
+    									  @PathParam("MesWerTimDay") String MesWerTimDay) {
 		
 		return "";
 		

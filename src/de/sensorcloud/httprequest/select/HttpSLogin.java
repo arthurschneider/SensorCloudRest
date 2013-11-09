@@ -1,26 +1,23 @@
 package de.sensorcloud.httprequest.select;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
-import de.sensorcloud.db.DBNutzerEmail;
-import de.sensorcloud.db.DBNutzerSicherheit;
+import de.sensorcloud.db.crud.DBNutzerEmail;
+import de.sensorcloud.db.crud.DBNutzerSicherheit;
 import de.sensorcloud.entitaet.Login;
-import de.sensorcloud.entitaet.NutzerStammdaten;
 
 
-@Path("/login")
+@Path("/Login")
 public class HttpSLogin{
 	
 	@GET

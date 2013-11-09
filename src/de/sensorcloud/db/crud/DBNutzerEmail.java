@@ -1,9 +1,8 @@
-package de.sensorcloud.db;
+package de.sensorcloud.db.crud;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import de.sensorcloud.db.connection.Cassandra;
@@ -17,17 +16,13 @@ public class DBNutzerEmail {
 		
 		ArrayList<String> emailList = new ArrayList<String>();
 		String CQL = "SELECT NutEmaNutStaID FROM NutzerEmail WHERE NutEmaAdr = '"+email+"'";
+		
 		try {
-		      
-			
-	       
-	           
+		 
 	        ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
-	        	
 	        	emailList.add(RS.getString("NutEmaNutStaID"));
-	        	
 	        }
 	                 
 		} catch (SQLException ex) {
@@ -39,15 +34,13 @@ public class DBNutzerEmail {
 	}
 	
 	
-	public static ArrayList<NutzerEmail> getNutzerEmailByNutStaID(String tabelleName, String nutStaID) {
+	public static ArrayList<NutzerEmail> getNutzerEmailByNutStaID(String nutStaID) {
 		
 		ArrayList<NutzerEmail> nutzerEmailList = new ArrayList<NutzerEmail>();
-		String CQL = "SELECT * FROM '"+tabelleName+"' WHERE NutEmaNutStaID = '"+nutStaID+"'";
+		String CQL = "SELECT * FROM NutzerEmail WHERE NutEmaNutStaID = '"+nutStaID+"'";
 		
 		try {
-		     
-	       
-	           
+		   
 	        ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
@@ -65,6 +58,7 @@ public class DBNutzerEmail {
 
 		return nutzerEmailList;
 	}
+	
 	
 	public static void updateNutzerEmail(NutzerEmail nutzerEmail) {
 

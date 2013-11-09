@@ -1,9 +1,7 @@
 package de.sensorcloud.httprequest.select;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -14,14 +12,14 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
-import de.sensorcloud.db.DBSensor;
-import de.sensorcloud.db.DBSensorVerbund;
-import de.sensorcloud.db.DBSensorVerbundMitglieder;
+import de.sensorcloud.db.crud.DBSensor;
+import de.sensorcloud.db.crud.DBSensorVerbund;
+import de.sensorcloud.db.crud.DBSensorVerbundMitglieder;
 import de.sensorcloud.entitaet.Sensor;
 import de.sensorcloud.entitaet.SensorVerbund;
 import de.sensorcloud.helper.Helper;
 
-@Path("/sensorVerb")
+@Path("/SensorVerbund")
 public class HttpSSensorVerbund {
 	
 	@GET
@@ -35,7 +33,7 @@ public class HttpSSensorVerbund {
 	
 	
 	@GET
-    @Path("/nutzerID/{nutStaID}")
+    @Path("/NutStaID/{nutStaID}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getSensorVerbundByNutStaID(@PathParam("nutStaID") String nutStaID) {
 	
@@ -68,14 +66,14 @@ public class HttpSSensorVerbund {
 	
 	
 	@GET
-    @Path("/verbundID/{verbundID}")
+    @Path("/SenVerID/{senVerID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getSensorBySensorVerbundID(@PathParam("verbundID") String verbundID) {
+    public String getSensorBySenVerID(@PathParam("senVerID") String senVerID) {
 		ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
 		ArrayList<String> senIDList = new ArrayList<String>();
 		JsonElement jsonElement = null;
 	
-		senIDList = DBSensorVerbundMitglieder.getSenIDBySenVerID(verbundID);
+		senIDList = DBSensorVerbundMitglieder.getSenIDBySenVerID(senVerID);
 		
 		for (String senID : senIDList) {
 			sensorList.add(DBSensor.getSensorBySenID(senID));

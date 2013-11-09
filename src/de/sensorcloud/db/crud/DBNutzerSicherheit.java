@@ -1,4 +1,4 @@
-package de.sensorcloud.db;
+package de.sensorcloud.db.crud;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,7 +34,7 @@ public class DBNutzerSicherheit {
 	}
 	
 	
-	public static ArrayList<NutzerSicherheit> getNutzerSicherheitByNutStaID(String tabelleName, String nutStaID) {
+	public static ArrayList<NutzerSicherheit> getNutzerSicherheitByNutStaID(String nutStaID) {
 		
 		ArrayList<NutzerSicherheit> nutzerSicherheitList = new ArrayList<NutzerSicherheit>();      
         

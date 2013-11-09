@@ -1,9 +1,7 @@
-package de.sensorcloud.db;
+package de.sensorcloud.db.crud;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import de.sensorcloud.db.connection.Cassandra;
 import de.sensorcloud.entitaet.NutzerStammdaten;

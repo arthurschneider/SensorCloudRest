@@ -11,27 +11,27 @@ import javax.ws.rs.core.MediaType;
 
 import com.google.gson.Gson;
 
-import de.sensorcloud.db.crud.DBNutzerStammdaten;
-import de.sensorcloud.entitaet.NutzerStammdaten;
+import de.sensorcloud.db.crud.DBNutzerEmail;
+import de.sensorcloud.entitaet.NutzerEmail;
 
-@Path("/NutzerStammdaten")
-public class HttpUNutzerStammdaten {
+@Path("/NutzerEmail")
+public class HttpUNutzerEmail {
 
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test() {
 
 		return "Enthaelt die Methode(n) :\n\n"
-				+ "public String updateNutzerStammdaten(String data)\n";
+				+ "public String updateNutzerEmail(String data)\n";
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String updateNutzerStammdaten(String data) throws SQLException {
+	public String updateNutzerEmail(String data) throws SQLException {
 		Gson gson = new Gson();
-		NutzerStammdaten nutzerStammdaten = gson.fromJson(data, NutzerStammdaten.class);
+		NutzerEmail nutzerEmail = gson.fromJson(data, NutzerEmail.class);
 	
-		DBNutzerStammdaten.updateNutzerStammdaten(nutzerStammdaten);
+		DBNutzerEmail.updateNutzerEmail(nutzerEmail);
 
 		return "ausgefuehrt";
 	}

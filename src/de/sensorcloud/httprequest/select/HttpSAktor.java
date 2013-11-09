@@ -1,6 +1,5 @@
 package de.sensorcloud.httprequest.select;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.ws.rs.GET;
@@ -12,10 +11,10 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
-import de.sensorcloud.db.DBAktor;
+import de.sensorcloud.db.crud.DBAktor;
 import de.sensorcloud.entitaet.Aktor;
 
-@Path("/aktor")
+@Path("/Aktor")
 public class HttpSAktor {
 	
 	@GET
@@ -28,7 +27,7 @@ public class HttpSAktor {
 	
 	
 	@GET
-    @Path("/id/{nutStaID}")
+    @Path("/NutStaID/{nutStaID}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getAktorByNutStaID(@PathParam("nutStaID") String nutStaID) {
 		ArrayList<Aktor> aktorList = new ArrayList<Aktor>();
