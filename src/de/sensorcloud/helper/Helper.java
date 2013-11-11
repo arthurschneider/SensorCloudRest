@@ -1,5 +1,6 @@
 package de.sensorcloud.helper;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import de.sensorcloud.entitaet.AktorVerbund;
@@ -7,6 +8,8 @@ import de.sensorcloud.entitaet.Event;
 import de.sensorcloud.entitaet.SensorVerbund;
 
 public class Helper {
+	
+	public final static long HOUR_IN_MICRO_SEC = 60*60*1000;
 
 	public static boolean checkObjectInSet(SensorVerbund senVerb, HashSet<SensorVerbund> senVerbSet) {
 		boolean result = false;
@@ -45,5 +48,27 @@ public class Helper {
 			}
 		}
 		return result;
+	}
+	
+	public static ArrayList<String> splitSemikolon(String textMitSemikolon){
+		ArrayList<String> result = new ArrayList<String>();
+		
+		String[] werteEinzeln = textMitSemikolon.split(";");
+		
+		for (int i = 0; i < werteEinzeln.length; i++) {
+			result.add(werteEinzeln[i]);
+		}
+		
+		return result;
+	}
+	
+	public static long getNextHour(long anfang){
+		return anfang + HOUR_IN_MICRO_SEC;
+	}
+	
+	public static String replaceSemikolon(String keysWithSemikolon){
+		
+		
+		return keysWithSemikolon.replace(";", "', '");
 	}
 }

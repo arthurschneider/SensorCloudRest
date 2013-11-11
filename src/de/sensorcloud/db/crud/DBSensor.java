@@ -1,6 +1,5 @@
 package de.sensorcloud.db.crud;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,8 +10,6 @@ import de.sensorcloud.entitaet.Sensor;
 
 public class DBSensor {
 	
-	static Cassandra verb = new Cassandra();
-	static Connection con;
 	
 	public static ArrayList<Sensor> getSensorListByNutStaID(String nutStaID){
 		
@@ -24,6 +21,7 @@ public class DBSensor {
 	        ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
+	        	
 	        	Sensor sensor = new Sensor();
 	        	sensor.setSenID(RS.getString("KEY"));
 	        	sensor.setSenNutStaID(nutStaID);
@@ -52,10 +50,7 @@ public class DBSensor {
 		String CQL = "SELECT * FROM Sensor WHERE SenID = '"+senID+"'";
 		
 		try {
-		      
 			
-	        
-	           
 	        ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
@@ -98,7 +93,6 @@ public class DBSensor {
 				
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -118,11 +112,8 @@ public class DBSensor {
 				
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 		
 		return senIDLIst;
 
