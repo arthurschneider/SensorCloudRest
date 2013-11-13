@@ -1,8 +1,11 @@
-package de.sensorcloud.httprequest.select;
+package de.sensorcloud.httprequest;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -15,7 +18,7 @@ import de.sensorcloud.db.crud.DBNutzerEmail;
 import de.sensorcloud.entitaet.NutzerEmail;
 
 @Path("/NutzerEmail")
-public class HttpSNutzerEmail {
+public class HttpNutzerEmail {
 	
 
 	@GET
@@ -39,6 +42,18 @@ public class HttpSNutzerEmail {
 		Gson gson = new Gson();
 		jsonElement = gson.toJsonTree(nutzerEmail);
         return jsonElement.toString();
+	}
+	
+	
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String updateNutzerEmail(String data) throws SQLException {
+		Gson gson = new Gson();
+		NutzerEmail nutzerEmail = gson.fromJson(data, NutzerEmail.class);
+	
+		DBNutzerEmail.updateNutzerEmail(nutzerEmail);
+
+		return "ausgefuehrt";
 	}
 
 }

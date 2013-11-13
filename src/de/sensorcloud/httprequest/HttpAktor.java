@@ -1,4 +1,4 @@
-package de.sensorcloud.httprequest.select;
+package de.sensorcloud.httprequest;
 
 import java.util.ArrayList;
 
@@ -15,7 +15,7 @@ import de.sensorcloud.db.crud.DBAktor;
 import de.sensorcloud.entitaet.Aktor;
 
 @Path("/Aktor")
-public class HttpSAktor {
+public class HttpAktor {
 	
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)

@@ -1,4 +1,4 @@
-package de.sensorcloud.httprequest.select;
+package de.sensorcloud.httprequest;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -20,7 +20,7 @@ import de.sensorcloud.entitaet.SensorVerbund;
 import de.sensorcloud.helper.Helper;
 
 @Path("/SensorVerbund")
-public class HttpSSensorVerbund {
+public class HttpSensorVerbund {
 	
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)

@@ -25,7 +25,7 @@ public class Cassandra {
         // Erstellung Datenbank-Verbindungsinstanz
         try {
             
-            con = DriverManager.getConnection("jdbc:cassandra://139.6.17.20:9160/SensorCloud");
+        	con = DriverManager.getConnection("insert here name");
             
         } catch (SQLException e){
             System.out.println("Fehler beim Verbindungsaufbau zur Datenbank!");

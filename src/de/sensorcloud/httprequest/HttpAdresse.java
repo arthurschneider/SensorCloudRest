@@ -1,4 +1,4 @@
-package de.sensorcloud.httprequest.select;
+package de.sensorcloud.httprequest;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -13,7 +13,7 @@ import de.sensorcloud.db.crud.DBAdresse;
 import de.sensorcloud.entitaet.Adresse;
 
 @Path("/Adresse")
-public class HttpSAdresse {
+public class HttpAdresse {
 
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)

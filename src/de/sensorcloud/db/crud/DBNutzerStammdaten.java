@@ -9,7 +9,7 @@ import de.sensorcloud.entitaet.NutzerStammdaten;
 public class DBNutzerStammdaten {
 
 	
-	public static NutzerStammdaten getNutzerStammdatenByID(String nutStaID) {
+	public static NutzerStammdaten getNutzerStammdatenByNutStaID(String nutStaID) {
 		
 		NutzerStammdaten nutzerStammdaten = new NutzerStammdaten();
 		String CQL = "SELECT * FROM NutzerStammdaten WHERE KEY = '"+ nutStaID + "'";

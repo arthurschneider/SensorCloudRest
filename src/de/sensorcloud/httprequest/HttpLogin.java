@@ -1,4 +1,4 @@
-package de.sensorcloud.httprequest.select;
+package de.sensorcloud.httprequest;
 
 import java.util.ArrayList;
 
@@ -18,7 +18,7 @@ import de.sensorcloud.entitaet.Login;
 
 
 @Path("/Login")
-public class HttpSLogin{
+public class HttpLogin{
 	
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)

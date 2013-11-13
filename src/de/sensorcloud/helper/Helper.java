@@ -2,6 +2,7 @@ package de.sensorcloud.helper;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.UUID;
 
 import de.sensorcloud.entitaet.AktorVerbund;
 import de.sensorcloud.entitaet.Event;
@@ -64,6 +65,10 @@ public class Helper {
 	
 	public static long getNextHour(long anfang){
 		return anfang + HOUR_IN_MICRO_SEC;
+	}
+	
+	public static String generateUUID(){
+		return UUID.randomUUID().toString();
 	}
 	
 	public static String replaceSemikolon(String keysWithSemikolon){

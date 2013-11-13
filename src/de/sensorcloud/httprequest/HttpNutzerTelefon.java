@@ -1,8 +1,10 @@
-package de.sensorcloud.httprequest.select;
+package de.sensorcloud.httprequest;
 
 import java.util.ArrayList;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -15,7 +17,7 @@ import de.sensorcloud.db.crud.DBNutzerTelefon;
 import de.sensorcloud.entitaet.NutzerTelefon;
 
 @Path("/NutzerTelefon")
-public class HttpSNutzerTelefon {
+public class HttpNutzerTelefon {
 	
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
@@ -38,6 +40,18 @@ public class HttpSNutzerTelefon {
 		Gson gson = new Gson();
 		jsonElement = gson.toJsonTree(nutzerTelefon);
         return jsonElement.toString();
+	}
+	
+	
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String updateNutzerTelefon(String data) {
+		Gson gson = new Gson();
+		NutzerTelefon nutzerTelefon = gson.fromJson(data, NutzerTelefon.class);
+	
+		DBNutzerTelefon.updateNutzerTelefon(nutzerTelefon);
+
+		return "ausgefuehrt";
 	}
 
 }

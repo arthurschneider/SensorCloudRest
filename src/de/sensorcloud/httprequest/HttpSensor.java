@@ -1,4 +1,4 @@
-package de.sensorcloud.httprequest.select;
+package de.sensorcloud.httprequest;
 
 import java.util.ArrayList;
 
@@ -15,7 +15,7 @@ import de.sensorcloud.db.crud.DBSensor;
 import de.sensorcloud.entitaet.Sensor;
 
 @Path("/Sensor")
-public class HttpSSensor {
+public class HttpSensor {
 	
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)

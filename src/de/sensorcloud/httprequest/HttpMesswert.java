@@ -1,4 +1,4 @@
-package de.sensorcloud.httprequest.select;
+package de.sensorcloud.httprequest;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -20,7 +20,7 @@ import de.sensorcloud.entitaet.MesswertTime;
 import de.sensorcloud.helper.Helper;
 
 @Path("/Messwert")
-public class HttpSMesswert {
+public class HttpMesswert {
 	
 
 	@GET
