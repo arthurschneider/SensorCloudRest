@@ -6,13 +6,16 @@ import java.util.ArrayList;
 
 import de.sensorcloud.db.connection.Cassandra;
 import de.sensorcloud.entitaet.NutzerTelefon;
+import de.sensorcloud.helpertools.Helper;
 
 public class DBNutzerTelefon {
+	
+	public static final String TABNAME = "NutzerTelefon";
 	
 	public static ArrayList<NutzerTelefon> getNutzerTelefonByNutStaID(String nutStaID) {
 		
 		ArrayList<NutzerTelefon> nutzerTelefonList = new ArrayList<NutzerTelefon>();
-		String CQL = "SELECT * FROM NutzerTelefon WHERE NutTelNutStaID = '"+nutStaID+"'";
+		String CQL = "SELECT * FROM " + TABNAME + " WHERE NutTelNutStaID = '"+nutStaID+"'";
 		
 		try {
 		   
@@ -36,7 +39,7 @@ public class DBNutzerTelefon {
 	
 	public static void updateNutzerTelefon(NutzerTelefon nutzerTelefon) {
 
-		String CQL = "UPDATE NutzerTelefon SET "
+		String CQL = "UPDATE " + TABNAME + " SET "
 					+ "NutTelID = '" + nutzerTelefon.getNutTelID() + "', "
 					+ "NutTelNutStaID = '" + nutzerTelefon.getNutTelNutStaID() + "', "
 					+ "NutTelNum = '" + nutzerTelefon.getNutTelNum() + "', "
@@ -50,6 +53,25 @@ public class DBNutzerTelefon {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public static String insertNutzerTelefon(NutzerTelefon nutzerTelefon) {
+
+		String uuID = Helper.generateUUID();
+		String CQL = "UPDATE " +TABNAME + " SET "
+					+ "NutTelID = '" + uuID + "', "
+					+ "NutTelNutStaID = '" + nutzerTelefon.getNutTelNutStaID() + "', "
+					+ "NutTelNum = '" + nutzerTelefon.getNutTelNum() + "', "
+					+ "NutTelBez = '" + nutzerTelefon.getNutTelBez() + "' "
+					+ "WHERE KEY = " + uuID;
+		
+		try {
+			Cassandra.update(CQL);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return uuID;
 	}
 
 }

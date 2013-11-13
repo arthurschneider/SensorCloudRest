@@ -9,12 +9,14 @@ import de.sensorcloud.db.connection.Cassandra;
 import de.sensorcloud.entitaet.Aktor;
 
 public class DBAktor {
+	
+	public static final String TABNAME = "Aktor";
 
 	public static ArrayList<Aktor> getAktorByNutStaID(String nutStaID) {
 
 		ArrayList<Aktor> aktorList = new ArrayList<Aktor>();
 
-		String CQL = "SELECT * FROM Aktor WHERE AktNutStaID = '" + nutStaID + "'";
+		String CQL = "SELECT * FROM "+ TABNAME +" WHERE AktNutStaID = '" + nutStaID + "'";
 
 		try {
 			ResultSet RS = Cassandra.select(CQL);
@@ -46,7 +48,7 @@ public class DBAktor {
 
 		Aktor aktor = new Aktor();
 
-		String CQL = "SELECT * FROM Aktor WHERE AktID = '" + aktID + "'";
+		String CQL = "SELECT * FROM " + TABNAME + " WHERE AktID = '" + aktID + "'";
 
 		try {
 			ResultSet RS = Cassandra.select(CQL);
@@ -77,7 +79,7 @@ public class DBAktor {
 	public static HashSet<String> getAktorIDListByNutStaID(String aktID) {
 
 		HashSet<String> aktIDLIst = new HashSet<String>();
-		String CQL = "SELECT AktID FROM Aktor WHERE NutStaID = '" + aktID + "'";
+		String CQL = "SELECT AktID FROM " + TABNAME + " WHERE NutStaID = '" + aktID + "'";
 
 		try {
 			ResultSet RS = Cassandra.select(CQL);

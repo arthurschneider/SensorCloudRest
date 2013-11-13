@@ -10,11 +10,12 @@ import de.sensorcloud.entitaet.Sensor;
 
 public class DBSensor {
 	
+	public static final String TABNAME = "Sensor";
 	
 	public static ArrayList<Sensor> getSensorListByNutStaID(String nutStaID){
 		
 		ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
-		String CQL = "SELECT * FROM Sensor WHERE SenNutStaID = '"+nutStaID+"'";
+		String CQL = "SELECT * FROM " +TABNAME + " WHERE SenNutStaID = '"+nutStaID+"'";
 		
 		try {
 		   
@@ -47,7 +48,7 @@ public class DBSensor {
 	public static Sensor getSensorBySenID(String senID) {
 		
 		Sensor sensor = new Sensor();
-		String CQL = "SELECT * FROM Sensor WHERE SenID = '"+senID+"'";
+		String CQL = "SELECT * FROM " + TABNAME + " WHERE SenID = '"+senID+"'";
 		
 		try {
 			
@@ -80,7 +81,7 @@ public class DBSensor {
 	public static String getSenProIDBySenID(String senID) {
 
 		String senSenProID = "";
-		String CQL = "SELECT SenSenProID FROM Sensor WHERE SenID = '"+ senID + "'";
+		String CQL = "SELECT SenSenProID FROM " + TABNAME + " WHERE SenID = '"+ senID + "'";
 		ResultSet RS;
 		
 		try {
@@ -102,7 +103,7 @@ public class DBSensor {
 	
 	public static HashSet<String> getSensorIDListByNutStaID(String senID) {
 		HashSet<String> senIDLIst = new HashSet<String>();
-		String CQL = "SELECT SenID FROM Sensor WHERE SenNutStaID = '"+ senID + "'";
+		String CQL = "SELECT SenID FROM " + TABNAME + " WHERE SenNutStaID = '"+ senID + "'";
 		
 		try {
 			ResultSet RS = Cassandra.select(CQL);

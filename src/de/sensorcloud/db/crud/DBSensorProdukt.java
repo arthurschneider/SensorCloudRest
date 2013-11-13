@@ -7,10 +7,12 @@ import de.sensorcloud.db.connection.Cassandra;
 
 public class DBSensorProdukt {
 	
+	public static String TABNAME = "SensorProdukt";
+	
 	public static String getSensorSemantikBySenProID(String senProID) {
 
 		String senProSem = "";
-		String CQL = "SELECT SenProSem FROM SensorProdukt WHERE SenProID = '"+ senProID + "'";
+		String CQL = "SELECT SenProSem FROM " + TABNAME + " WHERE SenProID = '"+ senProID + "'";
 
 		try {
 			

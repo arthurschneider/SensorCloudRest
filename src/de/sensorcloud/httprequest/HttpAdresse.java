@@ -1,6 +1,8 @@
 package de.sensorcloud.httprequest;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -19,15 +21,14 @@ public class HttpAdresse {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
 		
-		return "Enthaelt die Methode(n) :\n\n"
-				+ " public String getNutzerTelefonByID( @PathParam(\"tabelleName\") String tabelleName, @PathParam(\"nutStaID\") String nutStaID)\n";
+		return "Adresse laueft";
 	}
 	
 	
 	@GET
     @Path("/AdrID/{adrID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getNutzerTelefonByNutStaID(@PathParam("adrID") String adrID) {
+    public String getAdresseByAdrID(@PathParam("adrID") String adrID) {
 		Adresse adresse = new Adresse();
 		JsonElement jsonElement = null;
 		
@@ -36,5 +37,16 @@ public class HttpAdresse {
 		Gson gson = new Gson();
 		jsonElement = gson.toJsonTree(adresse);
         return jsonElement.toString();
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String updateAdresse(String data) {
+		Gson gson = new Gson();
+		Adresse adresse = gson.fromJson(data, Adresse.class);
+	
+		DBAdresse.updateAdresse(adresse);
+
+		return "ausgefuehrt";
 	}
 }

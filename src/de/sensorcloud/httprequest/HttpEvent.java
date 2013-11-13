@@ -4,6 +4,7 @@ import java.util.HashSet;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -23,7 +24,7 @@ import de.sensorcloud.entitaet.Event;
 import de.sensorcloud.entitaet.EventAktion;
 import de.sensorcloud.entitaet.EventRegel;
 import de.sensorcloud.entitaet.SensorEvent;
-import de.sensorcloud.helper.Helper;
+import de.sensorcloud.helpertools.Helper;
 
 @Path("/Event")
 public class HttpEvent {
@@ -32,8 +33,7 @@ public class HttpEvent {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
 		
-		return "Enthaelt die Methode(n) :\n\n"
-				+ " public String getSensorByNutStaID(@PathParam(\"nutStaID\") String nutStaID)\n";
+		return "Event läuft";
 	}
 	
 	
@@ -79,9 +79,9 @@ public class HttpEvent {
 	}
 
 	
-	@PUT
+	@PUT		//Insert
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String updateNutzerTelefon(String data) {
+	public String insertEventRegel(String data) {
 		
 		Gson gson = new Gson();
 		EventRegel eventRegel = gson.fromJson(data, EventRegel.class);
@@ -99,6 +99,27 @@ public class HttpEvent {
 			DBEventAktion.insertEventAktion(eveID, eventAktion);
 		}
 		DBEventBenachrichtigung.insertEventBenachrichtigung(eveID, eventRegel.getEventBen());
+		
+		return "ausgefuehrt";
+	}
+	
+	@POST		//Update
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String updateEventRegel(String data) {
+		
+		Gson gson = new Gson();
+		EventRegel eventRegel = gson.fromJson(data, EventRegel.class);
+		DBEvent.updateEvent(eventRegel.getEvent());
+		
+		for (SensorEvent sensorEvent: eventRegel.getSensorEvent()) {
+			
+			DBSensorEvent.updateSensorEvent(sensorEvent);
+			
+		}
+		for (EventAktion eventAktion : eventRegel.getEventAktion()) {
+			DBEventAktion.updateEventAktion(eventAktion);
+		}
+		DBEventBenachrichtigung.updateEventBenachrichtigung(eventRegel.getEventBen());
 		
 		return "ausgefuehrt";
 	}

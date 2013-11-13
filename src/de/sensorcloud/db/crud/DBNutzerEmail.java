@@ -1,21 +1,22 @@
 package de.sensorcloud.db.crud;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import de.sensorcloud.db.connection.Cassandra;
 import de.sensorcloud.entitaet.NutzerEmail;
+import de.sensorcloud.helpertools.Helper;
 
 public class DBNutzerEmail {
 	
-	static Connection con;
+
+	public static final String TABNAME = "NutzerEmail";
 	
 	public static ArrayList<String> getNutEmaNutStaIDbyNutEmaBez(String email) {
 		
 		ArrayList<String> emailList = new ArrayList<String>();
-		String CQL = "SELECT NutEmaNutStaID FROM NutzerEmail WHERE NutEmaAdr = '"+email+"'";
+		String CQL = "SELECT NutEmaNutStaID FROM " + TABNAME + " WHERE NutEmaAdr = '"+email+"'";
 		
 		try {
 		 
@@ -37,7 +38,7 @@ public class DBNutzerEmail {
 	public static ArrayList<NutzerEmail> getNutzerEmailByNutStaID(String nutStaID) {
 		
 		ArrayList<NutzerEmail> nutzerEmailList = new ArrayList<NutzerEmail>();
-		String CQL = "SELECT * FROM NutzerEmail WHERE NutEmaNutStaID = '"+nutStaID+"'";
+		String CQL = "SELECT * FROM " + TABNAME + " WHERE NutEmaNutStaID = '"+nutStaID+"'";
 		
 		try {
 		   
@@ -62,7 +63,7 @@ public class DBNutzerEmail {
 	
 	public static void updateNutzerEmail(NutzerEmail nutzerEmail) {
 
-		String CQL = "UPDATE NutzerEmail SET "
+		String CQL = "UPDATE " +TABNAME + " SET "
 					+ "NutEmaID = '" + nutzerEmail.getNutEmaID() + "', "
 					+ "NutEmaNutStaID = '" + nutzerEmail.getNutEmaNutStaID() + "', "
 					+ "NutEmaAdr = '" + nutzerEmail.getNutEmaAdr() + "', "
@@ -76,6 +77,25 @@ public class DBNutzerEmail {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public static String insertNutzerEmail(NutzerEmail nutzerEmail) {
+		
+		String uuID = Helper.generateUUID();
+		String CQL = "UPDATE " +TABNAME + " SET "
+					+ "NutEmaID = '" + uuID + "', "
+					+ "NutEmaNutStaID = '" + nutzerEmail.getNutEmaNutStaID() + "', "
+					+ "NutEmaAdr = '" + nutzerEmail.getNutEmaAdr() + "', "
+					+ "NutEmaBez = '" + nutzerEmail.getNutEmaBez() + "' "
+					+ "WHERE KEY = " + uuID;
+		
+		try {
+			Cassandra.update(CQL);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return uuID;
 	}
 
 }

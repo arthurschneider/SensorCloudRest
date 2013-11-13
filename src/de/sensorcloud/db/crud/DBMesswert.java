@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import de.sensorcloud.db.connection.Cassandra;
 import de.sensorcloud.entitaet.MesswertTime;
-import de.sensorcloud.helper.Helper;
+import de.sensorcloud.helpertools.Helper;
 
 public class DBMesswert {
 	

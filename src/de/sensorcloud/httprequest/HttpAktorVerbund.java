@@ -3,7 +3,10 @@ package de.sensorcloud.httprequest;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -17,7 +20,8 @@ import de.sensorcloud.db.crud.DBAktorVerbund;
 import de.sensorcloud.db.crud.DBAktorVerbundMitglieder;
 import de.sensorcloud.entitaet.Aktor;
 import de.sensorcloud.entitaet.AktorVerbund;
-import de.sensorcloud.helper.Helper;
+import de.sensorcloud.entitaet.AktorVerbundMitAktor;
+import de.sensorcloud.helpertools.Helper;
 
 @Path("/AktorVerbund")
 public class HttpAktorVerbund {
@@ -86,6 +90,33 @@ public class HttpAktorVerbund {
         System.out.println("JSON STRING "+jsonElement);
         return jsonElement.toString();
 	
+	}
+	
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String createAktorVerbund(String data) {
+		Gson gson = new Gson();
+		AktorVerbundMitAktor aktorVerbundmitAktor = gson.fromJson(data, AktorVerbundMitAktor.class);
+	
+		String aktVerID = DBAktorVerbund.createAktorVerbund(aktorVerbundmitAktor.getAktorVerbund());
+		for (Aktor aktor: aktorVerbundmitAktor.getAktorList()) {
+			DBAktorVerbundMitglieder.createAktorVerbundMitglieder(aktVerID, aktor);
+		}
+		
+		return aktVerID;
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String addAktorToAktorVerbund(String data) {
+		Gson gson = new Gson();
+		AktorVerbundMitAktor aktorVerbundmitAktor = gson.fromJson(data, AktorVerbundMitAktor.class);
+	
+		for (Aktor aktor: aktorVerbundmitAktor.getAktorList()) {
+			DBAktorVerbundMitglieder.createAktorVerbundMitglieder(aktorVerbundmitAktor.getAktorVerbund().getAktVerID(), aktor);
+		}
+		
+		return "ausgefuehrt";
 	}
 
 }

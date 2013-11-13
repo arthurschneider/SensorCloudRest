@@ -5,14 +5,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import de.sensorcloud.db.connection.Cassandra;
+import de.sensorcloud.entitaet.Sensor;
+import de.sensorcloud.helpertools.Helper;
 
 public class DBSensorVerbundMitglieder {
 	
+	public static final String TABNAME = "SensorVerbundMitglieder";
 	
 	public static ArrayList<String> getSenVerMitSenVerIDBySenID(String senID) {
 		
 		ArrayList<String> senVerMitSenVerID = new ArrayList<String>();
-		String CQL = "SELECT SenVerMitSenVerID FROM SensorVerbundMitglieder WHERE SenVerMitSenID = '"+senID+"'";
+		String CQL = "SELECT SenVerMitSenVerID FROM " + TABNAME + " WHERE SenVerMitSenID = '"+senID+"'";
 		
 		try {
 		      
@@ -53,6 +56,25 @@ public class DBSensorVerbundMitglieder {
 
 		return senIDList;
 		
+	}
+	
+	
+	public static String createSensorVerbundMitglieder(String senVerMitSenVerID, Sensor sensor) {
+		
+		String uuID = Helper.generateUUID();
+		String CQL = "UPDATE " + TABNAME + " SET "
+					+ "SenVerMitID = '" + uuID + "', "
+					+ "SenVerMitSenID = '" + sensor.getSenID() + "', "
+					+ "SenVerMitSenVerID = '" + senVerMitSenVerID + "' "
+					+ "WHERE KEY = " + uuID;
+		
+		try {
+			Cassandra.update(CQL);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return uuID;
 	}
 
 }

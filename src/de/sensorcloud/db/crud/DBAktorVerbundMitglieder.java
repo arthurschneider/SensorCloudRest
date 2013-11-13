@@ -5,13 +5,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import de.sensorcloud.db.connection.Cassandra;
+import de.sensorcloud.entitaet.Aktor;
+import de.sensorcloud.helpertools.Helper;
 
 public class DBAktorVerbundMitglieder {
+	
+	public static final String TABNAME = "AktorVerbundMitglieder";
 	
 	public static ArrayList<String> getAktVerMitAktVerIDByAktID(String aktID) {
 		
 		ArrayList<String> aktVerMitAktVerID = new ArrayList<String>();
-		String CQL = "SELECT AktVerMitAktVerID FROM AktorVerbundMitglieder WHERE AktVerMitAktID = '"+aktID+"'";
+		String CQL = "SELECT AktVerMitAktVerID FROM " +TABNAME + " WHERE AktVerMitAktID = '"+aktID+"'";
 	
 		try {
 			
@@ -34,7 +38,7 @@ public class DBAktorVerbundMitglieder {
 	public static ArrayList<String> getAktIDByAktVerID(String aktVerID){
 		
 		ArrayList<String> aktIDList = new ArrayList<String>();
-		String CQL = "SELECT AktVerMitAktID FROM AktorVerbundMitglieder WHERE AktVerMitAktVerID = '"+aktVerID+"'";
+		String CQL = "SELECT AktVerMitAktID FROM " + TABNAME + " WHERE AktVerMitAktVerID = '"+aktVerID+"'";
         
 		try {
 	           
@@ -52,6 +56,24 @@ public class DBAktorVerbundMitglieder {
 
 		return aktIDList;
 		
+	}
+	
+	public static String createAktorVerbundMitglieder(String aktVerMitAktVerID, Aktor aktor) {
+		
+		String uuID = Helper.generateUUID();
+		String CQL = "UPDATE " + TABNAME + " SET "
+					+ "AktVerMitID = '" + uuID + "', "
+					+ "AktVerMitAktID = '" + aktor.getAktID() + "', "
+					+ "AktVerMitAktVerID = '" + aktVerMitAktVerID + "' "
+					+ "WHERE KEY = " + uuID;
+		
+		try {
+			Cassandra.update(CQL);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return uuID;
 	}
 
 }

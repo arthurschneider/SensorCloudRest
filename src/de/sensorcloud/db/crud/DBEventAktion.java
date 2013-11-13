@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 import de.sensorcloud.db.connection.Cassandra;
 import de.sensorcloud.entitaet.EventAktion;
-import de.sensorcloud.helper.Helper;
+import de.sensorcloud.helpertools.Helper;
 
 public class DBEventAktion {
 	
@@ -13,7 +13,7 @@ public class DBEventAktion {
 	public static String insertEventAktion(String eveID, EventAktion eventAktion) {
 		
 		String uuID = Helper.generateUUID();
-		String CQL = "UPDATE " + TABNAME + " SET "
+		String CQL = "UPDATE '" + TABNAME + "' SET "
 				+ "EveAktiID = '" + uuID + "', "
 				+ "EveAktiEveID = '" + eveID + "', "
 				+ "EveAktiBez = '" + eventAktion.getEveAktiBez() + "', "
@@ -33,4 +33,28 @@ public class DBEventAktion {
 		
 		return uuID;
 	}
+	
+	
+	public static void updateEventAktion(EventAktion eventAktion) {
+		
+		String CQL = "UPDATE '" + TABNAME + "' SET "
+				+ "EveAktiID = '" + eventAktion.getEveAktiID() + "', "
+				+ "EveAktiEveID = '" + eventAktion.getEveAktiEveID() + "', "
+				+ "EveAktiBez = '" + eventAktion.getEveAktiBez() + "', "
+				+ "EveAktiZie = '" + eventAktion.getEveAktiZie() + "', "
+				+ "EveAktiZieID = '" + eventAktion.getEveAktiZieID() + "', "
+				+ "EveAktiZiePar = '" + eventAktion.getEveAktiZiePar() + "', "
+				+ "EveAktiZieWer = '" + eventAktion.getEveAktiZieWer() + "', "
+				+ "EveAktiZiePrio = '" + eventAktion.getEveAktiZiePrio() + "' "
+				+ "WHERE KEY = " + eventAktion.getEveAktiID();
+	
+		try {
+			Cassandra.update(CQL);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 }
+

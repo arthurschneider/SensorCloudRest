@@ -9,13 +9,15 @@ import de.sensorcloud.entitaet.NutzerSicherheit;
 
 public class DBNutzerSicherheit {
 	
+	public static final String TABNAME = "NutzerSicherheit";
+	
 	public static String getNutSicPasByNutStaID(String nutStaID){
 	
 		String nutSicPas = "";
 		
 		try {
 		   
-	        String CQL = "SELECT NutSicPas FROM NutzerSicherheit WHERE NutSicNutStaID = '"+nutStaID+"'";
+	        String CQL = "SELECT NutSicPas FROM " + TABNAME + " WHERE NutSicNutStaID = '"+nutStaID+"'";
 	           
 	        ResultSet RS   = Cassandra.select(CQL);
 	       
@@ -38,7 +40,7 @@ public class DBNutzerSicherheit {
 		
 		ArrayList<NutzerSicherheit> nutzerSicherheitList = new ArrayList<NutzerSicherheit>();      
         
-		String CQL = "SELECT * FROM NutzerSicherheit WHERE NutSicNutStaID = '"+nutStaID+"'";
+		String CQL = "SELECT * FROM " + TABNAME + " WHERE NutSicNutStaID = '"+nutStaID+"'";
 	   
 		try {
 			
@@ -66,7 +68,7 @@ public class DBNutzerSicherheit {
 	
 	public static void updateNutzerSicherheit(NutzerSicherheit nutzerSicherheit) {
 
-		String CQL = "UPDATE NutzerSicherheit SET "
+		String CQL = "UPDATE "+ TABNAME + " SET "
 					+ "NutSicID = '" + nutzerSicherheit.getNutSicID() + "', "
 					+ "NutSicNutStaID = '" + nutzerSicherheit.getNutSicNutStaID() + "', "
 					+ "NutSicPas = '" + nutzerSicherheit.getNutSicPas() + "', "

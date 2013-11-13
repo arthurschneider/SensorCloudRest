@@ -7,12 +7,13 @@ import de.sensorcloud.db.connection.Cassandra;
 import de.sensorcloud.entitaet.NutzerStammdaten;
 
 public class DBNutzerStammdaten {
-
 	
+	public static final String TABNAME = "NutzerStammdaten";
+
 	public static NutzerStammdaten getNutzerStammdatenByNutStaID(String nutStaID) {
 		
 		NutzerStammdaten nutzerStammdaten = new NutzerStammdaten();
-		String CQL = "SELECT * FROM NutzerStammdaten WHERE KEY = '"+ nutStaID + "'";
+		String CQL = "SELECT * FROM " + TABNAME + " WHERE KEY = '"+ nutStaID + "'";
 		
 		try {
 			
@@ -39,7 +40,7 @@ public class DBNutzerStammdaten {
 	
 	public static void updateNutzerStammdaten(NutzerStammdaten nutzerStammdaten){
 
-		String CQL = "UPDATE NutzerStammdaten SET NutStaAnr = '"
+		String CQL = "UPDATE " + TABNAME + " SET NutStaAnr = '"
 				+ nutzerStammdaten.getNutStaAnr() + "', " + "NutStaAdrID = '"
 				+ nutzerStammdaten.getNutStaAdrID() + "', NutStaFir = '"
 				+ nutzerStammdaten.getNutStaFir() + "', " + "NutStaNam = '"

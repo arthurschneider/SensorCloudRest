@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import de.sensorcloud.db.connection.Cassandra;
-import de.sensorcloud.helper.Helper;
+import de.sensorcloud.helpertools.Helper;
 
 public class DBEventMitglieder {
 	

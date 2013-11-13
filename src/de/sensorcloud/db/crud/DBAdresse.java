@@ -8,10 +8,12 @@ import de.sensorcloud.entitaet.Adresse;
 
 public class DBAdresse {
 
+	public static final String TABNAME = "Adresse";
+	
 	public static Adresse getAdresseByAdrID(String adrID) {
 		
 		Adresse adresse = new Adresse();
-		String CQL = "SELECT * FROM Adresse WHERE KEY = '"+ adrID + "'";
+		String CQL = "SELECT * FROM " + TABNAME + " WHERE KEY = '"+ adrID + "'";
 		
 		try {
 			ResultSet RS = Cassandra.select(CQL);
@@ -38,7 +40,7 @@ public class DBAdresse {
 	
 	public static void updateAdresse(Adresse adresse) {
 
-		String CQL = "UPDATE Adresse SET "
+		String CQL = "UPDATE " + TABNAME + " SET "
 					+ "AdrBez = '" + adresse.getAdrBez() + "', "
 					+ "AdrStr = '" + adresse.getAdrStr() + "', "
 					+ "AdrPlz = '" + adresse.getAdrPlz() + "', "

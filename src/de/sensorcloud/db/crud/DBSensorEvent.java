@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import de.sensorcloud.db.connection.Cassandra;
 import de.sensorcloud.entitaet.SensorEvent;
-import de.sensorcloud.helper.Helper;
+import de.sensorcloud.helpertools.Helper;
 
 public class DBSensorEvent {
 	
@@ -55,5 +55,23 @@ public class DBSensorEvent {
 		}
 		
 		return uuID;
+	}
+	
+	public static void updateSensorEvent(SensorEvent sensorEvent) {
+	
+		String CQL = "UPDATE " + TABNAME + " SET "
+				+ "SenEveID = '" + sensorEvent.getSenEveID() + "', "
+				+ "SenEveSenID = '" + sensorEvent.getSenEveSenID() + "', "
+				+ "SenEvePhyNam = '" + sensorEvent.getSenEvePhyNam() + "', "
+				+ "SenEveVop = '" + sensorEvent.getSenEveVop() + "', "
+				+ "SenEveWer = '" + sensorEvent.getSenEveWer() + "' "
+				+ "WHERE KEY = " + sensorEvent.getSenEveID();
+	
+		try {
+			Cassandra.update(CQL);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

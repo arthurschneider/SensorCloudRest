@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -43,7 +44,7 @@ public class HttpNutzerTelefon {
 	}
 	
 	
-	@PUT
+	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String updateNutzerTelefon(String data) {
 		Gson gson = new Gson();
@@ -52,6 +53,17 @@ public class HttpNutzerTelefon {
 		DBNutzerTelefon.updateNutzerTelefon(nutzerTelefon);
 
 		return "ausgefuehrt";
+	}
+	
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String insertNutzerTelefon(String data) {
+		Gson gson = new Gson();
+		NutzerTelefon nutzerTelefon = gson.fromJson(data, NutzerTelefon.class);
+	
+		String uuID = DBNutzerTelefon.insertNutzerTelefon(nutzerTelefon);
+
+		return uuID;
 	}
 
 }

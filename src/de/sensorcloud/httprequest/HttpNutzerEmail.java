@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -45,7 +46,7 @@ public class HttpNutzerEmail {
 	}
 	
 	
-	@PUT
+	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String updateNutzerEmail(String data) throws SQLException {
 		Gson gson = new Gson();
@@ -54,6 +55,17 @@ public class HttpNutzerEmail {
 		DBNutzerEmail.updateNutzerEmail(nutzerEmail);
 
 		return "ausgefuehrt";
+	}
+	
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String insertNutzerEmail(String data) throws SQLException {
+		Gson gson = new Gson();
+		NutzerEmail nutzerEmail = gson.fromJson(data, NutzerEmail.class);
+	
+		String uuID = DBNutzerEmail.insertNutzerEmail(nutzerEmail);
+
+		return uuID;
 	}
 
 }

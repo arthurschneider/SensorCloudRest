@@ -3,7 +3,10 @@ package de.sensorcloud.httprequest;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -17,7 +20,8 @@ import de.sensorcloud.db.crud.DBSensorVerbund;
 import de.sensorcloud.db.crud.DBSensorVerbundMitglieder;
 import de.sensorcloud.entitaet.Sensor;
 import de.sensorcloud.entitaet.SensorVerbund;
-import de.sensorcloud.helper.Helper;
+import de.sensorcloud.entitaet.SensorVerbundMitSensor;
+import de.sensorcloud.helpertools.Helper;
 
 @Path("/SensorVerbund")
 public class HttpSensorVerbund {
@@ -84,6 +88,35 @@ public class HttpSensorVerbund {
         System.out.println("JSON STRING "+jsonElement);
         return jsonElement.toString();
 	
+	}
+	
+	
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String createSensorVerbund(String data) {
+		Gson gson = new Gson();
+		SensorVerbundMitSensor sensorVerbundMitSensor = gson.fromJson(data, SensorVerbundMitSensor.class);
+	
+		String senVerID = DBSensorVerbund.createSensorVerbund(sensorVerbundMitSensor.getSensorVerbund());
+		for (Sensor sensor: sensorVerbundMitSensor.getSensorList()) {
+			DBSensorVerbundMitglieder.createSensorVerbundMitglieder(senVerID, sensor);
+		}
+		
+		return senVerID;
+	}
+	
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String addSensorToSensorVerbund(String data) {
+		Gson gson = new Gson();
+		SensorVerbundMitSensor sensorVerbundmitSensor = gson.fromJson(data, SensorVerbundMitSensor.class);
+	
+		for (Sensor sensor: sensorVerbundmitSensor.getSensorList()) {
+			DBSensorVerbundMitglieder.createSensorVerbundMitglieder(sensorVerbundmitSensor.getSensorVerbund().getSenVerID(), sensor);
+		}
+		
+		return "ausgefuehrt";
 	}
 
 }

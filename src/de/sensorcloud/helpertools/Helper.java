@@ -1,4 +1,4 @@
-package de.sensorcloud.helper;
+package de.sensorcloud.helpertools;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -72,8 +72,8 @@ public class Helper {
 	}
 	
 	public static String replaceSemikolon(String keysWithSemikolon){
-		
-		
+	
 		return keysWithSemikolon.replace(";", "', '");
 	}
+	
 }

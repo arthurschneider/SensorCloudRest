@@ -17,7 +17,7 @@ import com.google.gson.JsonElement;
 import de.sensorcloud.db.crud.DBMessLinie;
 import de.sensorcloud.db.crud.DBMesswert;
 import de.sensorcloud.entitaet.MesswertTime;
-import de.sensorcloud.helper.Helper;
+import de.sensorcloud.helpertools.Helper;
 
 @Path("/Messwert")
 public class HttpMesswert {
