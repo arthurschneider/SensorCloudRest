@@ -3,6 +3,7 @@ package de.sensorcloud.httprequest;
 import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -64,6 +65,17 @@ public class HttpNutzerTelefon {
 		String uuID = DBNutzerTelefon.insertNutzerTelefon(nutzerTelefon);
 
 		return uuID;
+	}
+	
+	@DELETE
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String deleteNutzerTelefon(String data) {
+		Gson gson = new Gson();
+		String nutTelID = gson.fromJson(data, String.class);
+	
+		DBNutzerTelefon.deleteNutzerTelefon(nutTelID);
+
+		return "ausgefuehrt";
 	}
 
 }

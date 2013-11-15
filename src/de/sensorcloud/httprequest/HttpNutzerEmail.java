@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -66,6 +67,17 @@ public class HttpNutzerEmail {
 		String uuID = DBNutzerEmail.insertNutzerEmail(nutzerEmail);
 
 		return uuID;
+	}
+	
+	@DELETE
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String deleteNutzerEmail(String data) throws SQLException {
+		Gson gson = new Gson();
+		String nutEmaID = gson.fromJson(data, String.class);
+	
+		DBNutzerEmail.deleteNutzerEmail(nutEmaID);
+
+		return "ausgefuehrt";
 	}
 
 }

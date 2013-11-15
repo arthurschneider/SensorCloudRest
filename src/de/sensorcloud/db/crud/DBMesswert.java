@@ -19,17 +19,19 @@ public class DBMesswert {
 		String in = Helper.replaceSemikolon(keysWithSemicolon);
 		
 		//String CQL = "SELECT MesWerWer, MesWerTimSta FROM '"+TABNAME+"' WHERE MesWerNam = '"+mesWerNam+"' AND KEY IN ('"+in+"')";
-		String CQL = "SELECT MesWerWer, MesWerTimSta FROM '"+TABNAME+"' WHERE KEY IN ('"+in+"')";
+		String CQL = "SELECT MesWerNam, MesWerWer, MesWerTimSta FROM '"+TABNAME+"' WHERE KEY IN ('"+in+"')";
 		
 		try {
 		   
 	        ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
-	        	MesswertTime wertTime = new MesswertTime();
-	        	wertTime.setMesWerWer(RS.getString("MesWerWer"));
-	        	wertTime.setMesWerTimSta(RS.getString("MesWerTimSta"));
-	        	wertTimeList.add(wertTime);
+	        	if (RS.getString("MesWerNam").equals(mesWerNam)) {
+	        		MesswertTime wertTime = new MesswertTime();
+		        	wertTime.setMesWerWer(RS.getString("MesWerWer"));
+		        	wertTime.setMesWerTimSta(RS.getString("MesWerTimSta"));
+		        	wertTimeList.add(wertTime);
+				}
 	        }
 	         
 		} catch (SQLException ex) {

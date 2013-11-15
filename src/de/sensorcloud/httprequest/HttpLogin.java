@@ -14,7 +14,9 @@ import com.google.gson.JsonElement;
 
 import de.sensorcloud.db.crud.DBNutzerEmail;
 import de.sensorcloud.db.crud.DBNutzerSicherheit;
+import de.sensorcloud.db.crud.DBNutzerStammdaten;
 import de.sensorcloud.entitaet.Login;
+import de.sensorcloud.entitaet.NutzerStammdaten;
 
 
 @Path("/Login")
@@ -53,7 +55,9 @@ public class HttpLogin{
 			}
 		}
 		
-	    jsonObj = gson.toJsonTree(nutzerID);
+		NutzerStammdaten nutzer = DBNutzerStammdaten.getNutzerStammdatenByNutStaID(nutzerID);
+		
+	    jsonObj = gson.toJsonTree(nutzer);
 	    return jsonObj.toString();
 		
 	}

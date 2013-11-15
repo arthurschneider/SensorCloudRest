@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import de.sensorcloud.entitaet.AktorVerbund;
 import de.sensorcloud.entitaet.Event;
+import de.sensorcloud.entitaet.SensorServiceMitFunktion;
 import de.sensorcloud.entitaet.SensorVerbund;
 
 public class Helper {
@@ -44,6 +45,19 @@ public class Helper {
 		if (!eventSet.isEmpty() && event != null) {
 			for (Event eventObj : eventSet) {
 				if (eventObj.getEveID().equals(event.getEveID())) {
+					result = true;
+				}
+			}
+		}
+		return result;
+	}
+	
+	public static boolean checkObjectInSet(SensorServiceMitFunktion senserv, HashSet<SensorServiceMitFunktion> senServFunkSet) {
+		boolean result = false;
+
+		if (!senServFunkSet.isEmpty() && senserv != null) {
+			for (SensorServiceMitFunktion Obj : senServFunkSet) {
+				if (Obj.getSenServ().getSenSerID().equals(senserv.getSenServ().getSenSerID())) {
 					result = true;
 				}
 			}

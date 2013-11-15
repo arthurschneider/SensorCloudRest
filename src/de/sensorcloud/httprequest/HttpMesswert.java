@@ -16,7 +16,12 @@ import com.google.gson.JsonElement;
 
 import de.sensorcloud.db.crud.DBMessLinie;
 import de.sensorcloud.db.crud.DBMesswert;
+import de.sensorcloud.db.crud.DBSensor;
+import de.sensorcloud.db.crud.DBSensorProdukt;
+import de.sensorcloud.entitaet.DatasetMitSemantik;
 import de.sensorcloud.entitaet.MesswertTime;
+import de.sensorcloud.entitaet.ParVor;
+import de.sensorcloud.entitaet.SensorProduktSemantik;
 import de.sensorcloud.helpertools.Helper;
 
 @Path("/Messwert")
@@ -40,10 +45,12 @@ public class HttpMesswert {
     									  	@PathParam("mesWerTimMon") String mesWerTimMon,
     									  	@PathParam("MesWerTimDay") String MesWerTimDay) {
 		
+		Gson gson = new Gson();
 		long mesLinTimBeg = 0;
-		ArrayList<MesswertTime> wertTimeList = new ArrayList<MesswertTime>();
-		
+		ArrayList<MesswertTime> messwertTimeList = new ArrayList<MesswertTime>();
+		System.out.println(mesWerNam);
 		try {
+			
 			DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
 			mesLinTimBeg = dfm.parse(mesWerTimYea+"-"+mesWerTimMon+"-"+MesWerTimDay).getTime();
 			
@@ -57,14 +64,30 @@ public class HttpMesswert {
 			String keysWithSemicolon = DBMessLinie.getMesLinMesWerIDsBySenIDAndMesLinTimBegAndMesLinTimEnd(senID, mesLinTimBeg, mesLinTimEnd);
 			
 			if (keysWithSemicolon != null) {
-				wertTimeList.addAll(DBMesswert.getMesswertByMesWerIDAndMesWerNam(keysWithSemicolon, mesWerNam)) ;
+				messwertTimeList.addAll(DBMesswert.getMesswertByMesWerIDAndMesWerNam(keysWithSemicolon, mesWerNam)) ;
 				
 			}
 			mesLinTimBeg = mesLinTimEnd;
 		}	
+		
+		String senProID = DBSensor.getSenProIDBySenID(senID);
+		String senProSem = DBSensorProdukt.getSensorSemantikBySenProID(senProID);
+		
+		
+		SensorProduktSemantik sensorSemantik = gson.fromJson(senProSem, SensorProduktSemantik.class);
+		DatasetMitSemantik datesetMitSemantik = new DatasetMitSemantik();
+		
+		for (ParVor parvor : sensorSemantik.getParvor()) {
+			
+			if (parvor.getPn().equals(mesWerNam)) {
+				datesetMitSemantik.setMesswertTime(messwertTimeList);
+				datesetMitSemantik.setParVor(parvor);
+			}
+			
+		}
+		
 		JsonElement jsonElement = null;
-		Gson gson = new Gson();
-		jsonElement = gson.toJsonTree(wertTimeList);
+		jsonElement = gson.toJsonTree(datesetMitSemantik);
         return jsonElement.toString();
 		
 	}

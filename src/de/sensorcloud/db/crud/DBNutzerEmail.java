@@ -97,5 +97,17 @@ public class DBNutzerEmail {
 		}
 		return uuID;
 	}
+	
+	public static void deleteNutzerEmail(String nutEmaID) {
+		
+		String CQL = "DELETE NutEmaNutStaID, NutEmaAdr, NutEmaBez, NutEmaID FROM " +TABNAME + "  WHERE KEY = '"+nutEmaID+"'";
+		
+		try {
+			Cassandra.update(CQL);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }

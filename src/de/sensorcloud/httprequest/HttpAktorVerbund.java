@@ -92,7 +92,7 @@ public class HttpAktorVerbund {
 	
 	}
 	
-	@PUT
+	@PUT //Insert
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String createAktorVerbund(String data) {
 		Gson gson = new Gson();
@@ -106,7 +106,7 @@ public class HttpAktorVerbund {
 		return aktVerID;
 	}
 	
-	@POST
+	@POST	//Update
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String addAktorToAktorVerbund(String data) {
 		Gson gson = new Gson();
