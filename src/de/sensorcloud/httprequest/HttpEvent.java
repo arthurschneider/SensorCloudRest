@@ -1,5 +1,6 @@
 package de.sensorcloud.httprequest;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import javax.ws.rs.Consumes;
@@ -46,6 +47,7 @@ public class HttpEvent {
 		HashSet<Event> eventSet = new HashSet<Event>();
 		String eveID = null;
 		Event event = new Event();
+		
 			
 		sensorIDList = DBSensor.getSensorIDListByNutStaID(nutStaID);
 		for (String senID : sensorIDList) {
@@ -77,6 +79,35 @@ public class HttpEvent {
 		}
 
 	}
+	
+	
+	@GET
+    @Path("/EveID/{eveID}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getEventRegelByEveID(@PathParam("eveID") String eveID) {
+		EventRegel eventRegel = new EventRegel();
+		ArrayList<String> eveMitgldrList = new  ArrayList<String>();
+		ArrayList<SensorEvent> senEveList = new ArrayList<SensorEvent>();
+		ArrayList<EventAktion> eveAktionList = new ArrayList<EventAktion>();
+		
+		eventRegel.setEvent(DBEvent.getEventObjByEventID(eveID));
+		eventRegel.setEventBen(DBEventBenachrichtigung.getEventBenachrichtigungByEveID(eveID));
+		eveMitgldrList  = DBEventMitglieder.getSensorEventListByEveID(eveID);
+		for (String senEveID : eveMitgldrList) {
+			senEveList.add(DBSensorEvent.getSensorEventBySenEveID(senEveID));
+		}
+		
+		eveAktionList = DBEventAktion.getEventAktionByEveID(eveID);
+		
+		eventRegel.setSensorEvent(senEveList);
+		eventRegel.setEventAktion(eveAktionList);
+		
+		Gson gson = new Gson();
+		JsonElement jsonElement = gson.toJsonTree(eventRegel);
+      
+		return jsonElement.toString();
+	}
+	
 
 	
 	@PUT		//Insert

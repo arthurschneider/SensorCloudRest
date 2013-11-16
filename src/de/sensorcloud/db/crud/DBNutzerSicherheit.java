@@ -18,7 +18,6 @@ public class DBNutzerSicherheit {
 		try {
 		   
 	        String CQL = "SELECT NutSicPas FROM " + TABNAME + " WHERE NutSicNutStaID = '"+nutStaID+"'";
-	           
 	        ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
@@ -26,13 +25,35 @@ public class DBNutzerSicherheit {
 	        	nutSicPas = RS.getString("NutSicPas");
 	        
 	        }
-	         
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} 
 
 		return nutSicPas;
+	}
+	
+	
+	
+	
+	public static String getNutSicPubKeyByNutStaID(String nutStaID){
 		
+		String nutSicPas = "";
+		
+		try {
+		   
+	        String CQL = "SELECT NutSicPubKey FROM " + TABNAME + " WHERE NutSicNutStaID = '"+nutStaID+"'";
+	        ResultSet RS   = Cassandra.select(CQL);
+	       
+	        while (RS.next()) {
+	        
+	        	nutSicPas = RS.getString("NutSicPubKey");
+	        
+	        }
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} 
+
+		return nutSicPas;
 	}
 	
 	

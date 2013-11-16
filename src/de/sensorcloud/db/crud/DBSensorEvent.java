@@ -15,33 +15,57 @@ public class DBSensorEvent {
 
 		String senEveID = "";
 		String CQL = "SELECT SenEveID FROM " + TABNAME + " WHERE SenEveQueID = '"+ senID + "'";
-		ResultSet RS;
+		
 		try {
 			
-			RS = Cassandra.select(CQL);
+			ResultSet RS = Cassandra.select(CQL);
 			
 			while (RS.next()) {
-				
 				senEveID = RS.getString("SenEveID");
-				
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return senEveID;
+	}
+	
+	
+	
+	public static SensorEvent getSensorEventBySenEveID(String senEveID) {
 
+		SensorEvent sensorEvent  = new SensorEvent();  
+		String CQL = "SELECT * FROM " + TABNAME + " WHERE SenEveID = '"+ senEveID + "'";
+		
+		try {
+			
+			ResultSet RS = Cassandra.select(CQL);
+			
+			while (RS.next()) {
+				sensorEvent.setSenEveID(RS.getString("SenEveID"));
+				sensorEvent.setSenEveQueID(RS.getString("SenEveQueID"));
+				sensorEvent.setSenEveQue(RS.getString("SenEveQue"));
+				sensorEvent.setSenEvePhyNam(RS.getString("SenEvePhyNam"));
+				sensorEvent.setSenEveVop(RS.getString("SenEveVop"));
+				sensorEvent.setSenEveWer(RS.getString("SenEveWer"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return sensorEvent;
 	}
 	
 	
 	public static String insertSensorEvent(String senEveID, SensorEvent sensorEvent) {
-		
+
 		String uuID = Helper.generateUUID();
 		String CQL = "UPDATE " + TABNAME + " SET "
 				+ "SenEveID = '" + senEveID + "', "
-				+ "SenEveSenID = '" + sensorEvent.getSenEveSenID() + "', "
+				+ "SenEveQueID = '" + sensorEvent.getSenEveQueID() + "', "
+				+ "SenEveQue = '" + sensorEvent.getSenEveQue() + "', "
 				+ "SenEvePhyNam = '" + sensorEvent.getSenEvePhyNam() + "', "
 				+ "SenEveVop = '" + sensorEvent.getSenEveVop() + "', "
 				+ "SenEveWer = '" + sensorEvent.getSenEveWer() + "' "
@@ -50,7 +74,6 @@ public class DBSensorEvent {
 		try {
 			Cassandra.update(CQL);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -61,7 +84,8 @@ public class DBSensorEvent {
 	
 		String CQL = "UPDATE " + TABNAME + " SET "
 				+ "SenEveID = '" + sensorEvent.getSenEveID() + "', "
-				+ "SenEveSenID = '" + sensorEvent.getSenEveSenID() + "', "
+				+ "SenEveQueID = '" + sensorEvent.getSenEveQueID() + "', "
+				+ "SenEveQue = '" + sensorEvent.getSenEveQue() + "', "
 				+ "SenEvePhyNam = '" + sensorEvent.getSenEvePhyNam() + "', "
 				+ "SenEveVop = '" + sensorEvent.getSenEveVop() + "', "
 				+ "SenEveWer = '" + sensorEvent.getSenEveWer() + "' "
@@ -70,7 +94,6 @@ public class DBSensorEvent {
 		try {
 			Cassandra.update(CQL);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

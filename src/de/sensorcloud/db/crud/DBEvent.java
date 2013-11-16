@@ -14,7 +14,6 @@ public class DBEvent {
 	public static Event getEventObjByEventID(String eveID) {
 
 		Event event = new Event();
-		
 		String CQL = "SELECT * FROM " + TABNAME + " WHERE EveID = '"+ eveID + "'";
 
 		try {
@@ -26,17 +25,14 @@ public class DBEvent {
 				event.setEveBez(RS.getString("EveBez"));
 				event.setEveID(RS.getString("EveID"));
 				event.setEveTimSta(RS.getString("EveTimSta"));
-				event.setEveNac(RS.getString("Evenac"));
+				event.setEveNac(RS.getString("EveNac"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
+	
 		return event;
-
 	}
 	
 	
@@ -60,6 +56,7 @@ public class DBEvent {
 		
 		return uuID;
 	}
+	
 	
 	public static void updateEvent(Event event) {
 		
