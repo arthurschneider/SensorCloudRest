@@ -1,7 +1,6 @@
 package de.sensorcloud.httprequest;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -18,6 +17,7 @@ import com.google.gson.JsonElement;
 
 import de.sensorcloud.db.crud.DBNutzerEmail;
 import de.sensorcloud.entitaet.NutzerEmail;
+import de.sensorcloud.entitaet.NutzerEmailList;
 
 @Path("/NutzerEmail")
 public class HttpNutzerEmail {
@@ -36,13 +36,13 @@ public class HttpNutzerEmail {
     @Path("/NutStaID/{nutStaID}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getNutzerEmailByID(@PathParam("nutStaID") String nutStaID) {
-		ArrayList<NutzerEmail> nutzerEmail = new ArrayList<NutzerEmail>();
+		NutzerEmailList  list = new NutzerEmailList();
 		JsonElement jsonElement = null;
 		
-		nutzerEmail = DBNutzerEmail.getNutzerEmailByNutStaID(nutStaID);
+		list.setList(DBNutzerEmail.getNutzerEmailByNutStaID(nutStaID));
 		
 		Gson gson = new Gson();
-		jsonElement = gson.toJsonTree(nutzerEmail);
+		jsonElement = gson.toJsonTree(list);
         return jsonElement.toString();
 	}
 	

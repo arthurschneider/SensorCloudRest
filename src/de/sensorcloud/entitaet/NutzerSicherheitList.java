@@ -4,13 +4,15 @@ import java.util.ArrayList;
 
 public class NutzerSicherheitList {
 
-	private ArrayList<NutzerSicherheit> nutzerSicherheitList = new ArrayList<NutzerSicherheit>();
+	private ArrayList<NutzerSicherheit> list = new ArrayList<NutzerSicherheit>();
 
-	public ArrayList<NutzerSicherheit> getNutzerSicherheitList() {
-		return nutzerSicherheitList;
+	public ArrayList<NutzerSicherheit> getList() {
+		return list;
 	}
 
-	public void setNutzerSicherheitList(ArrayList<NutzerSicherheit> nutzerSicherheitList) {
-		this.nutzerSicherheitList = nutzerSicherheitList;
+	public void setList(ArrayList<NutzerSicherheit> list) {
+		this.list = list;
 	}
+
+	
 }

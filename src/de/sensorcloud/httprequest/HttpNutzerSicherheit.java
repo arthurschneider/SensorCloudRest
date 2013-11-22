@@ -1,7 +1,5 @@
 package de.sensorcloud.httprequest;
 
-import java.util.ArrayList;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -15,6 +13,7 @@ import com.google.gson.JsonElement;
 
 import de.sensorcloud.db.crud.DBNutzerSicherheit;
 import de.sensorcloud.entitaet.NutzerSicherheit;
+import de.sensorcloud.entitaet.NutzerSicherheitList;
 
 @Path("/NutzerSicherheit")
 public class HttpNutzerSicherheit {
@@ -33,13 +32,13 @@ public class HttpNutzerSicherheit {
     @Path("NutStaID/{nutStaID}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getNutzerSicherheitByID(@PathParam("nutStaID") String nutStaID) {
-		ArrayList<NutzerSicherheit> nutzerSicherheit = new ArrayList<NutzerSicherheit>();
+		NutzerSicherheitList list = new NutzerSicherheitList();
 		JsonElement jsonElement = null;
 		
-		nutzerSicherheit = DBNutzerSicherheit.getNutzerSicherheitByNutStaID(nutStaID);
+		list.setList(DBNutzerSicherheit.getNutzerSicherheitByNutStaID(nutStaID));
 		
 		Gson gson = new Gson();
-		jsonElement = gson.toJsonTree(nutzerSicherheit);
+		jsonElement = gson.toJsonTree(list);
         return jsonElement.toString();
 	}
 	

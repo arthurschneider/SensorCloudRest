@@ -1,7 +1,5 @@
 package de.sensorcloud.httprequest;
 
-import java.util.ArrayList;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -17,6 +15,7 @@ import com.google.gson.JsonElement;
 
 import de.sensorcloud.db.crud.DBNutzerTelefon;
 import de.sensorcloud.entitaet.NutzerTelefon;
+import de.sensorcloud.entitaet.NutzerTelefonList;
 
 @Path("/NutzerTelefon")
 public class HttpNutzerTelefon {
@@ -34,13 +33,13 @@ public class HttpNutzerTelefon {
     @Path("/NutStaID/{nutStaID}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getNutzerTelefonByNutStaID(@PathParam("nutStaID") String nutStaID) {
-		ArrayList<NutzerTelefon> nutzerTelefon = new ArrayList<NutzerTelefon>();
+		NutzerTelefonList list = new NutzerTelefonList();
 		JsonElement jsonElement = null;
 		
-		nutzerTelefon = DBNutzerTelefon.getNutzerTelefonByNutStaID(nutStaID);
+		list.setList(DBNutzerTelefon.getNutzerTelefonByNutStaID(nutStaID));
 		
 		Gson gson = new Gson();
-		jsonElement = gson.toJsonTree(nutzerTelefon);
+		jsonElement = gson.toJsonTree(list);
         return jsonElement.toString();
 	}
 	

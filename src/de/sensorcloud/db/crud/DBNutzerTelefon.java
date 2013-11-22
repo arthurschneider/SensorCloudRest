@@ -23,8 +23,8 @@ public class DBNutzerTelefon {
 	       
 	        while (RS.next()) {
 	        	NutzerTelefon nutzerTelefon = new NutzerTelefon();
-	        	nutzerTelefon.setNutTelID(RS.getString("KEY"));
-	        	nutzerTelefon.setNutTelNutStaID(nutStaID);
+	        	nutzerTelefon.setNutTelID(RS.getString("NutTelID"));
+	        	nutzerTelefon.setNutTelNutStaID(RS.getString("NutTelNutStaID"));
 	        	nutzerTelefon.setNutTelNum(RS.getString("NutTelNum"));
 	        	nutzerTelefon.setNutTelBez(RS.getString("NutTelBez"));
 	        	nutzerTelefonList.add(nutzerTelefon);
