@@ -55,6 +55,18 @@ public class HttpNutzerTelefon {
 		return "ausgefuehrt";
 	}
 	
+	@POST
+	@Path("/delete")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String delAppNutzerTelefon(String data) {
+		Gson gson = new Gson();
+		String nutTelID = gson.fromJson(data, String.class);
+	
+		DBNutzerTelefon.deleteNutzerTelefon(nutTelID);
+
+		return "ausgefuehrt";
+	}
+	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String insertNutzerTelefon(String data) {

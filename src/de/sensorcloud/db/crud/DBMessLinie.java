@@ -7,13 +7,13 @@ import de.sensorcloud.db.connection.Cassandra;
 
 public class DBMessLinie {
 
-	public static final String TABNAME = "MesslinieNeu";
+	public static final String TABNAME = "MessLinie";
 
 	public static String getMesLinMesWerIDsBySenIDAndMesLinTimBegAndMesLinTimEnd(String senID, long mesLinTimBeg, long mesLinTimEnd) {
 		
 		String messwerteKeys = null;
 		
-			String CQL = "SELECT * FROM " + TABNAME + " WHERE MesLinQueID = '"+senID+"' AND MesLinTimBeg = '"+mesLinTimBeg+"' AND MesLinTimEnd = '"+mesLinTimEnd+"'";
+			String CQL = "SELECT MesLinMesWerIDs FROM " + TABNAME + " WHERE MesLinQueID = '"+senID+"' AND MesLinTimBeg = '"+mesLinTimBeg+"' AND MesLinTimEnd = '"+mesLinTimEnd+"'";
 			
 			try {
 			   

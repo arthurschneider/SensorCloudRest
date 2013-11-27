@@ -17,7 +17,7 @@ public class DBMandanten {
 		
 		ArrayList<Mandanten> mandantenList = new ArrayList<Mandanten>();
 		
-		String CQL = "SELECT * FROM " + TABNAME + " WHERE ManNustStaID = '"+nutStaID+"'";
+		String CQL = "SELECT * FROM " + TABNAME + " WHERE ManNutStaID = '"+nutStaID+"'";
 		
 		try {
 		   

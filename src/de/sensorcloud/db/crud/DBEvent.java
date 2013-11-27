@@ -14,7 +14,7 @@ public class DBEvent {
 	public static Event getEventObjByEventID(String eveID) {
 
 		Event event = new Event();
-		String CQL = "SELECT * FROM " + TABNAME + " WHERE EveID = '"+ eveID + "'";
+		String CQL = "SELECT * FROM " + TABNAME + " WHERE KEY = '"+ eveID + "'";
 
 		try {
 			

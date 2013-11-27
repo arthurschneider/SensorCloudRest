@@ -15,7 +15,7 @@ public class DBAktorVerbund {
 
 		AktorVerbund aktVerb = new AktorVerbund();
 
-		String CQL = "SELECT * FROM " +TABNAME + " WHERE AktVerID = '" + aktVerMitAktVerID + "'";
+		String CQL = "SELECT * FROM " +TABNAME + " WHERE KEY = '" + aktVerMitAktVerID + "'";
 
 		try {
 

@@ -36,7 +36,7 @@ public class DBSensorEvent {
 	public static SensorEvent getSensorEventBySenEveID(String senEveID) {
 
 		SensorEvent sensorEvent  = new SensorEvent();  
-		String CQL = "SELECT * FROM " + TABNAME + " WHERE SenEveID = '"+ senEveID + "'";
+		String CQL = "SELECT * FROM " + TABNAME + " WHERE KEY = '"+ senEveID + "'";
 		
 		try {
 			

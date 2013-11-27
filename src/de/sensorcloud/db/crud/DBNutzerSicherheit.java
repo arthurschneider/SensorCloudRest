@@ -68,8 +68,8 @@ public class DBNutzerSicherheit {
 			ResultSet RS = Cassandra.select(CQL);
 			
 			while (RS.next()) {
-	        	NutzerSicherheit nutzerSicherheit = new NutzerSicherheit();
-	        	nutzerSicherheit.setNutSicID(RS.getString("KEY"));
+				NutzerSicherheit nutzerSicherheit = new NutzerSicherheit();
+	        	nutzerSicherheit.setNutSicID(RS.getString("NutSicID"));
 	        	nutzerSicherheit.setNutSicNutStaID(nutStaID);
 	        	nutzerSicherheit.setNutSicPas(RS.getString("NutSicPas"));
 	        	nutzerSicherheit.setNutSicPriKey(RS.getString("NutSicPriKey"));

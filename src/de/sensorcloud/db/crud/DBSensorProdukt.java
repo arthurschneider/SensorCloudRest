@@ -12,7 +12,7 @@ public class DBSensorProdukt {
 	public static String getSensorSemantikBySenProID(String senProID) {
 
 		String senProSem = "";
-		String CQL = "SELECT SenProSem FROM " + TABNAME + " WHERE SenProID = '"+ senProID + "'";
+		String CQL = "SELECT SenProSem FROM " + TABNAME + " WHERE KEY = '"+ senProID + "'";
 
 		try {
 			

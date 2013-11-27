@@ -12,7 +12,7 @@ public static final String TABNAME = "SensorServiceFunktion";
 	
 	public static String getSenSerFunNamBySenSerFunID(String senSerFunID) {
 		
-		String CQL = "SELECT SenSerFunNam FROM " +TABNAME + " WHERE SenSerFunID = '"+senSerFunID+"'";
+		String CQL = "SELECT SenSerFunNam FROM " +TABNAME + " WHERE KEY = '"+senSerFunID+"'";
 		String senSerFunNam = null;
 		try {
 			

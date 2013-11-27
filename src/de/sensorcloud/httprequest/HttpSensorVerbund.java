@@ -21,6 +21,7 @@ import de.sensorcloud.db.crud.DBSensorVerbundMitglieder;
 import de.sensorcloud.entitaet.Sensor;
 import de.sensorcloud.entitaet.SensorVerbund;
 import de.sensorcloud.entitaet.SensorVerbundMitSensor;
+import de.sensorcloud.entitaet.SensorVerbundSet;
 import de.sensorcloud.helpertools.Helper;
 
 @Path("/SensorVerbund")
@@ -61,9 +62,10 @@ public class HttpSensorVerbund {
 				}
 			}
 		}
-		
+		SensorVerbundSet set = new SensorVerbundSet();
+		set.setSenVerbundSet(senVerbundSet);
 		Gson gson = new Gson();
-		jsonElement = gson.toJsonTree(senVerbundSet);
+		jsonElement = gson.toJsonTree(set);
         System.out.println("JSON STRING "+jsonElement);
         return jsonElement.toString();
 	}

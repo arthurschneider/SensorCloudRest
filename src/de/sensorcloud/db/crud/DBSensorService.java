@@ -13,7 +13,7 @@ public class DBSensorService {
 	
 	public static SensorService getSensorServiceBySenSerID(String senSerID) {
 		
-		String CQL = "SELECT * FROM " +TABNAME + " WHERE SenSerID = '"+senSerID+"'";
+		String CQL = "SELECT * FROM " +TABNAME + " WHERE KEY = '"+senSerID+"'";
 		SensorService senServ = new SensorService();
 		try {
 			

@@ -48,7 +48,7 @@ public class HttpMesswert {
 		Gson gson = new Gson();
 		long mesLinTimBeg = 0;
 		ArrayList<MesswertTime> messwertTimeList = new ArrayList<MesswertTime>();
-		System.out.println(mesWerNam);
+		
 		try {
 			
 			DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");

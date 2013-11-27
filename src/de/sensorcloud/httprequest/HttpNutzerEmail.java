@@ -58,6 +58,18 @@ public class HttpNutzerEmail {
 		return "ausgefuehrt";
 	}
 	
+	@POST
+	@Path("/delete")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String delAppNutzerEmail(String data) throws SQLException {
+		Gson gson = new Gson();
+		String nutEmaID = gson.fromJson(data, String.class);
+	
+		DBNutzerEmail.deleteNutzerEmail(nutEmaID);
+
+		return "ausgefuehrt";
+	}
+	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String insertNutzerEmail(String data) throws SQLException {

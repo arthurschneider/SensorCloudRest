@@ -48,7 +48,7 @@ public class DBAktor {
 
 		Aktor aktor = new Aktor();
 
-		String CQL = "SELECT * FROM " + TABNAME + " WHERE AktID = '" + aktID + "'";
+		String CQL = "SELECT * FROM " + TABNAME + " WHERE KEY = '" + aktID + "'";
 
 		try {
 			ResultSet RS = Cassandra.select(CQL);
@@ -79,7 +79,7 @@ public class DBAktor {
 	public static HashSet<String> getAktorIDListByNutStaID(String aktID) {
 
 		HashSet<String> aktIDLIst = new HashSet<String>();
-		String CQL = "SELECT AktID FROM " + TABNAME + " WHERE NutStaID = '" + aktID + "'";
+		String CQL = "SELECT AktID FROM " + TABNAME + " WHERE AktNutStaID = '" + aktID + "'";
 
 		try {
 			ResultSet RS = Cassandra.select(CQL);
