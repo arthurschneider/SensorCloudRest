@@ -1,7 +1,6 @@
 package de.sensorcloud.httprequest;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -19,7 +18,9 @@ import de.sensorcloud.db.crud.DBAktor;
 import de.sensorcloud.db.crud.DBAktorVerbund;
 import de.sensorcloud.db.crud.DBAktorVerbundMitglieder;
 import de.sensorcloud.entitaet.Aktor;
+import de.sensorcloud.entitaet.AktorList;
 import de.sensorcloud.entitaet.AktorVerbund;
+import de.sensorcloud.entitaet.AktorVerbundList;
 import de.sensorcloud.entitaet.AktorVerbundMitAktor;
 import de.sensorcloud.helpertools.Helper;
 
@@ -30,9 +31,7 @@ public class HttpAktorVerbund {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
 		
-		return "Enthaelt die Methode(n) :\n\n"
-				+ " public String getAktorVerbundByNutStaID(@PathParam(\"nutStaID\") String nutStaID)\n"
-				+ " public String getAktorByAktorVerbundID(@PathParam(\"verbundID\") String verbundID)\n";
+		return "Aktorverbund funktioniert";
 	}
 	
 	
@@ -43,9 +42,7 @@ public class HttpAktorVerbund {
 	
 		ArrayList<Aktor> aktorList = new ArrayList<Aktor>();
 		ArrayList<String> aktVerbundMitgldrList = new ArrayList<String>();
-		HashSet<AktorVerbund> aktVerbundSet = new HashSet<AktorVerbund>();
-		JsonElement jsonElement = null;
-		
+		ArrayList<AktorVerbund> aktVerbundList = new ArrayList<AktorVerbund>();
 	
 		aktorList = DBAktor.getAktorByNutStaID(nutStaID);
 		
@@ -57,16 +54,16 @@ public class HttpAktorVerbund {
 				
 				AktorVerbund aktVerb = DBAktorVerbund.getAktVerbBezByAktVerMitAktVerID(aktVerMitAktVerID);
 				
-				if (!Helper.checkObjectInSet(aktVerb, aktVerbundSet)) {
-					aktVerbundSet.add(aktVerb);
+				if (!Helper.checkObjectInList(aktVerb, aktVerbundList)) {
+					aktVerbundList.add(aktVerb);
 				}
 			}
 		}
 			
-		
+		AktorVerbundList list = new AktorVerbundList();
+		list.setAktVerbundList(aktVerbundList);
 		Gson gson = new Gson();
-		jsonElement = gson.toJsonTree(aktVerbundSet);
-        System.out.println("JSON STRING "+jsonElement);
+		JsonElement jsonElement = gson.toJsonTree(list);
         return jsonElement.toString();
 	}
 	
@@ -77,17 +74,16 @@ public class HttpAktorVerbund {
     public String getAktorByAktVerID(@PathParam("aktVerID") String aktVerID) {
 		ArrayList<Aktor> aktorList = new ArrayList<Aktor>();
 		ArrayList<String> aktIDList = new ArrayList<String>();
-		JsonElement jsonElement = null;
 	
 		aktIDList = DBAktorVerbundMitglieder.getAktIDByAktVerID(aktVerID);
 		
 		for (String aktID : aktIDList) {
 			aktorList.add(DBAktor.getAktorByAktID(aktID));
 		}
-		
+		AktorList list = new AktorList();
+		list.setList(aktorList);
 		Gson gson = new Gson();
-		jsonElement = gson.toJsonTree(aktorList);
-        System.out.println("JSON STRING "+jsonElement);
+		JsonElement jsonElement = gson.toJsonTree(list);
         return jsonElement.toString();
 	
 	}

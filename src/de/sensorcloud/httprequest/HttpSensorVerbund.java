@@ -1,7 +1,6 @@
 package de.sensorcloud.httprequest;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -19,9 +18,10 @@ import de.sensorcloud.db.crud.DBSensor;
 import de.sensorcloud.db.crud.DBSensorVerbund;
 import de.sensorcloud.db.crud.DBSensorVerbundMitglieder;
 import de.sensorcloud.entitaet.Sensor;
+import de.sensorcloud.entitaet.SensorList;
 import de.sensorcloud.entitaet.SensorVerbund;
+import de.sensorcloud.entitaet.SensorVerbundList;
 import de.sensorcloud.entitaet.SensorVerbundMitSensor;
-import de.sensorcloud.entitaet.SensorVerbundSet;
 import de.sensorcloud.helpertools.Helper;
 
 @Path("/SensorVerbund")
@@ -44,8 +44,7 @@ public class HttpSensorVerbund {
 	
 		ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
 		ArrayList<String> senVerbundMitgldrList = new ArrayList<String>();
-		HashSet<SensorVerbund> senVerbundSet = new HashSet<SensorVerbund>();
-		JsonElement jsonElement = null;
+		ArrayList<SensorVerbund> senVerbundList = new ArrayList<SensorVerbund>();
 		
 		sensorList = DBSensor.getSensorListByNutStaID(nutStaID);
 		
@@ -57,16 +56,15 @@ public class HttpSensorVerbund {
 				
 				SensorVerbund senVerb = DBSensorVerbund.getSenVerbBezBySenVerMitSenVerID(senVerMitSenVerID);
 				
-				if (!Helper.checkObjectInSet(senVerb, senVerbundSet)) {
-					senVerbundSet.add(senVerb);
+				if (!Helper.checkObjectInList(senVerb, senVerbundList)) {
+					senVerbundList.add(senVerb);
 				}
 			}
 		}
-		SensorVerbundSet set = new SensorVerbundSet();
-		set.setSenVerbundSet(senVerbundSet);
+		SensorVerbundList list = new SensorVerbundList();
+		list.setSenVerbundList(senVerbundList);
 		Gson gson = new Gson();
-		jsonElement = gson.toJsonTree(set);
-        System.out.println("JSON STRING "+jsonElement);
+		JsonElement jsonElement = gson.toJsonTree(list);
         return jsonElement.toString();
 	}
 	
@@ -77,17 +75,16 @@ public class HttpSensorVerbund {
     public String getSensorBySenVerID(@PathParam("senVerID") String senVerID) {
 		ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
 		ArrayList<String> senIDList = new ArrayList<String>();
-		JsonElement jsonElement = null;
 	
 		senIDList = DBSensorVerbundMitglieder.getSenIDBySenVerID(senVerID);
 		
 		for (String senID : senIDList) {
 			sensorList.add(DBSensor.getSensorBySenID(senID));
 		}
-		
+		SensorList list = new SensorList();
+		list.setSensorList(sensorList);
 		Gson gson = new Gson();
-		jsonElement = gson.toJsonTree(sensorList);
-        System.out.println("JSON STRING "+jsonElement);
+		JsonElement jsonElement = gson.toJsonTree(list);
         return jsonElement.toString();
 	
 	}

@@ -27,8 +27,7 @@ public class HttpNutzerEmail {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
 		
-		return "Enthaelt die Methode(n) :\n\n"
-				+ " public String getNutzerEmailByID( @PathParam(\"tabelleName\") String tabelleName, @PathParam(\"nutStaID\") String nutStaID)\n";
+		return "NutzerEmail Serveice läuft";
 	}
 	
 	

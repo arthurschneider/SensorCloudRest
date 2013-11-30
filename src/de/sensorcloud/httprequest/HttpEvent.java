@@ -23,6 +23,7 @@ import de.sensorcloud.db.crud.DBSensor;
 import de.sensorcloud.db.crud.DBSensorEvent;
 import de.sensorcloud.entitaet.Event;
 import de.sensorcloud.entitaet.EventAktion;
+import de.sensorcloud.entitaet.EventList;
 import de.sensorcloud.entitaet.EventRegel;
 import de.sensorcloud.entitaet.SensorEvent;
 import de.sensorcloud.helpertools.Helper;
@@ -44,7 +45,7 @@ public class HttpEvent {
     public String getEventObjectListByNutStaID(@PathParam("nutStaID") String nutStaID) {
 		
 		HashSet<String> sensorIDList = new HashSet<String>();
-		HashSet<Event> eventSet = new HashSet<Event>();
+		ArrayList<Event> list = new ArrayList<Event>();
 		String eveID = null;
 		Event event = new Event();
 		
@@ -60,15 +61,17 @@ public class HttpEvent {
 				}
 			}
 			
-			if (event != null && !Helper.checkObjectInSet(event, eventSet)) {
-				eventSet.add(event);
+			if (event != null && !Helper.checkObjectInList(event, list)) {
+				list.add(event);
 			}
 		}	
 		
-		if (!eventSet.isEmpty()) {
+		if (!list.isEmpty()) {
+			EventList eventList = new EventList();
+			eventList.setList(list);
 			JsonElement jsonElement = null;
 			Gson gson = new Gson();
-			jsonElement = gson.toJsonTree(eventSet);
+			jsonElement = gson.toJsonTree(eventList);
 	      
 			return jsonElement.toString();
 			

@@ -13,11 +13,11 @@ public class Helper {
 	
 	public final static long HOUR_IN_MICRO_SEC = 60*60*1000;
 
-	public static boolean checkObjectInSet(SensorVerbund senVerb, HashSet<SensorVerbund> senVerbSet) {
+	public static boolean checkObjectInList(SensorVerbund senVerb, ArrayList<SensorVerbund> senVerbList) {
 		boolean result = false;
 
-		if (!senVerbSet.isEmpty()) {
-			for (SensorVerbund senVerbObj : senVerbSet) {
+		if (!senVerbList.isEmpty()) {
+			for (SensorVerbund senVerbObj : senVerbList) {
 				if (senVerbObj.getSenVerID().equals(senVerb.getSenVerID())) {
 					result = true;
 				}
@@ -26,11 +26,11 @@ public class Helper {
 		return result;
 	}
 
-	public static boolean checkObjectInSet(AktorVerbund aktVerb, HashSet<AktorVerbund> aktVerbSet) {
+	public static boolean checkObjectInList(AktorVerbund aktVerb, ArrayList<AktorVerbund> aktVerbList) {
 		boolean result = false;
 
-		if (!aktVerbSet.isEmpty()) {
-			for (AktorVerbund senVerbObj : aktVerbSet) {
+		if (!aktVerbList.isEmpty()) {
+			for (AktorVerbund senVerbObj : aktVerbList) {
 				if (senVerbObj.getAktVerID().equals(aktVerb.getAktVerID())) {
 					result = true;
 				}
@@ -39,11 +39,11 @@ public class Helper {
 		return result;
 	}
 
-	public static boolean checkObjectInSet(Event event, HashSet<Event> eventSet) {
+	public static boolean checkObjectInList(Event event, ArrayList<Event> eventList) {
 		boolean result = false;
 
-		if (!eventSet.isEmpty() && event != null) {
-			for (Event eventObj : eventSet) {
+		if (!eventList.isEmpty() && event != null) {
+			for (Event eventObj : eventList) {
 				if (eventObj.getEveID().equals(event.getEveID())) {
 					result = true;
 				}
