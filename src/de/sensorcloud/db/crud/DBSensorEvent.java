@@ -13,7 +13,7 @@ public class DBSensorEvent {
 	
 	public static String getSenEveIDBySenEveQueID(String senID) {
 
-		String senEveID = "";
+		String senEveID = null;
 		String CQL = "SELECT SenEveID FROM " + TABNAME + " WHERE SenEveQueID = '"+ senID + "'";
 		
 		try {

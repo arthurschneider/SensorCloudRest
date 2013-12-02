@@ -31,7 +31,7 @@ public class HttpAktorVerbund {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
 		
-		return "Aktorverbund funktioniert";
+		return "Aktorverbund service laeuft";
 	}
 	
 	

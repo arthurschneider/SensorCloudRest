@@ -21,7 +21,7 @@ public class HttpAdresse {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
 		
-		return "Adresse laueft";
+		return "Adresse Service laeuft";
 	}
 	
 	

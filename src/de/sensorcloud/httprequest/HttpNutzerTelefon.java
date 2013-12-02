@@ -24,8 +24,7 @@ public class HttpNutzerTelefon {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
 		
-		return "Enthaelt die Methode(n) :\n\n"
-				+ " public String getNutzerTelefonByID( @PathParam(\"tabelleName\") String tabelleName, @PathParam(\"nutStaID\") String nutStaID)\n";
+		return "NutzerTelefon lauft";
 	}
 	
 	

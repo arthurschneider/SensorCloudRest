@@ -21,8 +21,7 @@ public class HttpAktor {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
 		
-		return "Enthaelt die Methode(n) :\n\n"
-				+ " public String getAktorByNutStaID(@PathParam(\"nutStaID\") String nutStaID)\n";
+		return "Aktor Service laeuft";
 	}
 	
 	

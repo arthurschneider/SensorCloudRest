@@ -26,8 +26,7 @@ public class HttpLogin{
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
 		
-		return "Enthaelt die Methode(n) :\n\n"
-				+ "public String authetifizieren( MultivaluedMap<String, String> loginParams)\n";
+		return "Login Service laeuft";
 	}
 	
 	@POST
@@ -37,7 +36,8 @@ public class HttpLogin{
 	public String authetifizieren(String data) {
 		JsonElement jsonObj = null;
 		ArrayList<String>  nutStaIDList;
-		String nutzerID = "";
+		String nutzerID = null;
+		
 		
 		Gson gson = new Gson();
         Login login = gson.fromJson(data, Login.class);
@@ -45,13 +45,11 @@ public class HttpLogin{
 		nutStaIDList = DBNutzerEmail.getNutEmaNutStaIDbyNutEmaBez(login.getEmail());
 		
 		for (String nutStaID : nutStaIDList) {
-			
+			System.out.println(nutStaID);
 			String nutsicPas = DBNutzerSicherheit.getNutSicPasByNutStaID(nutStaID);
 			
 			if (nutsicPas.equals(login.getPasswort())) {
-				
 				nutzerID =  nutStaID;
-				
 			}
 		}
 		

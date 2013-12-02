@@ -14,16 +14,16 @@ public class DBNutzerEmail {
 	public static final String TABNAME = "NutzerEmail";
 	
 	public static ArrayList<String> getNutEmaNutStaIDbyNutEmaBez(String email) {
-		
+		System.out.println("1");
 		ArrayList<String> emailList = new ArrayList<String>();
 		String CQL = "SELECT NutEmaNutStaID FROM " + TABNAME + " WHERE NutEmaAdr = '"+email+"'";
-		
 		try {
 		 
 	        ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
 	        	emailList.add(RS.getString("NutEmaNutStaID"));
+	        	System.out.println("2");
 	        }
 	                 
 		} catch (SQLException ex) {
@@ -46,7 +46,7 @@ public class DBNutzerEmail {
 	       
 	        while (RS.next()) {
 	        	NutzerEmail nutzerEmail = new NutzerEmail();
-	        	nutzerEmail.setNutEmaID(RS.getString("KEY"));
+	        	nutzerEmail.setNutEmaID(RS.getString("NutEmaID"));
 	        	nutzerEmail.setNutEmaNutStaID(nutStaID);
 	        	nutzerEmail.setNutEmaAdr(RS.getString("NutEmaAdr"));
 	        	nutzerEmail.setNutEmaBez(RS.getString("NutEmaBez"));

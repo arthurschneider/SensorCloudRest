@@ -15,7 +15,7 @@ public class DBEventAktion {
 	public static ArrayList<EventAktion> getEventAktionByEveID(String eveID){
 		
 		ArrayList<EventAktion> eveAktionList = new ArrayList<EventAktion>();
-		String CQL = "SELECT EveAktiID, EveAktiBez, EveAktiEveID, EveAktiZie, EveAktiZieID, EveAktiZiePar, EveAktiZieWer, EveAktiZiePri  FROM " + TABNAME + " WHERE EveAktiEveID = '"+eveID+"'";
+		String CQL = "SELECT EveAktiID, EveAktiZieBez, EveAktiEveID, EveAktiZie, EveAktiZieID, EveAktiZiePar, EveAktiZieWer, EveAktiZiePri  FROM " + TABNAME + " WHERE EveAktiEveID = '"+eveID+"'";
 		
 		try {
 		 
@@ -24,7 +24,7 @@ public class DBEventAktion {
 	        while (RS.next()) {
 	        	EventAktion eveAkt = new EventAktion();
 	        	eveAkt.setEveAktiID(RS.getString("EveAktiID"));
-	        	eveAkt.setEveAktiBez(RS.getString("EveAktiBez"));
+	        	eveAkt.setEveAktiBez(RS.getString("EveAktiZieBez"));
 	        	eveAkt.setEveAktiEveID(RS.getString("EveAktiEveID"));
 	        	eveAkt.setEveAktiZie(RS.getString("EveAktiZie"));
 	        	eveAkt.setEveAktiZieID(RS.getString("EveAktiZieID"));

@@ -101,8 +101,8 @@ public class DBSensor {
 
 	}
 	
-	public static HashSet<String> getSensorIDListByNutStaID(String senID) {
-		HashSet<String> senIDLIst = new HashSet<String>();
+	public static ArrayList<String> getSensorIDListByNutStaID(String senID) {
+		ArrayList<String> senIDLIst = new ArrayList<String>();
 		String CQL = "SELECT SenID FROM " + TABNAME + " WHERE SenNutStaID = '"+ senID + "'";
 		
 		try {
@@ -110,7 +110,7 @@ public class DBSensor {
 			while (RS.next()) {
 				
 				senIDLIst.add(RS.getString("SenID"));
-				
+				System.out.println("SenIDByNutStaID : "+RS.getString("SenID"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

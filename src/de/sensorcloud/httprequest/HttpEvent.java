@@ -1,7 +1,6 @@
 package de.sensorcloud.httprequest;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -35,7 +34,7 @@ public class HttpEvent {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
 		
-		return "Event läuft";
+		return "Event Servie laeuft";
 	}
 	
 	
@@ -44,26 +43,29 @@ public class HttpEvent {
     @Produces(MediaType.APPLICATION_JSON)
     public String getEventObjectListByNutStaID(@PathParam("nutStaID") String nutStaID) {
 		
-		HashSet<String> sensorIDList = new HashSet<String>();
+		ArrayList<String> sensorIDList = new ArrayList<String>();
 		ArrayList<Event> list = new ArrayList<Event>();
 		String eveID = null;
 		Event event = new Event();
 		
 			
 		sensorIDList = DBSensor.getSensorIDListByNutStaID(nutStaID);
+		
 		for (String senID : sensorIDList) {
-			String senEveID = DBSensorEvent.getSenEveIDBySenEveQueID(senID);
-			
+			String senEveID = null;
+			senEveID = DBSensorEvent.getSenEveIDBySenEveQueID(senID);
+			System.out.println("SenEveId :"+ senEveID+":");
 			if (senEveID != null) {
 				eveID = DBEventMitglieder.getEveMitEveIDByEveMitSenEveID(senEveID);
+				System.out.println("EventId : "+ eveID);
 				if (eveID != null) {
 					event = DBEvent.getEventObjByEventID(eveID);
+					if (event != null && !Helper.checkObjectInList(event, list)) {
+						list.add(event);
+					}
 				}
-			}
+			}	
 			
-			if (event != null && !Helper.checkObjectInList(event, list)) {
-				list.add(event);
-			}
 		}	
 		
 		if (!list.isEmpty()) {

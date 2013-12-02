@@ -27,7 +27,7 @@ public class HttpNutzerEmail {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
 		
-		return "NutzerEmail Serveice läuft";
+		return "NutzerEmail Service lauft";
 	}
 	
 	
