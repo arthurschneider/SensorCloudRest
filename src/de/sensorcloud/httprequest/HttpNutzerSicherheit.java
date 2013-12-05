@@ -23,8 +23,7 @@ public class HttpNutzerSicherheit {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
 		
-		return "Enthaelt die Methode(n) :\n\n"
-				+ "public String getNutzerSicherheitByID( @PathParam(\"tabelleName\") String tabelleName, @PathParam(\"nutStaID\") String nutStaID)\n";
+		return "NutzerSicherheit Service laeuft";
 	}
 	
 	

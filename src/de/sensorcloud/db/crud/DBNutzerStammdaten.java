@@ -13,7 +13,7 @@ public class DBNutzerStammdaten {
 	public static NutzerStammdaten getNutzerStammdatenByNutStaID(String nutStaID) {
 		
 		NutzerStammdaten nutzerStammdaten = new NutzerStammdaten();
-		String CQL = "SELECT NuStaID, NutStaAnr, NutStaAdrID, NutStaNam, NutStaFir, NutStaVor, NutStaDatEin FROM " + TABNAME + " WHERE KEY = '"+ nutStaID + "'";
+		String CQL = "SELECT NutStaID, NutStaAnr, NutStaAdrID, NutStaNam, NutStaFir, NutStaVor, NutStaDatEin FROM " + TABNAME + " WHERE KEY = '"+ nutStaID + "'";
 		
 		try {
 			
@@ -21,7 +21,7 @@ public class DBNutzerStammdaten {
 			
 			while (RS.next()) {
 
-				nutzerStammdaten.setNutStaID(RS.getString("NuStaID"));
+				nutzerStammdaten.setNutStaID(RS.getString("NutStaID"));
 				nutzerStammdaten.setNutStaAnr(RS.getString("NutStaAnr"));
 				nutzerStammdaten.setNutStaAdrID(RS.getString("NutStaAdrID"));
 				nutzerStammdaten.setNutStaFir(RS.getString("NutStaFir"));

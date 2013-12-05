@@ -13,7 +13,7 @@ public class DBSensorVerbund {
 	public static SensorVerbund getSenVerbBezBySenVerMitSenVerID(String senVerMitSenVerID) {
 		
 		SensorVerbund senVerb = new SensorVerbund();
-		String CQL = "SELECT * FROM " + TABNAME + " WHERE KEY = '"+senVerMitSenVerID+"'";
+		String CQL = "SELECT SenVerBez, SenVerID FROM " + TABNAME + " WHERE KEY = '"+senVerMitSenVerID+"'";
 		
 		try { 
 	      

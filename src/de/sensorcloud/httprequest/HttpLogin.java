@@ -53,10 +53,15 @@ public class HttpLogin{
 			}
 		}
 		
-		NutzerStammdaten nutzer = DBNutzerStammdaten.getNutzerStammdatenByNutStaID(nutzerID);
+		if (nutzerID != null) {
+			NutzerStammdaten nutzer = DBNutzerStammdaten.getNutzerStammdatenByNutStaID(nutzerID);
+			
+		    jsonObj = gson.toJsonTree(nutzer);
+		    return jsonObj.toString();
+		} else {
+			return "leer";
+		}
 		
-	    jsonObj = gson.toJsonTree(nutzer);
-	    return jsonObj.toString();
 		
 	}
 	

@@ -7,7 +7,7 @@ import de.sensorcloud.db.connection.Cassandra;
 
 public class DBMessLinie {
 
-	public static final String TABNAME = "MessLinie";
+	public static final String TABNAME = "MesslinieNeu";
 
 	public static String getMesLinMesWerIDsBySenIDAndMesLinTimBegAndMesLinTimEnd(String senID, long mesLinTimBeg, long mesLinTimEnd) {
 		

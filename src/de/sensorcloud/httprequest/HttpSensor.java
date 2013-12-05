@@ -13,6 +13,7 @@ import com.google.gson.JsonElement;
 
 import de.sensorcloud.db.crud.DBSensor;
 import de.sensorcloud.entitaet.Sensor;
+import de.sensorcloud.entitaet.SensorList;
 
 @Path("/Sensor")
 public class HttpSensor {
@@ -34,9 +35,10 @@ public class HttpSensor {
 		JsonElement jsonElement = null;
 		
 		sensorList = DBSensor.getSensorListByNutStaID(nutStaID);
-		
+		SensorList list = new SensorList();
+		list.setSensorList(sensorList);
 		Gson gson = new Gson();
-		jsonElement = gson.toJsonTree(sensorList);
+		jsonElement = gson.toJsonTree(list);
         return jsonElement.toString();
 	}
 

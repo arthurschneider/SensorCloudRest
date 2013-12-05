@@ -10,7 +10,7 @@ import de.sensorcloud.helpertools.Helper;
 
 public class DBMesswert {
 	
-	private final static String TABNAME =  "Messwert";
+	private final static String TABNAME =  "Messwert3";
 	
 	
 	public static ArrayList<MesswertTime> getMesswertByMesWerIDAndMesWerNam(String keysWithSemicolon, String mesWerNam) {
