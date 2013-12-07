@@ -3,7 +3,6 @@ package de.sensorcloud.db.crud;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import de.sensorcloud.db.connection.Cassandra;
 import de.sensorcloud.entitaet.Sensor;

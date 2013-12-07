@@ -1,11 +1,11 @@
 package de.sensorcloud.helpertools;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.UUID;
 
 import de.sensorcloud.entitaet.AktorVerbund;
 import de.sensorcloud.entitaet.Event;
+import de.sensorcloud.entitaet.Gruppen;
 import de.sensorcloud.entitaet.SensorServiceMitFunktion;
 import de.sensorcloud.entitaet.SensorVerbund;
 
@@ -38,6 +38,19 @@ public class Helper {
 		}
 		return result;
 	}
+	
+	public static boolean checkObjectInList(Gruppen grp, ArrayList<Gruppen> list) {
+		boolean result = false;
+
+		if (!list.isEmpty()) {
+			for (Gruppen obj : list) {
+				if (grp.getGruID().equals(obj.getGruID())) {
+					result = true;
+				}
+			}
+		}
+		return result;
+	}
 
 	public static boolean checkObjectInList(Event event, ArrayList<Event> eventList) {
 		boolean result = false;
@@ -52,11 +65,11 @@ public class Helper {
 		return result;
 	}
 	
-	public static boolean checkObjectInSet(SensorServiceMitFunktion senserv, HashSet<SensorServiceMitFunktion> senServFunkSet) {
+	public static boolean checkObjectInList(SensorServiceMitFunktion senserv, ArrayList<SensorServiceMitFunktion> senServFunkList) {
 		boolean result = false;
 
-		if (!senServFunkSet.isEmpty() && senserv != null) {
-			for (SensorServiceMitFunktion Obj : senServFunkSet) {
+		if (!senServFunkList.isEmpty() && senserv != null) {
+			for (SensorServiceMitFunktion Obj : senServFunkList) {
 				if (Obj.getSenServ().getSenSerID().equals(senserv.getSenServ().getSenSerID())) {
 					result = true;
 				}

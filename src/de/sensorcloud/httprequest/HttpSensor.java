@@ -22,8 +22,7 @@ public class HttpSensor {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
 		
-		return "Enthaelt die Methode(n) :\n\n"
-				+ " public String getSensorByNutStaID(@PathParam(\"nutStaID\") String nutStaID)\n";
+		return "Sensor Service laeuft";
 	}
 	
 	

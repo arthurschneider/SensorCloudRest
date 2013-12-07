@@ -1,7 +1,6 @@
 package de.sensorcloud.httprequest;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -30,8 +29,7 @@ public class HttpSensorService {
     @Produces(MediaType.APPLICATION_JSON)
     public String getSensorServicesByNutStaID(@PathParam("nutStaID") String nutStaID) {
 		ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
-		JsonElement jsonElement = null;
-		HashSet<SensorServiceMitFunktion> senServFunkSet = new HashSet<SensorServiceMitFunktion>();
+		ArrayList<SensorServiceMitFunktion> senServFunkSet = new ArrayList<SensorServiceMitFunktion>();
 		
 		sensorList = DBSensor.getSensorListByNutStaID(nutStaID);
 		
@@ -45,12 +43,12 @@ public class HttpSensorService {
 			senServFunk.setSenServFunkt(DBSensorServiceFunktion.getSenSerFunNamBySenSerFunID(senSerFunMitSenSerFunID));
 			senServFunk.setSenServ(senServ);
 			
-			if (!Helper.checkObjectInSet(senServFunk, senServFunkSet)) {
+			if (!Helper.checkObjectInList(senServFunk, senServFunkSet)) {
 				senServFunkSet.add(senServFunk);
 			}
 		}
 		Gson gson = new Gson();
-		jsonElement = gson.toJsonTree(senServFunkSet);
+		JsonElement jsonElement = gson.toJsonTree(senServFunkSet);
         return jsonElement.toString();
 	}
 

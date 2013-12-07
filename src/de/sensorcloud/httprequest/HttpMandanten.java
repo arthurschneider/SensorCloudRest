@@ -1,11 +1,8 @@
 package de.sensorcloud.httprequest;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -16,10 +13,7 @@ import com.google.gson.JsonElement;
 
 import de.sensorcloud.db.crud.DBMandanten;
 import de.sensorcloud.db.crud.DBMandantenMitglieder;
-import de.sensorcloud.db.crud.DBNutzerEmail;
-import de.sensorcloud.db.crud.DBNutzerSicherheit;
 import de.sensorcloud.db.crud.DBNutzerStammdaten;
-import de.sensorcloud.entitaet.InsertMandant;
 import de.sensorcloud.entitaet.Mandanten;
 import de.sensorcloud.entitaet.MandantenData;
 
@@ -51,32 +45,5 @@ public class HttpMandanten {
         return jsonElement.toString();
 	}
 	
-	
-	
-	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	public String insertMandanten(String data) throws SQLException {
-		Gson gson = new Gson();
-		InsertMandant mandant = gson.fromJson(data, InsertMandant.class);
-		ArrayList<String>  nutStaIDList;
-		String manMitNutStaID = null;
-		String uuID = null;
-	
-		
-		nutStaIDList = DBNutzerEmail.getNutEmaNutStaIDbyNutEmaBez(mandant.getEmail());
-		
-		for (String nutStaID : nutStaIDList) {
-			
-			String nutsicPubKey = DBNutzerSicherheit.getNutSicPubKeyByNutStaID(nutStaID);
-			
-			if (nutsicPubKey.equals(mandant.getPubKey())) {
-				
-				manMitNutStaID =  nutStaID;
-				uuID = DBMandanten.insertMandanten(mandant);
-			}
-		}
-		DBMandantenMitglieder.insertMitglied(uuID, manMitNutStaID);
-		return uuID;
-	}
 
 }

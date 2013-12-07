@@ -13,24 +13,22 @@ public class DBNutzerEmail {
 
 	public static final String TABNAME = "NutzerEmail";
 	
-	public static ArrayList<String> getNutEmaNutStaIDbyNutEmaBez(String email) {
-		System.out.println("1");
-		ArrayList<String> emailList = new ArrayList<String>();
+	public static String getNutEmaNutStaIDbyNutEmaBez(String email) {
+		String nutEmaNutStaID = new String();
 		String CQL = "SELECT NutEmaNutStaID FROM " + TABNAME + " WHERE NutEmaAdr = '"+email+"'";
 		try {
 		 
 	        ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
-	        	emailList.add(RS.getString("NutEmaNutStaID"));
-	        	System.out.println("2");
+	        	nutEmaNutStaID = RS.getString("NutEmaNutStaID");
 	        }
 	                 
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} 
 		
-		return emailList;
+		return nutEmaNutStaID;
 		
 	}
 	

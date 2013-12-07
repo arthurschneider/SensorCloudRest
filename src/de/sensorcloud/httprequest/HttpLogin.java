@@ -1,7 +1,5 @@
 package de.sensorcloud.httprequest;
 
-import java.util.ArrayList;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -35,23 +33,21 @@ public class HttpLogin{
 	@Produces(MediaType.APPLICATION_JSON)
 	public String authetifizieren(String data) {
 		JsonElement jsonObj = null;
-		ArrayList<String>  nutStaIDList;
+		String  nutStaID;
 		String nutzerID = null;
 		
 		
 		Gson gson = new Gson();
         Login login = gson.fromJson(data, Login.class);
 	    
-		nutStaIDList = DBNutzerEmail.getNutEmaNutStaIDbyNutEmaBez(login.getEmail());
+		nutStaID = DBNutzerEmail.getNutEmaNutStaIDbyNutEmaBez(login.getEmail());
 		
-		for (String nutStaID : nutStaIDList) {
-			System.out.println(nutStaID);
+		
 			String nutsicPas = DBNutzerSicherheit.getNutSicPasByNutStaID(nutStaID);
 			
 			if (nutsicPas.equals(login.getPasswort())) {
 				nutzerID =  nutStaID;
 			}
-		}
 		
 		if (nutzerID != null) {
 			NutzerStammdaten nutzer = DBNutzerStammdaten.getNutzerStammdatenByNutStaID(nutzerID);
