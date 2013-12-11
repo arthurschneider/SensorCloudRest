@@ -14,7 +14,7 @@ public class DBNutzerEmail {
 	public static final String TABNAME = "NutzerEmail";
 	
 	public static String getNutEmaNutStaIDbyNutEmaBez(String email) {
-		String nutEmaNutStaID = new String();
+		String nutEmaNutStaID = null;
 		String CQL = "SELECT NutEmaNutStaID FROM " + TABNAME + " WHERE NutEmaAdr = '"+email+"'";
 		try {
 		 

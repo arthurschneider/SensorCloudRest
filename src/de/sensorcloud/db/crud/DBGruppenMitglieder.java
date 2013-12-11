@@ -9,9 +9,9 @@ import de.sensorcloud.helpertools.Helper;
 
 public class DBGruppenMitglieder {
 	
-public static final String TABNAME = "Gruppen";
+public static final String TABNAME = "GruppenMitglieder";
 	
-	public static ArrayList<String> getGruMitGruIDByAdrID(String nutStaID) {
+	public static ArrayList<String> getGruMitGruIDByNutStaID(String nutStaID) {
 		
 		ArrayList<String> id = new ArrayList<String>();
 		String CQL = "SELECT GruMitGruID FROM " + TABNAME + " WHERE GruMitNutStaID = '"+ nutStaID + "'";
@@ -46,6 +46,24 @@ public static final String TABNAME = "Gruppen";
 		return id;
 	}
 	
+	
+	public static String getKeyByGruIDAndGruNutStaID(String nuStaID, String gruID) {
+		
+		String key = null;
+		String CQL = "SELECT GruMitID FROM " + TABNAME + " WHERE GruMitGruID = '"+ gruID + "' AND GruMitNutStaID = '"+nuStaID+"'";
+		
+		try {
+			ResultSet RS = Cassandra.select(CQL);
+			
+			while (RS.next()) {
+				key = RS.getString("GruMitID");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return key;
+	}
+	
 	public static String insertMitglied(String nutStaID, String gruID){
 			
 			String uuID = Helper.generateUUID();
@@ -61,5 +79,17 @@ public static final String TABNAME = "Gruppen";
 				e.printStackTrace();
 			}
 		return uuID;
+	}
+	
+	public static void verlassenGruppe(String key) {
+		
+		String CQL = "DELETE GruMitID, GruMitGruID, GruMitNutStaID FROM " +TABNAME + "  WHERE KEY = '"+key+"'";
+		
+		try {
+			Cassandra.update(CQL);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

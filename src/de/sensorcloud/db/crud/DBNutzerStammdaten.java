@@ -20,7 +20,6 @@ public class DBNutzerStammdaten {
 			ResultSet RS = Cassandra.select(CQL);
 			
 			while (RS.next()) {
-
 				nutzerStammdaten.setNutStaID(RS.getString("NutStaID"));
 				nutzerStammdaten.setNutStaAnr(RS.getString("NutStaAnr"));
 				nutzerStammdaten.setNutStaAdrID(RS.getString("NutStaAdrID"));
