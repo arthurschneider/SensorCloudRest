@@ -27,7 +27,7 @@ public class DBSensor {
 	        	sensor.setSenNutStaID(nutStaID);
 	        	sensor.setSenSenProID(RS.getString("SenSenProID"));
 	        	sensor.setSenSenTypID(RS.getString("SenSenTypID"));
-	        	sensor.setSenRauID(RS.getString("SenRauID"));
+	        	sensor.setSenRauID(DBRaum.getRauBezByRauID(RS.getString("SenRauID")));
 	        	sensor.setSenLocMasID(RS.getString("SenLocMasID"));
 	        	sensor.setSenSouID(RS.getString("SenSouID"));
 	        	sensor.setSenBez(RS.getString("SenBez"));

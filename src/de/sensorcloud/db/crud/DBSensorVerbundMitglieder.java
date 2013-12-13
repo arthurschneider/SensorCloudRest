@@ -22,7 +22,6 @@ public class DBSensorVerbundMitglieder {
 	        ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
-	        	
 	        	senVerMitSenVerID.add(RS.getString("SenVerMitSenVerID"));
 	        	
 	        }

@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
+import de.sensorcloud.db.crud.DBRaum;
 import de.sensorcloud.db.crud.DBSensor;
 import de.sensorcloud.db.crud.DBSensorVerbund;
 import de.sensorcloud.db.crud.DBSensorVerbundMitglieder;
@@ -31,9 +32,7 @@ public class HttpSensorVerbund {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
 		
-		return "Enthaelt die Methode(n) :\n\n"
-				+ " public String getSensorVerbundByNutStaID(@PathParam(\"nutStaID\") String nutStaID)\n"
-				+ " public String getSensorBySensorVerbundID(@PathParam(\"verbundID\") String verbundID)\n";
+		return "SensorVerbund Service laeuft";
 	}
 	
 	
@@ -53,10 +52,10 @@ public class HttpSensorVerbund {
 			senVerbundMitgldrList = DBSensorVerbundMitglieder.getSenVerMitSenVerIDBySenID(sensor.getSenID());
 			
 			for (String senVerMitSenVerID : senVerbundMitgldrList) {
-				
+				System.out.println("httpSenverb senVerMitSenVerID : " +senVerMitSenVerID);
 				SensorVerbund senVerb = DBSensorVerbund.getSenVerbBezBySenVerMitSenVerID(senVerMitSenVerID);
 				
-				if (!Helper.checkObjectInList(senVerb, senVerbundList)) {
+				if (senVerb != null && !Helper.checkObjectInList(senVerb, senVerbundList)) {
 					senVerbundList.add(senVerb);
 				}
 			}
@@ -79,7 +78,9 @@ public class HttpSensorVerbund {
 		senIDList = DBSensorVerbundMitglieder.getSenIDBySenVerID(senVerID);
 		
 		for (String senID : senIDList) {
-			sensorList.add(DBSensor.getSensorBySenID(senID));
+			Sensor sensor = DBSensor.getSensorBySenID(senID);
+			sensor.setSenRauID(DBRaum.getRauBezByRauID(sensor.getSenRauID()));
+			sensorList.add(sensor);
 		}
 		SensorList list = new SensorList();
 		list.setSensorList(sensorList);

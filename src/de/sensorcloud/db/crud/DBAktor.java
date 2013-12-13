@@ -27,7 +27,7 @@ public class DBAktor {
 				aktor.setAktNutStaID(nutStaID);
 				aktor.setAktAktProID(RS.getString("AktAktProID"));
 				aktor.setAktAktTypID(RS.getString("AktAktTypID"));
-				aktor.setAktRauID(RS.getString("AktRauID"));
+				aktor.setAktRauID(DBRaum.getRauBezByRauID(RS.getString("AktRauID")));
 				aktor.setAktLocMasID(RS.getString("AktLocMasID"));
 				aktor.setAktSouID(RS.getString("AktSouID"));
 				aktor.setAktBez(RS.getString("AktBez"));

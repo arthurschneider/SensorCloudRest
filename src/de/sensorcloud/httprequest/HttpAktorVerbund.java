@@ -17,6 +17,7 @@ import com.google.gson.JsonElement;
 import de.sensorcloud.db.crud.DBAktor;
 import de.sensorcloud.db.crud.DBAktorVerbund;
 import de.sensorcloud.db.crud.DBAktorVerbundMitglieder;
+import de.sensorcloud.db.crud.DBRaum;
 import de.sensorcloud.entitaet.Aktor;
 import de.sensorcloud.entitaet.AktorList;
 import de.sensorcloud.entitaet.AktorVerbund;
@@ -78,7 +79,9 @@ public class HttpAktorVerbund {
 		aktIDList = DBAktorVerbundMitglieder.getAktIDByAktVerID(aktVerID);
 		
 		for (String aktID : aktIDList) {
-			aktorList.add(DBAktor.getAktorByAktID(aktID));
+			Aktor aktor = DBAktor.getAktorByAktID(aktID);
+			aktor.setAktRauID(DBRaum.getRauBezByRauID(aktor.getAktRauID()));
+			aktorList.add(aktor);
 		}
 		AktorList list = new AktorList();
 		list.setList(aktorList);

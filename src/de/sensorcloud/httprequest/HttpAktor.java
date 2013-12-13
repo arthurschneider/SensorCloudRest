@@ -13,6 +13,7 @@ import com.google.gson.JsonElement;
 
 import de.sensorcloud.db.crud.DBAktor;
 import de.sensorcloud.entitaet.Aktor;
+import de.sensorcloud.entitaet.AktorList;
 
 @Path("/Aktor")
 public class HttpAktor {
@@ -30,13 +31,11 @@ public class HttpAktor {
     @Produces(MediaType.APPLICATION_JSON)
     public String getAktorByNutStaID(@PathParam("nutStaID") String nutStaID) {
 		ArrayList<Aktor> aktorList = new ArrayList<Aktor>();
-		JsonElement jsonElement = null;
+		AktorList list = new AktorList();
 		aktorList = DBAktor.getAktorByNutStaID(nutStaID);
 		Gson gson = new Gson();
-        //creates json from messwertListe object
-		jsonElement = gson.toJsonTree(aktorList);
-        System.out.println("JSON STRING "+jsonElement);
-        //create a new JSON object
+		list.setList(aktorList);
+		JsonElement jsonElement = gson.toJsonTree(list);
         return jsonElement.toString();
 	}
 

@@ -11,16 +11,15 @@ public class DBSensorVerbund {
 	public static final String TABNAME = "SensorVerbund";
 	
 	public static SensorVerbund getSenVerbBezBySenVerMitSenVerID(String senVerMitSenVerID) {
-		
 		SensorVerbund senVerb = new SensorVerbund();
-		String CQL = "SELECT SenVerBez, SenVerID FROM " + TABNAME + " WHERE KEY = '"+senVerMitSenVerID+"'";
+		String CQL = "SELECT * FROM " + TABNAME + " WHERE KEY = '"+senVerMitSenVerID+"'";
 		
 		try { 
 	      
 	        ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
-	        	
+	        	System.out.println("VerbundId : "+RS.getString("SenVerID") );
 	        	senVerb.setSenVerBez(RS.getString("SenVerBez"));
 	        	senVerb.setSenVerID(RS.getString("SenVerID"));
 	        }

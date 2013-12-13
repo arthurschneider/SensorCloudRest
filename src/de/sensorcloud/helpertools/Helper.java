@@ -30,8 +30,8 @@ public class Helper {
 		boolean result = false;
 
 		if (!aktVerbList.isEmpty()) {
-			for (AktorVerbund senVerbObj : aktVerbList) {
-				if (senVerbObj.getAktVerID().equals(aktVerb.getAktVerID())) {
+			for (AktorVerbund aktVerbObj : aktVerbList) {
+				if (aktVerbObj.getAktVerID().equals(aktVerb.getAktVerID())) {
 					result = true;
 				}
 			}
