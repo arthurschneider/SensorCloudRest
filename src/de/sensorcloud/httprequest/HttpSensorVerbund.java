@@ -27,63 +27,59 @@ public class HttpSensorVerbund {
 	 @GET
      @Produces(MediaType.TEXT_PLAIN)
      public String test(){
-             
-             return "SensorVerbund Service laeuft";
+         return "SensorVerbund Service laeuft";
      }
      
      
      @GET
- @Path("/NutStaID/{nutStaID}")
- @Produces(MediaType.APPLICATION_JSON)
- public String getSensorVerbundByNutStaID(@PathParam("nutStaID") String nutStaID) {
-     
-             ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
-             ArrayList<String> senVerbundMitgldrList = new ArrayList<String>();
-             ArrayList<SensorVerbund> senVerbundList = new ArrayList<SensorVerbund>();
+	 @Path("/NutStaID/{nutStaID}")
+	 @Produces(MediaType.APPLICATION_JSON)
+	 public String getSensorVerbundByNutStaID(@PathParam("nutStaID") String nutStaID) {
+         ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
+         ArrayList<String> senVerbundMitgldrList = new ArrayList<String>();
+         ArrayList<SensorVerbund> senVerbundList = new ArrayList<SensorVerbund>();
+         
+         sensorList = DBSensor.getSensorListByNutStaID(nutStaID);
+         
+         for (Sensor sensor : sensorList) {
+             senVerbundMitgldrList = DBSensorVerbundMitglieder.getSenVerMitSenVerIDBySenID(sensor.getSenID());
              
-             sensorList = DBSensor.getSensorListByNutStaID(nutStaID);
-             
-             for (Sensor sensor : sensorList) {
-                     
-                     senVerbundMitgldrList = DBSensorVerbundMitglieder.getSenVerMitSenVerIDBySenID(sensor.getSenID());
-                     
-                     for (String senVerMitSenVerID : senVerbundMitgldrList) {
-                             System.out.println("httpSenverb senVerMitSenVerID : " +senVerMitSenVerID);
-                             SensorVerbund senVerb = DBSensorVerbund.getSenVerbBezBySenVerMitSenVerID(senVerMitSenVerID);
-                             
-                             if (senVerb != null && !Helper.checkObjectInList(senVerb, senVerbundList)) {
-                                     senVerbundList.add(senVerb);
-                             }
-                     }
+             for (String senVerMitSenVerID : senVerbundMitgldrList) {
+                
+                 SensorVerbund senVerb = DBSensorVerbund.getSenVerbBezBySenVerMitSenVerID(senVerMitSenVerID);
+                 
+                 if (senVerb != null && !Helper.checkObjectInList(senVerb, senVerbundList)) {
+                     senVerbundList.add(senVerb);
+                 }
              }
-             SensorVerbundList list = new SensorVerbundList();
-             list.setSenVerbundList(senVerbundList);
-             Gson gson = new Gson();
-             JsonElement jsonElement = gson.toJsonTree(list);
-     return jsonElement.toString();
+         }
+         SensorVerbundList list = new SensorVerbundList();
+         list.setSenVerbundList(senVerbundList);
+         Gson gson = new Gson();
+         JsonElement jsonElement = gson.toJsonTree(list);
+         return jsonElement.toString();
      }
      
      
      @GET
- @Path("/SenVerID/{senVerID}")
- @Produces(MediaType.APPLICATION_JSON)
- public String getSensorBySenVerID(@PathParam("senVerID") String senVerID) {
-             ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
-             ArrayList<String> senIDList = new ArrayList<String>();
-     
-             senIDList = DBSensorVerbundMitglieder.getSenIDBySenVerID(senVerID);
-             
-             for (String senID : senIDList) {
-                     Sensor sensor = DBSensor.getSensorBySenID(senID);
-                     sensor.setSenRauID(DBRaum.getRauBezByRauID(sensor.getSenRauID()));
-                     sensorList.add(sensor);
-             }
-             SensorList list = new SensorList();
-             list.setSensorList(sensorList);
-             Gson gson = new Gson();
-             JsonElement jsonElement = gson.toJsonTree(list);
-     return jsonElement.toString();
-     
+	 @Path("/SenVerID/{senVerID}")
+	 @Produces(MediaType.APPLICATION_JSON)
+	 public String getSensorBySenVerID(@PathParam("senVerID") String senVerID) {
+         ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
+         ArrayList<String> senIDList = new ArrayList<String>();
+ 
+         senIDList = DBSensorVerbundMitglieder.getSenIDBySenVerID(senVerID);
+         
+         for (String senID : senIDList) {
+             Sensor sensor = DBSensor.getSensorBySenID(senID);
+             sensor.setSenRauID(DBRaum.getRauBezByRauID(sensor.getSenRauID()));
+             sensorList.add(sensor);
+         }
+         SensorList list = new SensorList();
+         list.setSensorList(sensorList);
+         Gson gson = new Gson();
+         JsonElement jsonElement = gson.toJsonTree(list);
+         return jsonElement.toString();
      }
      
      

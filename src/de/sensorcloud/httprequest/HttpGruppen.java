@@ -36,10 +36,8 @@ public class HttpGruppen {
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
-		
 		return "Gruppen Service lauft";
 	}
-	
 	
 	@GET
     @Path("/NutStaID/{nutStaID}")
@@ -49,7 +47,6 @@ public class HttpGruppen {
 		GruppenList grpList = new GruppenList();
 		ArrayList<Gruppen> gruppen  = new ArrayList<Gruppen>();
 		ArrayList<String> idList = new ArrayList<String>();
-		
 		
 		idList.addAll(DBGruppenMitglieder.getGruMitGruIDByNutStaID(nutStaID));
 		for (String id : idList) {

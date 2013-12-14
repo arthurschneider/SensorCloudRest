@@ -22,7 +22,7 @@ public class HttpAktor {
 	@GET
     @Produces(MediaType.TEXT_PLAIN)
     public String test(){
-            return "Aktor Service laeuft";
+        return "Aktor Service laeuft";
     }
     
 
@@ -30,12 +30,12 @@ public class HttpAktor {
     @Path("/NutStaID/{nutStaID}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getAktorByNutStaID(@PathParam("nutStaID") String nutStaID) {
-            ArrayList<Aktor> aktorList = new ArrayList<Aktor>();
-            AktorList list = new AktorList();
-            aktorList = DBAktor.getAktorByNutStaID(nutStaID);
-            Gson gson = new Gson();
-            list.setList(aktorList);
-            JsonElement jsonElement = gson.toJsonTree(list);
-            return jsonElement.toString();
+        ArrayList<Aktor> aktorList = new ArrayList<Aktor>();
+        AktorList list = new AktorList();
+        aktorList = DBAktor.getAktorByNutStaID(nutStaID);
+        Gson gson = new Gson();
+        list.setList(aktorList);
+        JsonElement jsonElement = gson.toJsonTree(list);
+        return jsonElement.toString();
     }
 }

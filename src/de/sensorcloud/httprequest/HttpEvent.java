@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -33,7 +32,6 @@ public class HttpEvent {
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
-		
 		return "Event Servie laeuft";
 	}
 	
@@ -78,9 +76,7 @@ public class HttpEvent {
 			return jsonElement.toString();
 			
 		} else {
-			
 			return "leer";
-			
 		}
 
 	}
@@ -113,31 +109,29 @@ public class HttpEvent {
 		return jsonElement.toString();
 	}
 	
-
-	
-	@PUT		//Insert
-	@Consumes(MediaType.APPLICATION_JSON)
-	public String insertEventRegel(String data) {
-		
-		Gson gson = new Gson();
-		EventRegel eventRegel = gson.fromJson(data, EventRegel.class);
-		int reihenFolge = 0;
-		String eveID = DBEvent.insertEvent(eventRegel.getEvent());
-		
-		for (SensorEvent sensorEvent: eventRegel.getSensorEvent()) {
-			reihenFolge ++;
-			System.out.println("Reihenfolge : " + reihenFolge);
-			String eveMitSenEveID = DBEventMitglieder.insertEventMitglieder(eveID, sensorEvent.getSenEveID(), reihenFolge);
-			DBSensorEvent.insertSensorEvent(eveMitSenEveID, sensorEvent);
-			
-		}
-		for (EventAktion eventAktion : eventRegel.getEventAktion()) {
-			DBEventAktion.insertEventAktion(eveID, eventAktion);
-		}
-		DBEventBenachrichtigung.insertEventBenachrichtigung(eveID, eventRegel.getEventBen());
-		
-		return "ausgefuehrt";
-	}
+//	@PUT		//Insert
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	public String insertEventRegel(String data) {
+//		
+//		Gson gson = new Gson();
+//		EventRegel eventRegel = gson.fromJson(data, EventRegel.class);
+//		int reihenFolge = 0;
+//		String eveID = DBEvent.insertEvent(eventRegel.getEvent());
+//		
+//		for (SensorEvent sensorEvent: eventRegel.getSensorEvent()) {
+//			reihenFolge ++;
+//			System.out.println("Reihenfolge : " + reihenFolge);
+//			String eveMitSenEveID = DBEventMitglieder.insertEventMitglieder(eveID, sensorEvent.getSenEveID(), reihenFolge);
+//			DBSensorEvent.insertSensorEvent(eveMitSenEveID, sensorEvent);
+//			
+//		}
+//		for (EventAktion eventAktion : eventRegel.getEventAktion()) {
+//			DBEventAktion.insertEventAktion(eveID, eventAktion);
+//		}
+//		DBEventBenachrichtigung.insertEventBenachrichtigung(eveID, eventRegel.getEventBen());
+//		
+//		return "ausgefuehrt";
+//	}
 	
 	@POST		//Update
 	@Consumes(MediaType.APPLICATION_JSON)

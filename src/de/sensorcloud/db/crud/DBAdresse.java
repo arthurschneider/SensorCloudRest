@@ -11,7 +11,6 @@ public class DBAdresse {
 	public static final String TABNAME = "Adresse";
 	
 	public static Adresse getAdresseByAdrID(String adrID) {
-		
 		Adresse adresse = new Adresse();
 		String CQL = "SELECT * FROM " + TABNAME + " WHERE KEY = '"+ adrID + "'";
 		
@@ -28,18 +27,13 @@ public class DBAdresse {
 				adresse.setAdrLan(RS.getString("AdrLan"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
 		return adresse;
 	}
 	
 	
 	public static void updateAdresse(Adresse adresse) {
-
 		String CQL = "UPDATE " + TABNAME + " SET "
 					+ "AdrBez = '" + adresse.getAdrBez() + "', "
 					+ "AdrStr = '" + adresse.getAdrStr() + "', "
@@ -51,10 +45,8 @@ public class DBAdresse {
 		try {
 			Cassandra.update(CQL);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 }

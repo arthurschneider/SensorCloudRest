@@ -5,7 +5,6 @@ import java.sql.SQLException;
 
 import de.sensorcloud.db.connection.Cassandra;
 import de.sensorcloud.entitaet.Event;
-import de.sensorcloud.helpertools.Helper;
 
 public class DBEvent {
 	
@@ -28,7 +27,6 @@ public class DBEvent {
 				event.setEveNac(RS.getString("EveNac"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	
@@ -36,26 +34,24 @@ public class DBEvent {
 	}
 	
 	
-	public static String insertEvent(Event event) {
-		
-		String uuID = Helper.generateUUID();
-		String CQL = "UPDATE " + TABNAME + " SET "
-				+ "EveID = '" + uuID + "', "
-				+ "EveArt = '" + event.getEveArt() + "', "
-				+ "EveBez = '" + event.getEveBez() + "', "
-				+ "EveNac = '" + event.getEveNac() + "', "
-				+ "EveTimSta = '" + event.getEveTimSta() + "' "
-				+ "WHERE KEY = " + uuID;
-	
-		try {
-			Cassandra.update(CQL);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return uuID;
-	}
+//	public static String insertEvent(Event event) {
+//		String uuID = Helper.generateUUID();
+//		String CQL = "UPDATE " + TABNAME + " SET "
+//				+ "EveID = '" + uuID + "', "
+//				+ "EveArt = '" + event.getEveArt() + "', "
+//				+ "EveBez = '" + event.getEveBez() + "', "
+//				+ "EveNac = '" + event.getEveNac() + "', "
+//				+ "EveTimSta = '" + event.getEveTimSta() + "' "
+//				+ "WHERE KEY = " + uuID;
+//	
+//		try {
+//			Cassandra.update(CQL);
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		return uuID;
+//	}
 	
 	
 	public static void updateEvent(Event event) {
@@ -71,7 +67,6 @@ public class DBEvent {
 		try {
 			Cassandra.update(CQL);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

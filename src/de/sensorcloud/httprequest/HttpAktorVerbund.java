@@ -23,65 +23,64 @@ import de.sensorcloud.helpertools.Helper;
 
 @Path("/AktorVerbund")
 public class HttpAktorVerbund {
+	
 	@GET
     @Produces(MediaType.TEXT_PLAIN)
     public String test(){
-            
-            return "Aktorverbund service laeuft";
+		return "Aktorverbund service laeuft";
     }
     
     
     @GET
-@Path("/NutStaID/{nutStaID}")
-@Produces(MediaType.APPLICATION_JSON)
-public String getAktorVerbundByNutStaID(@PathParam("nutStaID") String nutStaID) {
-    
-            ArrayList<Aktor> aktorList = new ArrayList<Aktor>();
-            ArrayList<String> aktVerbundMitgldrList = new ArrayList<String>();
-            ArrayList<AktorVerbund> aktVerbundList = new ArrayList<AktorVerbund>();
-    
-            aktorList = DBAktor.getAktorByNutStaID(nutStaID);
+	@Path("/NutStaID/{nutStaID}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getAktorVerbundByNutStaID(@PathParam("nutStaID") String nutStaID) {
+        ArrayList<Aktor> aktorList = new ArrayList<Aktor>();
+        ArrayList<String> aktVerbundMitgldrList = new ArrayList<String>();
+        ArrayList<AktorVerbund> aktVerbundList = new ArrayList<AktorVerbund>();
+
+        aktorList = DBAktor.getAktorByNutStaID(nutStaID);
+        
+        for (Aktor aktor : aktorList) {
+                
+            aktVerbundMitgldrList = DBAktorVerbundMitglieder.getAktVerMitAktVerIDByAktID(aktor.getAktID());
             
-            for (Aktor aktor : aktorList) {
+            for (String aktVerMitAktVerID : aktVerbundMitgldrList) {
                     
-                    aktVerbundMitgldrList = DBAktorVerbundMitglieder.getAktVerMitAktVerIDByAktID(aktor.getAktID());
-                    
-                    for (String aktVerMitAktVerID : aktVerbundMitgldrList) {
-                            
-                            AktorVerbund aktVerb = DBAktorVerbund.getAktVerbBezByAktVerMitAktVerID(aktVerMitAktVerID);
-                            
-                            if (!Helper.checkObjectInList(aktVerb, aktVerbundList)) {
-                                    aktVerbundList.add(aktVerb);
-                            }
-                    }
+                AktorVerbund aktVerb = DBAktorVerbund.getAktVerbBezByAktVerMitAktVerID(aktVerMitAktVerID);
+                
+                if (!Helper.checkObjectInList(aktVerb, aktVerbundList)) {
+                        aktVerbundList.add(aktVerb);
+                }
             }
-                    
-            AktorVerbundList list = new AktorVerbundList();
-            list.setAktVerbundList(aktVerbundList);
-            Gson gson = new Gson();
-            JsonElement jsonElement = gson.toJsonTree(list);
+        }
+                
+        AktorVerbundList list = new AktorVerbundList();
+        list.setAktVerbundList(aktVerbundList);
+        Gson gson = new Gson();
+        JsonElement jsonElement = gson.toJsonTree(list);
     return jsonElement.toString();
     }
     
     
     @GET
-@Path("/AktVerID/{aktVerID}")
-@Produces(MediaType.APPLICATION_JSON)
-public String getAktorByAktVerID(@PathParam("aktVerID") String aktVerID) {
-            ArrayList<Aktor> aktorList = new ArrayList<Aktor>();
-            ArrayList<String> aktIDList = new ArrayList<String>();
-    
-            aktIDList = DBAktorVerbundMitglieder.getAktIDByAktVerID(aktVerID);
-            
-            for (String aktID : aktIDList) {
-                    Aktor aktor = DBAktor.getAktorByAktID(aktID);
-                    aktor.setAktRauID(DBRaum.getRauBezByRauID(aktor.getAktRauID()));
-                    aktorList.add(aktor);
-            }
-            AktorList list = new AktorList();
-            list.setList(aktorList);
-            Gson gson = new Gson();
-            JsonElement jsonElement = gson.toJsonTree(list);
+	@Path("/AktVerID/{aktVerID}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getAktorByAktVerID(@PathParam("aktVerID") String aktVerID) {
+        ArrayList<Aktor> aktorList = new ArrayList<Aktor>();
+        ArrayList<String> aktIDList = new ArrayList<String>();
+
+        aktIDList = DBAktorVerbundMitglieder.getAktIDByAktVerID(aktVerID);
+        
+        for (String aktID : aktIDList) {
+                Aktor aktor = DBAktor.getAktorByAktID(aktID);
+                aktor.setAktRauID(DBRaum.getRauBezByRauID(aktor.getAktRauID()));
+                aktorList.add(aktor);
+        }
+        AktorList list = new AktorList();
+        list.setList(aktorList);
+        Gson gson = new Gson();
+        JsonElement jsonElement = gson.toJsonTree(list);
     return jsonElement.toString();
     
     }

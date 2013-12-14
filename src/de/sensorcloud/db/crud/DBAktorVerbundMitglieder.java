@@ -19,59 +19,50 @@ public class DBAktorVerbundMitglieder {
     
             try {
                     
-                    ResultSet RS = Cassandra.select(CQL);
-    
-     while (RS.next()) {
-             
-             aktVerMitAktVerID.add(RS.getString("AktVerMitAktVerID"));
-             
-     }
+                ResultSet RS = Cassandra.select(CQL);
+
+                while (RS.next()) {
+                	aktVerMitAktVerID.add(RS.getString("AktVerMitAktVerID"));
+                }
     
             } catch (SQLException ex) {
-                    ex.printStackTrace();
+                ex.printStackTrace();
             }
-
             return aktVerMitAktVerID;
-            
     }
     
     public static ArrayList<String> getAktIDByAktVerID(String aktVerID){
-            
             ArrayList<String> aktIDList = new ArrayList<String>();
             String CQL = "SELECT AktVerMitAktID FROM " + TABNAME + " WHERE AktVerMitAktVerID = '"+aktVerID+"'";
     
             try {
-    
-     ResultSet RS = Cassandra.select(CQL);
-    
-     while (RS.next()) {
-             
-             aktIDList.add(RS.getString("AktVerMitAktID"));
-             
-     }
+            	ResultSet RS = Cassandra.select(CQL);
+		    
+			     while (RS.next()) {
+	             
+			    	 aktIDList.add(RS.getString("AktVerMitAktID"));
+	             
+			     }
     
             } catch (SQLException ex) {
-                    ex.printStackTrace();
+                ex.printStackTrace();
             }
-
             return aktIDList;
-            
     }
     
     public static String createAktorVerbundMitglieder(String aktVerMitAktVerID, Aktor aktor) {
             
             String uuID = Helper.generateUUID();
-            String CQL = "UPDATE " + TABNAME + " SET "
-                                    + "AktVerMitID = '" + uuID + "', "
-                                    + "AktVerMitAktID = '" + aktor.getAktID() + "', "
-                                    + "AktVerMitAktVerID = '" + aktVerMitAktVerID + "' "
-                                    + "WHERE KEY = " + uuID;
+            String CQL =  "UPDATE " + TABNAME + " SET "
+                        + "AktVerMitID = '" + uuID + "', "
+                        + "AktVerMitAktID = '" + aktor.getAktID() + "', "
+                        + "AktVerMitAktVerID = '" + aktVerMitAktVerID + "' "
+                        + "WHERE KEY = " + uuID;
             
             try {
-                    Cassandra.update(CQL);
+                Cassandra.update(CQL);
             } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                e.printStackTrace();
             }
             return uuID;
     }
