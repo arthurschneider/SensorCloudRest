@@ -18,11 +18,11 @@ import de.sensorcloud.db.crud.DBAktor;
 import de.sensorcloud.db.crud.DBAktorVerbund;
 import de.sensorcloud.db.crud.DBAktorVerbundMitglieder;
 import de.sensorcloud.db.crud.DBRaum;
-import de.sensorcloud.entitaet.Aktor;
-import de.sensorcloud.entitaet.AktorList;
-import de.sensorcloud.entitaet.AktorVerbund;
-import de.sensorcloud.entitaet.AktorVerbundList;
-import de.sensorcloud.entitaet.AktorVerbundMitAktor;
+import de.sensorcloud.entitaet.Feldgeraet;
+import de.sensorcloud.entitaet.FeldgeraetList;
+import de.sensorcloud.entitaet.FeldgeraetVerbund;
+import de.sensorcloud.entitaet.FeldgeraetVerbundList;
+import de.sensorcloud.entitaet.FeldgeraetVerbundMitFeldgeraet;
 import de.sensorcloud.helpertools.Helper;
 
 @Path("/AktorVerbund")
@@ -41,19 +41,19 @@ public class HttpAktorVerbund {
     @Produces(MediaType.APPLICATION_JSON)
     public String getAktorVerbundByNutStaID(@PathParam("nutStaID") String nutStaID) {
 	
-		ArrayList<Aktor> aktorList = new ArrayList<Aktor>();
+		ArrayList<Feldgeraet> aktorList = new ArrayList<Feldgeraet>();
 		ArrayList<String> aktVerbundMitgldrList = new ArrayList<String>();
-		ArrayList<AktorVerbund> aktVerbundList = new ArrayList<AktorVerbund>();
+		ArrayList<FeldgeraetVerbund> aktVerbundList = new ArrayList<FeldgeraetVerbund>();
 	
 		aktorList = DBAktor.getAktorByNutStaID(nutStaID);
 		
-		for (Aktor aktor : aktorList) {
+		for (Feldgeraet aktor : aktorList) {
 			
-			aktVerbundMitgldrList = DBAktorVerbundMitglieder.getAktVerMitAktVerIDByAktID(aktor.getAktID());
+			aktVerbundMitgldrList = DBAktorVerbundMitglieder.getAktVerMitAktVerIDByAktID(aktor.getiD());
 			
 			for (String aktVerMitAktVerID : aktVerbundMitgldrList) {
 				
-				AktorVerbund aktVerb = DBAktorVerbund.getAktVerbBezByAktVerMitAktVerID(aktVerMitAktVerID);
+				FeldgeraetVerbund aktVerb = DBAktorVerbund.getAktVerbBezByAktVerMitAktVerID(aktVerMitAktVerID);
 				
 				if (!Helper.checkObjectInList(aktVerb, aktVerbundList)) {
 					aktVerbundList.add(aktVerb);
@@ -61,8 +61,8 @@ public class HttpAktorVerbund {
 			}
 		}
 			
-		AktorVerbundList list = new AktorVerbundList();
-		list.setAktVerbundList(aktVerbundList);
+		FeldgeraetVerbundList list = new FeldgeraetVerbundList();
+		list.setList(aktVerbundList);
 		Gson gson = new Gson();
 		JsonElement jsonElement = gson.toJsonTree(list);
         return jsonElement.toString();
@@ -73,17 +73,17 @@ public class HttpAktorVerbund {
     @Path("/AktVerID/{aktVerID}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getAktorByAktVerID(@PathParam("aktVerID") String aktVerID) {
-		ArrayList<Aktor> aktorList = new ArrayList<Aktor>();
+		ArrayList<Feldgeraet> aktorList = new ArrayList<Feldgeraet>();
 		ArrayList<String> aktIDList = new ArrayList<String>();
 	
 		aktIDList = DBAktorVerbundMitglieder.getAktIDByAktVerID(aktVerID);
 		
 		for (String aktID : aktIDList) {
-			Aktor aktor = DBAktor.getAktorByAktID(aktID);
-			aktor.setAktRauID(DBRaum.getRauBezByRauID(aktor.getAktRauID()));
+			Feldgeraet aktor = DBAktor.getAktorByAktID(aktID);
+			aktor.setRauID(DBRaum.getRauBezByRauID(aktor.getRauID()));
 			aktorList.add(aktor);
 		}
-		AktorList list = new AktorList();
+		FeldgeraetList list = new FeldgeraetList();
 		list.setList(aktorList);
 		Gson gson = new Gson();
 		JsonElement jsonElement = gson.toJsonTree(list);
@@ -95,10 +95,10 @@ public class HttpAktorVerbund {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String createAktorVerbund(String data) {
 		Gson gson = new Gson();
-		AktorVerbundMitAktor aktorVerbundmitAktor = gson.fromJson(data, AktorVerbundMitAktor.class);
+		FeldgeraetVerbundMitFeldgeraet aktorVerbundmitAktor = gson.fromJson(data, FeldgeraetVerbundMitFeldgeraet.class);
 	
-		String aktVerID = DBAktorVerbund.createAktorVerbund(aktorVerbundmitAktor.getAktorVerbund());
-		for (Aktor aktor: aktorVerbundmitAktor.getAktorList()) {
+		String aktVerID = DBAktorVerbund.createAktorVerbund(aktorVerbundmitAktor.getFeldgeraetVerbund());
+		for (Feldgeraet aktor: aktorVerbundmitAktor.getFeldgeraetList()) {
 			DBAktorVerbundMitglieder.createAktorVerbundMitglieder(aktVerID, aktor);
 		}
 		
@@ -109,10 +109,10 @@ public class HttpAktorVerbund {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String addAktorToAktorVerbund(String data) {
 		Gson gson = new Gson();
-		AktorVerbundMitAktor aktorVerbundmitAktor = gson.fromJson(data, AktorVerbundMitAktor.class);
+		FeldgeraetVerbundMitFeldgeraet aktorVerbundmitAktor = gson.fromJson(data, FeldgeraetVerbundMitFeldgeraet.class);
 	
-		for (Aktor aktor: aktorVerbundmitAktor.getAktorList()) {
-			DBAktorVerbundMitglieder.createAktorVerbundMitglieder(aktorVerbundmitAktor.getAktorVerbund().getAktVerID(), aktor);
+		for (Feldgeraet aktor: aktorVerbundmitAktor.getFeldgeraetList()) {
+			DBAktorVerbundMitglieder.createAktorVerbundMitglieder(aktorVerbundmitAktor.getFeldgeraetVerbund().getVerID(), aktor);
 		}
 		
 		return "ausgefuehrt";

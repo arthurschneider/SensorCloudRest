@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import de.sensorcloud.db.connection.Cassandra;
-import de.sensorcloud.entitaet.Sensor;
+import de.sensorcloud.entitaet.Feldgeraet;
 import de.sensorcloud.helpertools.Helper;
 
 public class DBSensorVerbundMitglieder {
@@ -58,12 +58,12 @@ public class DBSensorVerbundMitglieder {
 	}
 	
 	
-	public static String createSensorVerbundMitglieder(String senVerMitSenVerID, Sensor sensor) {
+	public static String createSensorVerbundMitglieder(String senVerMitSenVerID, Feldgeraet sensor) {
 		
 		String uuID = Helper.generateUUID();
 		String CQL = "UPDATE " + TABNAME + " SET "
 					+ "SenVerMitID = '" + uuID + "', "
-					+ "SenVerMitSenID = '" + sensor.getSenID() + "', "
+					+ "SenVerMitSenID = '" + sensor.getiD() + "', "
 					+ "SenVerMitSenVerID = '" + senVerMitSenVerID + "' "
 					+ "WHERE KEY = " + uuID;
 		

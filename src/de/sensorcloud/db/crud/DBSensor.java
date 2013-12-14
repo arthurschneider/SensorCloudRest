@@ -5,15 +5,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import de.sensorcloud.db.connection.Cassandra;
-import de.sensorcloud.entitaet.Sensor;
+import de.sensorcloud.entitaet.Feldgeraet;
 
 public class DBSensor {
 	
 	public static final String TABNAME = "Sensor";
 	
-	public static ArrayList<Sensor> getSensorListByNutStaID(String nutStaID){
+	public static ArrayList<Feldgeraet> getSensorListByNutStaID(String nutStaID){
 		
-		ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
+		ArrayList<Feldgeraet> sensorList = new ArrayList<Feldgeraet>();
 		String CQL = "SELECT * FROM " +TABNAME + " WHERE SenNutStaID = '"+nutStaID+"'";
 		
 		try {
@@ -22,17 +22,17 @@ public class DBSensor {
 	       
 	        while (RS.next()) {
 	        	
-	        	Sensor sensor = new Sensor();
-	        	sensor.setSenID(RS.getString("KEY"));
-	        	sensor.setSenNutStaID(nutStaID);
-	        	sensor.setSenSenProID(RS.getString("SenSenProID"));
-	        	sensor.setSenSenTypID(RS.getString("SenSenTypID"));
-	        	sensor.setSenRauID(DBRaum.getRauBezByRauID(RS.getString("SenRauID")));
-	        	sensor.setSenLocMasID(RS.getString("SenLocMasID"));
-	        	sensor.setSenSouID(RS.getString("SenSouID"));
-	        	sensor.setSenBez(RS.getString("SenBez"));
-	        	sensor.setSenPos(RS.getString("SenPos"));
-	        	sensor.setSenDatEin(RS.getString("SenDatEin"));
+	        	Feldgeraet sensor = new Feldgeraet();
+	        	sensor.setiD(RS.getString("KEY"));
+	        	sensor.setNutStaID(nutStaID);
+	        	sensor.setProID(RS.getString("SenSenProID"));
+	        	sensor.setTypID(RS.getString("SenSenTypID"));
+	        	sensor.setRauID(DBRaum.getRauBezByRauID(RS.getString("SenRauID")));
+	        	sensor.setLocMasID(RS.getString("SenLocMasID"));
+	        	sensor.setSouID(RS.getString("SenSouID"));
+	        	sensor.setBez(RS.getString("SenBez"));
+	        	sensor.setPos(RS.getString("SenPos"));
+	        	sensor.setDatEin(RS.getString("SenDatEin"));
 	        	sensorList.add(sensor);
 	        }
 	         
@@ -44,9 +44,9 @@ public class DBSensor {
 		
 	} 
 	
-	public static Sensor getSensorBySenID(String senID) {
+	public static Feldgeraet getSensorBySenID(String senID) {
 		
-		Sensor sensor = new Sensor();
+		Feldgeraet sensor = new Feldgeraet();
 		String CQL = "SELECT * FROM " + TABNAME + " WHERE SenID = '"+senID+"'";
 		
 		try {
@@ -55,16 +55,16 @@ public class DBSensor {
 	       
 	        while (RS.next()) {
 	        	
-	        	sensor.setSenID(senID);
-	        	sensor.setSenNutStaID(RS.getString("SenNutStaID"));
-	        	sensor.setSenSenProID(RS.getString("SenSenProID"));
-	        	sensor.setSenSenTypID(RS.getString("SenSenTypID"));
-	        	sensor.setSenRauID(RS.getString("SenRauID"));
-	        	sensor.setSenLocMasID(RS.getString("SenLocMasID"));
-	        	sensor.setSenSouID(RS.getString("SenSouID"));
-	        	sensor.setSenBez(RS.getString("SenBez"));
-	        	sensor.setSenPos(RS.getString("SenPos"));
-	        	sensor.setSenDatEin(RS.getString("SenDatEin"));
+	        	sensor.setiD(senID);
+	        	sensor.setNutStaID(RS.getString("SenNutStaID"));
+	        	sensor.setProID(RS.getString("SenSenProID"));
+	        	sensor.setTypID(RS.getString("SenSenTypID"));
+	        	sensor.setRauID(RS.getString("SenRauID"));
+	        	sensor.setLocMasID(RS.getString("SenLocMasID"));
+	        	sensor.setSouID(RS.getString("SenSouID"));
+	        	sensor.setBez(RS.getString("SenBez"));
+	        	sensor.setPos(RS.getString("SenPos"));
+	        	sensor.setDatEin(RS.getString("SenDatEin"));
 	        
 	        }
 	         

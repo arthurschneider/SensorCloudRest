@@ -4,14 +4,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import de.sensorcloud.db.connection.Cassandra;
-import de.sensorcloud.entitaet.SensorVerbund;
+import de.sensorcloud.entitaet.FeldgeraetVerbund;
 import de.sensorcloud.helpertools.Helper;
 
 public class DBSensorVerbund {
 	public static final String TABNAME = "SensorVerbund";
 	
-	public static SensorVerbund getSenVerbBezBySenVerMitSenVerID(String senVerMitSenVerID) {
-		SensorVerbund senVerb = new SensorVerbund();
+	public static FeldgeraetVerbund getSenVerbBezBySenVerMitSenVerID(String senVerMitSenVerID) {
+		FeldgeraetVerbund senVerb = new FeldgeraetVerbund();
 		String CQL = "SELECT * FROM " + TABNAME + " WHERE KEY = '"+senVerMitSenVerID+"'";
 		
 		try { 
@@ -20,8 +20,8 @@ public class DBSensorVerbund {
 	       
 	        while (RS.next()) {
 	        	System.out.println("VerbundId : "+RS.getString("SenVerID") );
-	        	senVerb.setSenVerBez(RS.getString("SenVerBez"));
-	        	senVerb.setSenVerID(RS.getString("SenVerID"));
+	        	senVerb.setVerBez(RS.getString("SenVerBez"));
+	        	senVerb.setVerID(RS.getString("SenVerID"));
 	        }
 	         
 		} catch (SQLException ex) {
@@ -33,12 +33,12 @@ public class DBSensorVerbund {
 	}
 	
 	
-	public static String createSensorVerbund(SensorVerbund sensorVerbund) {
+	public static String createSensorVerbund(FeldgeraetVerbund sensorVerbund) {
 		
 		String uuID = Helper.generateUUID();
 		String CQL = "UPDATE " + TABNAME + " SET "
 					+ "senVerID = '" + uuID + "', "
-					+ "AktSenBez = '" + sensorVerbund.getSenVerBez() + "' "
+					+ "AktSenBez = '" + sensorVerbund.getVerBez() + "' "
 					+ "WHERE KEY = " + uuID;
 		
 		try {

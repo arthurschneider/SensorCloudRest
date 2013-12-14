@@ -18,11 +18,11 @@ import de.sensorcloud.db.crud.DBRaum;
 import de.sensorcloud.db.crud.DBSensor;
 import de.sensorcloud.db.crud.DBSensorVerbund;
 import de.sensorcloud.db.crud.DBSensorVerbundMitglieder;
-import de.sensorcloud.entitaet.Sensor;
-import de.sensorcloud.entitaet.SensorList;
-import de.sensorcloud.entitaet.SensorVerbund;
-import de.sensorcloud.entitaet.SensorVerbundList;
-import de.sensorcloud.entitaet.SensorVerbundMitSensor;
+import de.sensorcloud.entitaet.Feldgeraet;
+import de.sensorcloud.entitaet.FeldgeraetList;
+import de.sensorcloud.entitaet.FeldgeraetVerbund;
+import de.sensorcloud.entitaet.FeldgeraetVerbundList;
+import de.sensorcloud.entitaet.FeldgeraetVerbundMitFeldgeraet;
 import de.sensorcloud.helpertools.Helper;
 
 @Path("/SensorVerbund")
@@ -41,27 +41,27 @@ public class HttpSensorVerbund {
     @Produces(MediaType.APPLICATION_JSON)
     public String getSensorVerbundByNutStaID(@PathParam("nutStaID") String nutStaID) {
 	
-		ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
+		ArrayList<Feldgeraet> sensorList = new ArrayList<Feldgeraet>();
 		ArrayList<String> senVerbundMitgldrList = new ArrayList<String>();
-		ArrayList<SensorVerbund> senVerbundList = new ArrayList<SensorVerbund>();
+		ArrayList<FeldgeraetVerbund> senVerbundList = new ArrayList<FeldgeraetVerbund>();
 		
 		sensorList = DBSensor.getSensorListByNutStaID(nutStaID);
 		
-		for (Sensor sensor : sensorList) {
+		for (Feldgeraet sensor : sensorList) {
 			
-			senVerbundMitgldrList = DBSensorVerbundMitglieder.getSenVerMitSenVerIDBySenID(sensor.getSenID());
+			senVerbundMitgldrList = DBSensorVerbundMitglieder.getSenVerMitSenVerIDBySenID(sensor.getiD());
 			
 			for (String senVerMitSenVerID : senVerbundMitgldrList) {
 				System.out.println("httpSenverb senVerMitSenVerID : " +senVerMitSenVerID);
-				SensorVerbund senVerb = DBSensorVerbund.getSenVerbBezBySenVerMitSenVerID(senVerMitSenVerID);
+				FeldgeraetVerbund senVerb = DBSensorVerbund.getSenVerbBezBySenVerMitSenVerID(senVerMitSenVerID);
 				
 				if (senVerb != null && !Helper.checkObjectInList(senVerb, senVerbundList)) {
 					senVerbundList.add(senVerb);
 				}
 			}
 		}
-		SensorVerbundList list = new SensorVerbundList();
-		list.setSenVerbundList(senVerbundList);
+		FeldgeraetVerbundList list = new FeldgeraetVerbundList();
+		list.setList(senVerbundList);
 		Gson gson = new Gson();
 		JsonElement jsonElement = gson.toJsonTree(list);
         return jsonElement.toString();
@@ -72,18 +72,18 @@ public class HttpSensorVerbund {
     @Path("/SenVerID/{senVerID}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getSensorBySenVerID(@PathParam("senVerID") String senVerID) {
-		ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
+		ArrayList<Feldgeraet> sensorList = new ArrayList<Feldgeraet>();
 		ArrayList<String> senIDList = new ArrayList<String>();
 	
 		senIDList = DBSensorVerbundMitglieder.getSenIDBySenVerID(senVerID);
 		
 		for (String senID : senIDList) {
-			Sensor sensor = DBSensor.getSensorBySenID(senID);
-			sensor.setSenRauID(DBRaum.getRauBezByRauID(sensor.getSenRauID()));
+			Feldgeraet sensor = DBSensor.getSensorBySenID(senID);
+			sensor.setRauID(DBRaum.getRauBezByRauID(sensor.getRauID()));
 			sensorList.add(sensor);
 		}
-		SensorList list = new SensorList();
-		list.setSensorList(sensorList);
+		FeldgeraetList list = new FeldgeraetList();
+		list.setList(sensorList);
 		Gson gson = new Gson();
 		JsonElement jsonElement = gson.toJsonTree(list);
         return jsonElement.toString();
@@ -95,10 +95,10 @@ public class HttpSensorVerbund {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String createSensorVerbund(String data) {
 		Gson gson = new Gson();
-		SensorVerbundMitSensor sensorVerbundMitSensor = gson.fromJson(data, SensorVerbundMitSensor.class);
+		FeldgeraetVerbundMitFeldgeraet sensorVerbundMitSensor = gson.fromJson(data, FeldgeraetVerbundMitFeldgeraet.class);
 	
-		String senVerID = DBSensorVerbund.createSensorVerbund(sensorVerbundMitSensor.getSensorVerbund());
-		for (Sensor sensor: sensorVerbundMitSensor.getSensorList()) {
+		String senVerID = DBSensorVerbund.createSensorVerbund(sensorVerbundMitSensor.getFeldgeraetVerbund());
+		for (Feldgeraet sensor: sensorVerbundMitSensor.getFeldgeraetList()) {
 			DBSensorVerbundMitglieder.createSensorVerbundMitglieder(senVerID, sensor);
 		}
 		
@@ -110,10 +110,10 @@ public class HttpSensorVerbund {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String addSensorToSensorVerbund(String data) {
 		Gson gson = new Gson();
-		SensorVerbundMitSensor sensorVerbundmitSensor = gson.fromJson(data, SensorVerbundMitSensor.class);
+		FeldgeraetVerbundMitFeldgeraet sensorVerbundmitSensor = gson.fromJson(data, FeldgeraetVerbundMitFeldgeraet.class);
 	
-		for (Sensor sensor: sensorVerbundmitSensor.getSensorList()) {
-			DBSensorVerbundMitglieder.createSensorVerbundMitglieder(sensorVerbundmitSensor.getSensorVerbund().getSenVerID(), sensor);
+		for (Feldgeraet sensor: sensorVerbundmitSensor.getFeldgeraetList()) {
+			DBSensorVerbundMitglieder.createSensorVerbundMitglieder(sensorVerbundmitSensor.getFeldgeraetVerbund().getVerID(), sensor);
 		}
 		
 		return "ausgefuehrt";

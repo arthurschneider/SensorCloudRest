@@ -19,7 +19,7 @@ import de.sensorcloud.db.crud.DBGruppen;
 import de.sensorcloud.db.crud.DBGruppenMitglieder;
 import de.sensorcloud.db.crud.DBNutzerEmail;
 import de.sensorcloud.db.crud.DBNutzerStammdaten;
-import de.sensorcloud.entitaet.GruIDNutStaID;
+import de.sensorcloud.entitaet.NutStaIDAndGruID;
 import de.sensorcloud.entitaet.Gruppen;
 import de.sensorcloud.entitaet.GruppenList;
 import de.sensorcloud.entitaet.GruppenMitglied;
@@ -125,7 +125,7 @@ public class HttpGruppen {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String deleteGruppe(String data) {
 		Gson gson = new Gson();
-		GruIDNutStaID gruNut = gson.fromJson(data, GruIDNutStaID.class);
+		NutStaIDAndGruID gruNut = gson.fromJson(data, NutStaIDAndGruID.class);
 		String key = DBGruppenMitglieder.getKeyByGruIDAndGruNutStaID(gruNut.getNutStaID(), gruNut.getGruID());
 		DBGruppenMitglieder.verlassenGruppe(key);
 		return "Gruppe verlassen";
