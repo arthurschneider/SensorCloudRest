@@ -12,35 +12,30 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 import de.sensorcloud.db.crud.DBAktor;
-
 import de.sensorcloud.entitaet.Aktor;
+import de.sensorcloud.entitaet.AktorList;
 
 @Path("/Aktor")
 public class HttpAktor {
 	
-	@GET
-	@Produces(MediaType.TEXT_PLAIN)
-	public String test(){
-		
-		return "Aktor Service laeuft";
-	}
-	
 	
 	@GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String test(){
+            return "Aktor Service laeuft";
+    }
+    
+
+    @GET
     @Path("/NutStaID/{nutStaID}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getAktorByNutStaID(@PathParam("nutStaID") String nutStaID) {
-
-		ArrayList<Aktor> aktorList = new ArrayList<Aktor>();
-		JsonElement jsonElement = null;
-
-		aktorList = DBAktor.getAktorByNutStaID(nutStaID);
-		Gson gson = new Gson();
-        //creates json from messwertListe object
-		jsonElement = gson.toJsonTree(aktorList);
-        System.out.println("JSON STRING "+jsonElement);
-        //create a new JSON object
-        return jsonElement.toString();
-	}
-
+            ArrayList<Aktor> aktorList = new ArrayList<Aktor>();
+            AktorList list = new AktorList();
+            aktorList = DBAktor.getAktorByNutStaID(nutStaID);
+            Gson gson = new Gson();
+            list.setList(aktorList);
+            JsonElement jsonElement = gson.toJsonTree(list);
+            return jsonElement.toString();
+    }
 }
