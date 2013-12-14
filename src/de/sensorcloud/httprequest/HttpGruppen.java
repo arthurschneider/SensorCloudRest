@@ -37,7 +37,7 @@ public class HttpGruppen {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
 		
-		return "Gruppen Service laeuft";
+		return "Gruppen Service lauft";
 	}
 	
 	

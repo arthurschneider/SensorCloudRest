@@ -4,16 +4,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import de.sensorcloud.db.connection.Cassandra;
-import de.sensorcloud.entitaet.FeldgeraetVerbund;
+import de.sensorcloud.entitaet.AktorVerbund;
 import de.sensorcloud.helpertools.Helper;
 
 public class DBAktorVerbund {
 
 	public static final String  TABNAME = "AktorVerbund";
 	
-	public static FeldgeraetVerbund getAktVerbBezByAktVerMitAktVerID(String aktVerMitAktVerID) {
+	public static AktorVerbund getAktVerbBezByAktVerMitAktVerID(String aktVerMitAktVerID) {
 
-		FeldgeraetVerbund aktVerb = new FeldgeraetVerbund();
+		AktorVerbund aktVerb = new AktorVerbund();
 
 		String CQL = "SELECT * FROM " +TABNAME + " WHERE KEY = '" + aktVerMitAktVerID + "'";
 
@@ -23,8 +23,8 @@ public class DBAktorVerbund {
 
 			while (RS.next()) {
 
-				aktVerb.setVerBez(RS.getString("AktVerBez"));
-				aktVerb.setVerID(RS.getString("AktVerID"));
+				aktVerb.setAktVerBez(RS.getString("AktVerBez"));
+				aktVerb.setAktVerID(RS.getString("AktVerID"));
 			}
 
 		} catch (SQLException ex) {
@@ -35,12 +35,12 @@ public class DBAktorVerbund {
 
 	}
 	
-	public static String createAktorVerbund(FeldgeraetVerbund aktorVerbund) {
+	public static String createAktorVerbund(AktorVerbund aktorVerbund) {
 		
 		String uuID = Helper.generateUUID();
 		String CQL = "UPDATE " + TABNAME + " SET "
 					+ "AktVerID = '" + uuID + "', "
-					+ "AktVerBez = '" + aktorVerbund.getVerBez() + "' "
+					+ "AktVerBez = '" + aktorVerbund.getAktVerBez() + "' "
 					+ "WHERE KEY = " + uuID;
 		
 		try {

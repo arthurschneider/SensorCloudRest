@@ -6,15 +6,15 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import de.sensorcloud.db.connection.Cassandra;
-import de.sensorcloud.entitaet.Feldgeraet;
+import de.sensorcloud.entitaet.Aktor;
 
 public class DBAktor {
 	
 	public static final String TABNAME = "Aktor";
 
-	public static ArrayList<Feldgeraet> getAktorByNutStaID(String nutStaID) {
+	public static ArrayList<Aktor> getAktorByNutStaID(String nutStaID) {
 
-		ArrayList<Feldgeraet> aktorList = new ArrayList<Feldgeraet>();
+		ArrayList<Aktor> aktorList = new ArrayList<Aktor>();
 
 		String CQL = "SELECT * FROM "+ TABNAME +" WHERE AktNutStaID = '" + nutStaID + "'";
 
@@ -22,17 +22,17 @@ public class DBAktor {
 			ResultSet RS = Cassandra.select(CQL);
 			while (RS.next()) {
 
-				Feldgeraet aktor = new Feldgeraet();
-				aktor.setiD(RS.getString("KEY"));
-				aktor.setNutStaID(nutStaID);
-				aktor.setProID(RS.getString("AktAktProID"));
-				aktor.setTypID(RS.getString("AktAktTypID"));
-				aktor.setRauID(DBRaum.getRauBezByRauID(RS.getString("AktRauID")));
-				aktor.setLocMasID(RS.getString("AktLocMasID"));
-				aktor.setSouID(RS.getString("AktSouID"));
-				aktor.setBez(RS.getString("AktBez"));
-				aktor.setPos(RS.getString("AktPos"));
-				aktor.setDatEin(RS.getString("AktDatEin"));
+				Aktor aktor = new Aktor();
+				aktor.setAktID(RS.getString("KEY"));
+				aktor.setAktNutStaID(nutStaID);
+				aktor.setAktAktProID(RS.getString("AktAktProID"));
+				aktor.setAktAktTypID(RS.getString("AktAktTypID"));
+				aktor.setAktRauID(RS.getString("AktRauID"));
+				aktor.setAktLocMasID(RS.getString("AktLocMasID"));
+				aktor.setAktSouID(RS.getString("AktSouID"));
+				aktor.setAktBez(RS.getString("AktBez"));
+				aktor.setAktPos(RS.getString("AktPos"));
+				aktor.setAktDatEin(RS.getString("AktDatEin"));
 				aktorList.add(aktor);
 			}
 		} catch (SQLException e) {
@@ -44,9 +44,9 @@ public class DBAktor {
 
 	}
 
-	public static Feldgeraet getAktorByAktID(String aktID) {
+	public static Aktor getAktorByAktID(String aktID) {
 
-		Feldgeraet aktor = new Feldgeraet();
+		Aktor aktor = new Aktor();
 
 		String CQL = "SELECT * FROM " + TABNAME + " WHERE KEY = '" + aktID + "'";
 
@@ -55,16 +55,16 @@ public class DBAktor {
 
 			while (RS.next()) {
 
-				aktor.setiD(aktID);
-				aktor.setNutStaID(RS.getString("AktNutStaID"));
-				aktor.setProID(RS.getString("AktAktProID"));
-				aktor.setTypID(RS.getString("AktAktTypID"));
-				aktor.setRauID(RS.getString("AktRauID"));
-				aktor.setLocMasID(RS.getString("AktLocMasID"));
-				aktor.setSouID(RS.getString("AktSouID"));
-				aktor.setBez(RS.getString("AktBez"));
-				aktor.setPos(RS.getString("AktPos"));
-				aktor.setDatEin(RS.getString("AktDatEin"));
+				aktor.setAktID(aktID);
+				aktor.setAktNutStaID(RS.getString("AktNutStaID"));
+				aktor.setAktAktProID(RS.getString("AktAktProID"));
+				aktor.setAktAktTypID(RS.getString("AktAktTypID"));
+				aktor.setAktRauID(RS.getString("AktRauID"));
+				aktor.setAktLocMasID(RS.getString("AktLocMasID"));
+				aktor.setAktSouID(RS.getString("AktSouID"));
+				aktor.setAktBez(RS.getString("AktBez"));
+				aktor.setAktPos(RS.getString("AktPos"));
+				aktor.setAktDatEin(RS.getString("AktDatEin"));
 
 			}
 		} catch (SQLException e) {

@@ -3,27 +3,45 @@ package de.sensorcloud.helpertools;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import de.sensorcloud.entitaet.FeldgeraetVerbund;
+import de.sensorcloud.entitaet.AktorVerbund;
 import de.sensorcloud.entitaet.Event;
 import de.sensorcloud.entitaet.Gruppen;
 import de.sensorcloud.entitaet.SensorServiceMitFunktion;
+import de.sensorcloud.entitaet.SensorVerbund;
 
 public class Helper {
 	
 	public final static long HOUR_IN_MICRO_SEC = 60*60*1000;
 
-	public static boolean checkObjectInList(FeldgeraetVerbund senVerb, ArrayList<FeldgeraetVerbund> senVerbList) {
+
+
+
+	public static boolean checkObjectInList(AktorVerbund aktVerb, ArrayList<AktorVerbund> aktVerbList) {
 		boolean result = false;
 
-		if (!senVerbList.isEmpty()) {
-			for (FeldgeraetVerbund senVerbObj : senVerbList) {
-				if (senVerbObj.getVerID().equals(senVerb.getVerID())) {
+		if (!aktVerbList.isEmpty()) {
+			for (AktorVerbund senVerbObj : aktVerbList) {
+				if (senVerbObj.getAktVerID().equals(aktVerb.getAktVerID())) {
 					result = true;
 				}
 			}
 		}
 		return result;
 	}
+	
+	public static boolean checkObjectInList(SensorVerbund senVerb, ArrayList<SensorVerbund> senVerbList) {
+		boolean result = false;
+
+		if (!senVerbList.isEmpty()) {
+			for (SensorVerbund senVerbObj : senVerbList) {
+				if (senVerbObj.getSenVerID().equals(senVerb.getSenVerID())) {
+					result = true;
+				}
+			}
+		}
+		return result;
+	}
+	
 
 	public static boolean checkObjectInList(Gruppen grp, ArrayList<Gruppen> list) {
 		boolean result = false;

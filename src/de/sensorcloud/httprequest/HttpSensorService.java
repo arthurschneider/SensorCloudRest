@@ -16,7 +16,7 @@ import de.sensorcloud.db.crud.DBSensorService;
 import de.sensorcloud.db.crud.DBSensorServiceFunktion;
 import de.sensorcloud.db.crud.DBSensorServiceFunktionMitglied;
 import de.sensorcloud.db.crud.DBSensorServiceMitglied;
-import de.sensorcloud.entitaet.Feldgeraet;
+import de.sensorcloud.entitaet.Sensor;
 import de.sensorcloud.entitaet.SensorService;
 import de.sensorcloud.entitaet.SensorServiceMitFunktion;
 import de.sensorcloud.helpertools.Helper;
@@ -28,15 +28,15 @@ public class HttpSensorService {
     @Path("/NutStaID/{nutStaID}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getSensorServicesByNutStaID(@PathParam("nutStaID") String nutStaID) {
-		ArrayList<Feldgeraet> sensorList = new ArrayList<Feldgeraet>();
+		ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
 		ArrayList<SensorServiceMitFunktion> senServFunkSet = new ArrayList<SensorServiceMitFunktion>();
 		
 		sensorList = DBSensor.getSensorListByNutStaID(nutStaID);
 		
-		for (Feldgeraet sensor : sensorList) {
+		for (Sensor sensor : sensorList) {
 			SensorServiceMitFunktion senServFunk = new SensorServiceMitFunktion();
 			
-			String senSerMitSenSerID = DBSensorServiceMitglied.getSenSerMitSenSerIDBySenSerMitSenID(sensor.getiD()); 
+			String senSerMitSenSerID = DBSensorServiceMitglied.getSenSerMitSenSerIDBySenSerMitSenID(sensor.getSenID()); 
 			SensorService senServ = DBSensorService.getSensorServiceBySenSerID(senSerMitSenSerID);
 
 			String senSerFunMitSenSerFunID = DBSensorServiceFunktionMitglied.getSenSerFunMitSenSerFunIDBySenSerFunMitSenSerID(senServ.getSenSerID());

@@ -12,8 +12,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 import de.sensorcloud.db.crud.DBSensor;
-import de.sensorcloud.entitaet.Feldgeraet;
-import de.sensorcloud.entitaet.FeldgeraetList;
+import de.sensorcloud.entitaet.Sensor;
+import de.sensorcloud.entitaet.SensorList;
 
 @Path("/Sensor")
 public class HttpSensor {
@@ -30,14 +30,13 @@ public class HttpSensor {
     @Path("/NutStaID/{nutStaID}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getSensorListByNutStaID(@PathParam("nutStaID") String nutStaID) {
-		ArrayList<Feldgeraet> sensorList = new ArrayList<Feldgeraet>();
-		JsonElement jsonElement = null;
+		ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
 		
 		sensorList = DBSensor.getSensorListByNutStaID(nutStaID);
-		FeldgeraetList list = new FeldgeraetList();
-		list.setList(sensorList);
+		SensorList list = new SensorList();
+		list.setSensorList(sensorList);
 		Gson gson = new Gson();
-		jsonElement = gson.toJsonTree(list);
+		JsonElement jsonElement = gson.toJsonTree(list);
         return jsonElement.toString();
 	}
 
