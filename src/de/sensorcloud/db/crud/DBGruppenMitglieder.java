@@ -9,7 +9,7 @@ import de.sensorcloud.helpertools.Helper;
 
 public class DBGruppenMitglieder {
 	
-public static final String TABNAME = "GruppenMitglieder";
+	public static final String TABNAME = "GruppenMitglieder";
 	
 	public static ArrayList<String> getGruMitGruIDByNutStaID(String nutStaID) {
 		

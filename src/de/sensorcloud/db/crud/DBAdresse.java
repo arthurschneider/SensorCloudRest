@@ -48,5 +48,23 @@ public class DBAdresse {
 			e.printStackTrace();
 		}
 	}
+	
+	public static String insertAdresse(Adresse adresse) {
+		String CQL = "UPDATE " +TABNAME + " SET "
+					+ "AdrID = '" + adresse.getAdrID() + "', "
+					+ "AdrBez = '" + adresse.getAdrBez() + "', "
+					+ "AdrStr = '" + adresse.getAdrStr() + "', "
+					+ "AdrPlz = '" + adresse.getAdrPlz() + "', "
+					+ "AdrOrt = '" + adresse.getAdrOrt() + "', "
+					+ "AdrLan = '" + adresse.getAdrLan() + "' "
+					+ "WHERE KEY = " + adresse.getAdrID();
+		
+		try {
+			Cassandra.update(CQL);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return adresse.getAdrID();
+	}
 
 }

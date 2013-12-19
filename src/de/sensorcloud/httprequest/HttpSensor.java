@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 import de.sensorcloud.db.crud.DBSensor;
+import de.sensorcloud.db.crud.DBSensorServiceMitglieder;
 import de.sensorcloud.entitaet.Sensor;
 import de.sensorcloud.entitaet.SensorList;
 
@@ -33,6 +34,29 @@ public class HttpSensor {
          JsonElement jsonElement = null;
          
          sensorList = DBSensor.getSensorListByNutStaID(nutStaID);
+         SensorList list = new SensorList();
+         list.setSensorList(sensorList);
+         Gson gson = new Gson();
+         jsonElement = gson.toJsonTree(list);
+	     return jsonElement.toString();
+     }
+     
+     @GET
+	 @Path("/SenSerID/{senSerID}")
+	 @Produces(MediaType.APPLICATION_JSON)
+	 public String getSensorListBySenSerID(@PathParam("senSerID") String senSerID) {
+         ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
+         ArrayList<String> senIDList = new ArrayList<String>();
+         JsonElement jsonElement = null;
+         
+         senIDList = DBSensorServiceMitglieder.getServiceIDBySenSerID(senSerID);
+         
+         for (String id : senIDList) {
+        	 Sensor sen = new Sensor();
+        	 sen = DBSensor.getSensorBySenID(id);
+        	 sensorList.add(sen);
+		}
+         
          SensorList list = new SensorList();
          list.setSensorList(sensorList);
          Gson gson = new Gson();

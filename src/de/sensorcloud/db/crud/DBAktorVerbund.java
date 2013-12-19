@@ -5,7 +5,6 @@ import java.sql.SQLException;
 
 import de.sensorcloud.db.connection.Cassandra;
 import de.sensorcloud.entitaet.AktorVerbund;
-import de.sensorcloud.helpertools.Helper;
 
 public class DBAktorVerbund {
 
@@ -32,18 +31,18 @@ public class DBAktorVerbund {
     }
     
     public static String createAktorVerbund(AktorVerbund aktorVerbund) {
-            String uuID = Helper.generateUUID();
+            
             String CQL =  "UPDATE " + TABNAME + " SET "
-                        + "AktVerID = '" + uuID + "', "
+                        + "AktVerID = '" + aktorVerbund.getAktVerID() + "', "
                         + "AktVerBez = '" + aktorVerbund.getAktVerBez() + "' "
-                        + "WHERE KEY = " + uuID;
+                        + "WHERE KEY = " + aktorVerbund.getAktVerID();
             
             try {
             	Cassandra.update(CQL);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        return uuID;
+        return aktorVerbund.getAktVerID();
     }
 
 }

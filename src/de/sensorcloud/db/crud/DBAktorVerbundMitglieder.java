@@ -50,8 +50,7 @@ public class DBAktorVerbundMitglieder {
             return aktIDList;
     }
     
-    public static String createAktorVerbundMitglieder(String aktVerMitAktVerID, Aktor aktor) {
-            
+    public static String createAktorVerbundMitglieder(String aktVerMitAktVerID, Aktor aktor){
             String uuID = Helper.generateUUID();
             String CQL =  "UPDATE " + TABNAME + " SET "
                         + "AktVerMitID = '" + uuID + "', "

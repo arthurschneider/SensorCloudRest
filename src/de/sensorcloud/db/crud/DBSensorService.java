@@ -20,17 +20,30 @@ public class DBSensorService {
 			ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
-	        	
 	        	senServ.setSenSerID(RS.getString("SenSerID"));
 	        	senServ.setSenSerBez(RS.getString("SenSerBez"));
-	        	
 	        }
-	         
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
-
 		return senServ;
+	}
+	
+	public static SensorService getSensorServiceByID(String iD) {
 		
+		String CQL = "SELECT * FROM " +TABNAME + " WHERE KEY = '"+iD+"'";
+		SensorService senServ = new SensorService();
+		try {
+			
+			ResultSet RS   = Cassandra.select(CQL);
+	       
+	        while (RS.next()) {
+	        	senServ.setSenSerID(RS.getString("SenSerID"));
+	        	senServ.setSenSerBez(RS.getString("SenSerBez"));
+	        }
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return senServ;
 	}
 }

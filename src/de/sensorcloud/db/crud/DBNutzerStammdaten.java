@@ -29,7 +29,6 @@ public class DBNutzerStammdaten {
 				nutzerStammdaten.setNutStaDatEin(RS.getString("NutStaDatEin"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	
@@ -54,7 +53,26 @@ public class DBNutzerStammdaten {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+	}
+	
+	public static String insertNutzerStammdaten(NutzerStammdaten stammdaten) {
+		
+		String CQL = "UPDATE " +TABNAME + " SET "
+					+ "NutStaID = '" + stammdaten.getNutStaID() + "', "
+					+ "NutStaAdrID = '" + stammdaten.getNutStaAdrID() + "', "
+					+ "NutStaAnr = '" + stammdaten.getNutStaAnr() + "', "
+					+ "NutStaNam = '" + stammdaten.getNutStaNam() + "', "
+					+ "NutStaVor = '" + stammdaten.getNutStaVor() + "', "
+					+ "NutStaDatEin = '" + stammdaten.getNutStaDatEin() + "', "
+					+ "NutStaFir = '" + stammdaten.getNutStaFir() + "' "
+					+ "WHERE KEY = " + stammdaten.getNutStaID();
+		
+		try {
+			Cassandra.update(CQL);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return stammdaten.getNutStaID();
 	}
 
 }

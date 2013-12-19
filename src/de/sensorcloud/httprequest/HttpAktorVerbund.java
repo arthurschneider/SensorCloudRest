@@ -2,7 +2,10 @@ package de.sensorcloud.httprequest;
 
 import java.util.ArrayList;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -19,6 +22,7 @@ import de.sensorcloud.entitaet.Aktor;
 import de.sensorcloud.entitaet.AktorList;
 import de.sensorcloud.entitaet.AktorVerbund;
 import de.sensorcloud.entitaet.AktorVerbundList;
+import de.sensorcloud.entitaet.AktorVerbundMitAktor;
 import de.sensorcloud.helpertools.Helper;
 
 @Path("/AktorVerbund")
@@ -85,31 +89,27 @@ public class HttpAktorVerbund {
     
     }
     
-//    @PUT //Insert
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public String createAktorVerbund(String data) {
-//            Gson gson = new Gson();
-//            AktorVerbundMitAktor aktorVerbundmitAktor = gson.fromJson(data, AktorVerbundMitAktor.class);
-//    
-//            String aktVerID = DBAktorVerbund.createAktorVerbund(aktorVerbundmitAktor.getAktorVerbund());
-//            for (Aktor aktor: aktorVerbundmitAktor.getAktorList()) {
-//                    DBAktorVerbundMitglieder.createAktorVerbundMitglieder(aktVerID, aktor);
-//            }
-//            
-//            return aktVerID;
-//    }
-//    
-//    @POST        //Update
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public String addAktorToAktorVerbund(String data) {
-//            Gson gson = new Gson();
-//            AktorVerbundMitAktor aktorVerbundmitAktor = gson.fromJson(data, AktorVerbundMitAktor.class);
-//    
-//            for (Aktor aktor: aktorVerbundmitAktor.getAktorList()) {
-//                    DBAktorVerbundMitglieder.createAktorVerbundMitglieder(aktorVerbundmitAktor.getAktorVerbund().getAktVerID(), aktor);
-//            }
-//            
-//            return "ausgefuehrt";
-//    }
+    @PUT //Insert
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String createAktorVerbund(String data) {
+        Gson gson = new Gson();
+        AktorVerbundMitAktor aktorVerbundmitAktor = gson.fromJson(data, AktorVerbundMitAktor.class);
+
+        String aktVerID = DBAktorVerbund.createAktorVerbund(aktorVerbundmitAktor.getVerb());  
+        DBAktorVerbundMitglieder.createAktorVerbundMitglieder(aktVerID, aktorVerbundmitAktor.getAktor());
+
+        return aktVerID;
+    }
+    
+    @POST        //Update
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String addAktorToAktorVerbund(String data) {
+        Gson gson = new Gson();
+        AktorVerbundMitAktor aktorVerbundmitAktor = gson.fromJson(data, AktorVerbundMitAktor.class);
+
+        DBAktorVerbundMitglieder.createAktorVerbundMitglieder(aktorVerbundmitAktor.getVerb().getAktVerID(), aktorVerbundmitAktor.getAktor());
+       
+        return "ausgefuehrt";
+    }
 
 }

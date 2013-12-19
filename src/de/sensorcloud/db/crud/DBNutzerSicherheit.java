@@ -36,7 +36,6 @@ public class DBNutzerSicherheit {
 	
 	
 	public static String getNutSicPubKeyByNutStaID(String nutStaID){
-		
 		String nutSicPas = "";
 		
 		try {
@@ -45,20 +44,16 @@ public class DBNutzerSicherheit {
 	        ResultSet RS   = Cassandra.select(CQL);
 	       
 	        while (RS.next()) {
-	        
 	        	nutSicPas = RS.getString("NutSicPubKey");
-	        
 	        }
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} 
-
 		return nutSicPas;
 	}
 	
 	
 	public static ArrayList<NutzerSicherheit> getNutzerSicherheitByNutStaID(String nutStaID) {
-		
 		ArrayList<NutzerSicherheit> nutzerSicherheitList = new ArrayList<NutzerSicherheit>();      
         
 		String CQL = "SELECT * FROM " + TABNAME + " WHERE NutSicNutStaID = '"+nutStaID+"'";
@@ -77,16 +72,12 @@ public class DBNutzerSicherheit {
 	        	nutzerSicherheitList.add(nutzerSicherheit);
 	        }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return nutzerSicherheitList;
-		
 	}
 	
 	public static void updateNutzerSicherheit(NutzerSicherheit nutzerSicherheit) {
-
 		String CQL = "UPDATE "+ TABNAME + " SET "
 					+ "NutSicID = '" + nutzerSicherheit.getNutSicID() + "', "
 					+ "NutSicNutStaID = '" + nutzerSicherheit.getNutSicNutStaID() + "', "
@@ -98,10 +89,25 @@ public class DBNutzerSicherheit {
 		try {
 			Cassandra.update(CQL);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+	}
+	
+	public static String insertNutzerSicherheit(NutzerSicherheit sicherheit) {
+		String CQL = "UPDATE " +TABNAME + " SET "
+					+ "NutSicID = '" + sicherheit.getNutSicID() + "', "
+					+ "NutSicNutStaID = '" + sicherheit.getNutSicNutStaID() + "', "
+					+ "NutSicPas = '" + sicherheit.getNutSicPas() + "', "
+					+ "NutSicPriKey = '" + sicherheit.getNutSicPriKey() + "', "
+					+ "NutSicPubKey = '" + sicherheit.getNutSicPubKey() + "' "
+					+ "WHERE KEY = " + sicherheit.getNutSicID();
+		
+		try {
+			Cassandra.update(CQL);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sicherheit.getNutSicID();
 	}
 
 }
