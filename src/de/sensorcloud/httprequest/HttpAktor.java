@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 import de.sensorcloud.db.crud.DBAktor;
+import de.sensorcloud.db.crud.DBAktorServiceMitglieder;
 import de.sensorcloud.entitaet.Aktor;
 import de.sensorcloud.entitaet.AktorList;
 
@@ -38,4 +39,27 @@ public class HttpAktor {
         JsonElement jsonElement = gson.toJsonTree(list);
         return jsonElement.toString();
     }
+    
+    @GET
+    @Path("/AktSerID/{aktSerID}")
+	 @Produces(MediaType.APPLICATION_JSON)
+	 public String getAktorListByAktSerID(@PathParam("aktSerID") String aktSerID) {
+	    ArrayList<Aktor> aktsorList = new ArrayList<Aktor>();
+	    ArrayList<String> senIDList = new ArrayList<String>();
+	    JsonElement jsonElement = null;
+	    
+	    senIDList = DBAktorServiceMitglieder.getServiceIDByAktSerID(aktSerID);
+	    
+	    for (String id : senIDList) {
+	   	 	Aktor akt = new Aktor();
+	   	 	akt = DBAktor.getAktorByAktID(id);
+	   	 	aktsorList.add(akt);
+		}
+	    
+	    AktorList list = new AktorList();
+	    list.setList(aktsorList);
+	    Gson gson = new Gson();
+	    jsonElement = gson.toJsonTree(list);
+	    return jsonElement.toString();
+	}
 }

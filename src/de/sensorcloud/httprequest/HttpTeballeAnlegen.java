@@ -19,7 +19,7 @@ public class HttpTeballeAnlegen {
 	@Path("/create/ServiceLinienMitglieder")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String createServiceLinienMitglieder() {
-		String cql = "CREATE COLUMNFAMILY ServiceLinienMitglieder (KEY uuid PRIMARY KEY, SerLinMitID text, SerLinMitSenSerID text, SerLinMitSerLinID text, SerLinMitTyp text)"; 
+		String cql = "CREATE COLUMNFAMILY ServiceLinienMitglieder (KEY text PRIMARY KEY, SerLinMitID text, SerLinMitSerID text, SerLinMitSerLinID text, SerLinMitTyp text)"; 
 		try {
 			Cassandra.update(cql);
 		} catch (SQLException e) {
@@ -32,7 +32,7 @@ public class HttpTeballeAnlegen {
 	@Path("/create/SensorServiceFunktion")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String createSensorServiceFunktion() {
-		String cql = "CREATE COLUMNFAMILY SensorServiceFunktion (KEY uuid PRIMARY KEY, SenSerFunID text, SenSerFunNam text)"; 
+		String cql = "CREATE COLUMNFAMILY SensorServiceFunktion (KEY text PRIMARY KEY, SenSerFunID text, SenSerFunNam text)"; 
 		try {
 			Cassandra.update(cql);
 		} catch (SQLException e) {
@@ -42,16 +42,42 @@ public class HttpTeballeAnlegen {
 	}
 	
 	@GET
+	@Path("/create/AktorServiceFunktion")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String createAktorServiceFunktion() {
+		String cql = "CREATE COLUMNFAMILY AktorServiceFunktion (KEY text PRIMARY KEY, AktSerFunID text, AktSerFunNam text)"; 
+		try {
+			Cassandra.update(cql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "AktorServiceFunktion ausgefuehrt";
+	}
+	
+	@GET
 	@Path("/create/SensorServiceFunktionMitglieder")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String createSensorServiceFunktionMitglieder() {
-		String cql = "CREATE COLUMNFAMILY SensorServiceFunktionMitglieder (KEY uuid PRIMARY KEY, SenSerFunMitID text, SenSerFunMitSenSerFunID text, SenSerFunMitSenSerID text)"; 
+		String cql = "CREATE COLUMNFAMILY SensorServiceFunktionMitglieder (KEY text PRIMARY KEY, SenSerFunMitID text, SenSerFunMitSenSerFunID text, SenSerFunMitSenSerID text)"; 
 		try {
 			Cassandra.update(cql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return "SensorServiceFunktionMitglieder ausgefuehrt";
+	}
+	
+	@GET
+	@Path("/create/AktorServiceFunktionMitglieder")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String createAktorServiceFunktionMitglieder() {
+		String cql = "CREATE COLUMNFAMILY AktorServiceFunktionMitglieder (KEY text PRIMARY KEY, AktSerFunMitID text, AktSerFunMitAktSerFunID text, AktSerFunMitAktSerID text)"; 
+		try {
+			Cassandra.update(cql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "AktorServiceFunktionMitglieder ausgefuehrt";
 	}
 	
 	@GET

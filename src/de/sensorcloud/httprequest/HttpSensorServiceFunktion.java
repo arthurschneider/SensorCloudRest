@@ -48,4 +48,7 @@ public class HttpSensorServiceFunktion {
          jsonElement = gson.toJsonTree(list);
 	     return jsonElement.toString();
      }
+	 
+	 
+	
 }

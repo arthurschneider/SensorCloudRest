@@ -28,5 +28,23 @@ public static final String TABNAME = "AktorService";
 		}
 		return serv;
 	}
+	
+	public static AktorService getAktorServiceByID(String iD) {
+		
+		String CQL = "SELECT * FROM " +TABNAME + " WHERE KEY = '"+iD+"'";
+		AktorService aktServ = new AktorService();
+		try {
+			
+			ResultSet RS   = Cassandra.select(CQL);
+	       
+	        while (RS.next()) {
+	        	aktServ.setAktSerID(RS.getString("AktSerID"));
+	        	aktServ.setAktSerBez(RS.getString("AktSerBez"));
+	        }
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return aktServ;
+	}
 
 }
