@@ -52,10 +52,10 @@ public class HttpEvent {
 		for (String senID : sensorIDList) {
 			String senEveID = null;
 			senEveID = DBSensorEvent.getSenEveIDBySenEveQueID(senID);
-			System.out.println("SenEveId :"+ senEveID+":");
+			
 			if (senEveID != null) {
 				eveID = DBEventMitglieder.getEveMitEveIDByEveMitSenEveID(senEveID);
-				System.out.println("EventId : "+ eveID);
+				
 				if (eveID != null) {
 					event = DBEvent.getEventObjByEventID(eveID);
 					if (event != null && !Helper.checkObjectInList(event, list)) {

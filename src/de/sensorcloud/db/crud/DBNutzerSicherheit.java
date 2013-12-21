@@ -109,5 +109,16 @@ public class DBNutzerSicherheit {
 		}
 		return sicherheit.getNutSicID();
 	}
+	
+	public static void deleteNutzerSicherheit(String nutSicID) {
+		
+		String CQL = "DELETE NutSicID, NutSicNutStaID, NutSicPas, NutSicPriKey, NutSicPubKey FROM " +TABNAME + "  WHERE KEY = '"+nutSicID+"'";
+		
+		try {
+			Cassandra.update(CQL);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 }
