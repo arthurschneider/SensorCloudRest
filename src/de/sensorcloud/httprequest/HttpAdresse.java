@@ -47,6 +47,6 @@ public class HttpAdresse {
 	
 		DBAdresse.updateAdresse(adresse);
 
-		return "ausgefuehrt";
+		return "Update der Ressource"+adresse.getAdrID();
 	}
 }

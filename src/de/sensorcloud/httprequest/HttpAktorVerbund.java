@@ -52,7 +52,6 @@ public class HttpAktorVerbund {
             for (String aktVerMitAktVerID : aktVerbundMitgldrList) {
                     
                 AktorVerbund aktVerb = DBAktorVerbund.getAktVerbBezByAktVerMitAktVerID(aktVerMitAktVerID);
-                
                 if (!Helper.checkObjectInList(aktVerb, aktVerbundList)) {
                         aktVerbundList.add(aktVerb);
                 }
@@ -63,7 +62,7 @@ public class HttpAktorVerbund {
         list.setAktVerbundList(aktVerbundList);
         Gson gson = new Gson();
         JsonElement jsonElement = gson.toJsonTree(list);
-    return jsonElement.toString();
+        return jsonElement.toString();
     }
     
     

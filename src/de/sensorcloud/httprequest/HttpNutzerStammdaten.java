@@ -61,7 +61,7 @@ public class HttpNutzerStammdaten {
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String insertNeuenNutzer(String data) throws SQLException {
+	public String registriereNutzer(String data) throws SQLException {
 		Gson gson = new Gson();
 		Registrieren regist = gson.fromJson(data, Registrieren.class);
 	

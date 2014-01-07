@@ -10,8 +10,7 @@ public class DBAktorServiceMitglieder {
 	
 public static final String TABNAME = "AktorServiceMitglieder";
 	
-	public static ArrayList<String> getServiceIDByAktID(String aktID) {
-		
+	public static ArrayList<String> getServiceIDByAktID(String aktID) {	
 		ArrayList<String> id = new ArrayList<String>();
 		String CQL = "SELECT AktSerMitAktSerID FROM " + TABNAME + " WHERE AktSerMitAktID = '" + aktID + "'";
 

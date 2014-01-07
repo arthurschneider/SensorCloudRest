@@ -13,7 +13,7 @@ public class DBAktorVerbund {
     public static AktorVerbund getAktVerbBezByAktVerMitAktVerID(String aktVerMitAktVerID) {
         AktorVerbund aktVerb = new AktorVerbund();
 
-        String CQL = "SELECT * FROM " +TABNAME + " WHERE KEY = '" + aktVerMitAktVerID + "'";
+        String CQL = "SELECT AktVerBez, AktVerID FROM " +TABNAME + " WHERE KEY = '" + aktVerMitAktVerID + "'";
 
         try {
 

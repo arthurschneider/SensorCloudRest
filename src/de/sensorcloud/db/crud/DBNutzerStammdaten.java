@@ -26,7 +26,7 @@ public class DBNutzerStammdaten {
 				nutzerStammdaten.setNutStaFir(RS.getString("NutStaFir"));
 				nutzerStammdaten.setNutStaNam(RS.getString("NutStaNam"));
 				nutzerStammdaten.setNutStaVor(RS.getString("NutStaVor"));
-				nutzerStammdaten.setNutStaDatEin(RS.getString("NutStaDatEin"));
+				nutzerStammdaten.setNutStaDatEin(RS.getLong("NutStaDatEin"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -38,15 +38,15 @@ public class DBNutzerStammdaten {
 	
 	public static void updateNutzerStammdaten(NutzerStammdaten nutzerStammdaten){
 
-		String CQL = "UPDATE " + TABNAME + " SET NutStaAnr = '"
-				+ nutzerStammdaten.getNutStaAnr() + "', " + "NutStaAdrID = '"
-				+ nutzerStammdaten.getNutStaAdrID() + "', NutStaFir = '"
-				+ nutzerStammdaten.getNutStaFir() + "', " + "NutStaNam = '"
-				+ nutzerStammdaten.getNutStaNam() + "', NutStaVor = '"
-				+ nutzerStammdaten.getNutStaVor() + "', " + "NutStaDatEin = '"
-				+ nutzerStammdaten.getNutStaDatEin() + "', NutStaID = '"
-				+ nutzerStammdaten.getNutStaID() + "' WHERE KEY = "
-				+ nutzerStammdaten.getNutStaID();
+		String CQL = "UPDATE " + TABNAME + " SET "
+				+ "NutStaAnr = '"+ nutzerStammdaten.getNutStaAnr() + "', "
+				+ "NutStaAdrID = '"+ nutzerStammdaten.getNutStaAdrID() + "', "
+				+ "NutStaFir = '"+ nutzerStammdaten.getNutStaFir() + "', " 
+				+ "NutStaNam = '"+ nutzerStammdaten.getNutStaNam() + "', "
+				+ "NutStaVor = '"+ nutzerStammdaten.getNutStaVor() + "', " 
+				+ "NutStaDatEin = '"+ nutzerStammdaten.getNutStaDatEin() + "',"
+				+ "NutStaID = '"+ nutzerStammdaten.getNutStaID() + "' "
+				+ "WHERE KEY = "+ nutzerStammdaten.getNutStaID();
 		
 		try {
 			Cassandra.update(CQL);

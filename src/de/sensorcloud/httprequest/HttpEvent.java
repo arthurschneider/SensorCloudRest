@@ -78,7 +78,6 @@ public class HttpEvent {
 		} else {
 			return "leer";
 		}
-
 	}
 	
 	

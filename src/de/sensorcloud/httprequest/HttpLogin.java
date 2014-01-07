@@ -32,30 +32,27 @@ public class HttpLogin{
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String authetifizieren(String data) {
-		JsonElement jsonObj = null;
 		String  nutStaID;
 		String nutzerID = null;
 		
-		
 		Gson gson = new Gson();
         Login login = gson.fromJson(data, Login.class);
-	    
+        
 		nutStaID = DBNutzerEmail.getNutEmaNutStaIDbyNutEmaBez(login.getEmail());
 		
+		String nutsicPas = DBNutzerSicherheit.getNutSicPasByNutStaID(nutStaID);
 		
-			String nutsicPas = DBNutzerSicherheit.getNutSicPasByNutStaID(nutStaID);
-			
-			if (nutsicPas.equals(login.getPasswort())) {
-				nutzerID =  nutStaID;
-			}
+		if (nutsicPas.equals(login.getPasswort())) {
+			nutzerID =  nutStaID;
+		}
 		
 		if (nutzerID != null) {
 			NutzerStammdaten nutzer = DBNutzerStammdaten.getNutzerStammdatenByNutStaID(nutzerID);
 			
-		    jsonObj = gson.toJsonTree(nutzer);
+			JsonElement jsonObj = gson.toJsonTree(nutzer);
 		    return jsonObj.toString();
 		} else {
-			return "leer";
+			return "Denied";
 		}
 		
 		

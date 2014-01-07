@@ -27,7 +27,7 @@ public class HttpAktorService {
 	@GET
     @Path("/AktID/{aktID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getSensorServicesBySenID(@PathParam("aktID") String aktID) {
+    public String getAktorServicesByAktID(@PathParam("aktID") String aktID) {
 		ArrayList<String> servIDList = new ArrayList<String>();
 		ArrayList<AktorService> aktServList = new ArrayList<AktorService>();
 		
