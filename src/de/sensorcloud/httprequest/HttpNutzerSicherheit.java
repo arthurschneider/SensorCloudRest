@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
 import de.sensorcloud.db.crud.DBNutzerSicherheit;
@@ -36,7 +37,7 @@ public class HttpNutzerSicherheit {
 		
 		sicherheitList.setList(DBNutzerSicherheit.getNutzerSicherheitByNutStaID(nutStaID));
 		
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		JsonElement jsonElement = gson.toJsonTree(sicherheitList);
         return jsonElement.toString();
 	}

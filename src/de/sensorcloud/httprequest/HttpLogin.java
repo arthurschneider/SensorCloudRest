@@ -39,7 +39,6 @@ public class HttpLogin{
         Login login = gson.fromJson(data, Login.class);
         
 		nutStaID = DBNutzerEmail.getNutEmaNutStaIDbyNutEmaBez(login.getEmail());
-		
 		String nutsicPas = DBNutzerSicherheit.getNutSicPasByNutStaID(nutStaID);
 		
 		if (nutsicPas.equals(login.getPasswort())) {
@@ -54,8 +53,6 @@ public class HttpLogin{
 		} else {
 			return "Denied";
 		}
-		
-		
 	}
 	
 

@@ -108,7 +108,7 @@ public class HttpAktorVerbund {
 
         DBAktorVerbundMitglieder.createAktorVerbundMitglieder(aktorVerbundmitAktor.getVerb().getAktVerID(), aktorVerbundmitAktor.getAktor());
        
-        return "ausgefuehrt";
+        return aktorVerbundmitAktor.getVerb().getAktVerID();
     }
 
 }

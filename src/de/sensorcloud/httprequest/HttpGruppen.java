@@ -93,8 +93,6 @@ public class HttpGruppen {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String insertMitglied(String data) throws SQLException {
 		Gson gson = new Gson();
-		
-		
 		GruppenMitglied mitglied = gson.fromJson(data, GruppenMitglied.class);
 	
 		String nutStaID = DBNutzerEmail.getNutEmaNutStaIDbyNutEmaBez(mitglied.getEmail());
@@ -119,6 +117,7 @@ public class HttpGruppen {
 	}
 	
 	@POST
+	@Path("/delete")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String deleteGruppe(String data) {
 		Gson gson = new Gson();

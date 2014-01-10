@@ -24,40 +24,12 @@ import de.sensorcloud.entitaet.ServiceMitTypList;
 
 @Path("/SensorService")
 public class HttpSensorService {
+	
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
 		return "SensorService Service laeuft";
 	}
-	
-//	@GET
-//    @Path("/NutStaID/{nutStaID}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public String getSensorServicesByNutStaID(@PathParam("nutStaID") String nutStaID) {
-//		ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
-//		ArrayList<SensorServiceMitFunktion> senServFunkSet = new ArrayList<SensorServiceMitFunktion>();
-//		
-//		sensorList = DBSensor.getSensorListByNutStaID(nutStaID);
-//		
-//		for (Sensor sensor : sensorList) {
-//			SensorServiceMitFunktion senServFunk = new SensorServiceMitFunktion();
-//			
-//			String senSerMitSenSerID = DBSensorServiceMitglieder.getSenSerMitSenSerIDBySenSerMitSenID(sensor.getSenID()); 
-//			SensorService senServ = DBSensorService.getSensorServiceBySenSerID(senSerMitSenSerID);
-//
-//			String senSerFunMitSenSerFunID = DBSensorServiceFunktionMitglied.getSenSerFunMitSenSerFunIDBySenSerFunMitSenSerID(senServ.getSenSerID());
-//			senServFunk.setSenServFunkt(DBSensorServiceFunktion.getSenSerFunNamBySenSerFunID(senSerFunMitSenSerFunID));
-//			senServFunk.setSenServ(senServ);
-//			
-//			if (!Helper.checkObjectInList(senServFunk, senServFunkSet)) {
-//				senServFunkSet.add(senServFunk);
-//			}
-//		}
-//		Gson gson = new Gson();
-//		JsonElement jsonElement = gson.toJsonTree(senServFunkSet);
-//        return jsonElement.toString();
-//	}
-	
 	
 	@GET
     @Path("/SenID/{senID}")

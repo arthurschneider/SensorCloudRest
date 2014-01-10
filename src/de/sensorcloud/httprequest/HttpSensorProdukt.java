@@ -25,10 +25,12 @@ public class HttpSensorProdukt {
 	@GET
     @Path("/SenProID/{senProID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getSensorListByNutStaID(@PathParam("senProID") String senProID) {
-		
+    public String getSensorProduktBySenProID(@PathParam("senProID") String senProID) {
+		SensorProduktSemantik sen = new SensorProduktSemantik();
 		Gson gson = new Gson();
-		SensorProduktSemantik sen = gson.fromJson(DBSensorProdukt.getSensorSemantikBySenProID(senProID), SensorProduktSemantik.class);
+		//String liegt in der DB im Json Format vor. 
+		//Muss deshalb vorher umgewandelt werden, wegen der Klasse Gson.
+		sen = gson.fromJson(DBSensorProdukt.getSensorSemantikBySenProID(senProID), SensorProduktSemantik.class);
 		
 		
 		JsonElement jsonElement = gson.toJsonTree(sen);
