@@ -1,7 +1,5 @@
 package de.sensorcloud.httprequest;
 
-import java.sql.SQLException;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -49,7 +47,7 @@ public class HttpNutzerEmail {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String updateNutzerEmail(String data) throws SQLException {
+	public String updateNutzerEmail(String data) {
 		Gson gson = new Gson();
 		NutzerEmail nutzerEmail = gson.fromJson(data, NutzerEmail.class);
 	
@@ -61,7 +59,7 @@ public class HttpNutzerEmail {
 	@POST
 	@Path("/delete")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String delAppNutzerEmail(String data) throws SQLException {
+	public String deleteNutzerEmailPOST(String data){
 		Gson gson = new Gson();
 		String nutEmaID = gson.fromJson(data, String.class);
 	
@@ -72,7 +70,7 @@ public class HttpNutzerEmail {
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String insertNutzerEmail(String data) throws SQLException {
+	public String insertNutzerEmail(String data){
 		Gson gson = new Gson();
 		NutzerEmail nutzerEmail = gson.fromJson(data, NutzerEmail.class);
 	
@@ -83,7 +81,7 @@ public class HttpNutzerEmail {
 	
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String deleteNutzerEmail(String data) throws SQLException {
+	public String deleteNutzerEmail(String data){
 		Gson gson = new Gson();
 		String nutEmaID = gson.fromJson(data, String.class);
 	

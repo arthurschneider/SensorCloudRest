@@ -108,29 +108,6 @@ public class HttpEvent {
 		return jsonElement.toString();
 	}
 	
-//	@PUT		//Insert
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public String insertEventRegel(String data) {
-//		
-//		Gson gson = new Gson();
-//		EventRegel eventRegel = gson.fromJson(data, EventRegel.class);
-//		int reihenFolge = 0;
-//		String eveID = DBEvent.insertEvent(eventRegel.getEvent());
-//		
-//		for (SensorEvent sensorEvent: eventRegel.getSensorEvent()) {
-//			reihenFolge ++;
-//			System.out.println("Reihenfolge : " + reihenFolge);
-//			String eveMitSenEveID = DBEventMitglieder.insertEventMitglieder(eveID, sensorEvent.getSenEveID(), reihenFolge);
-//			DBSensorEvent.insertSensorEvent(eveMitSenEveID, sensorEvent);
-//			
-//		}
-//		for (EventAktion eventAktion : eventRegel.getEventAktion()) {
-//			DBEventAktion.insertEventAktion(eveID, eventAktion);
-//		}
-//		DBEventBenachrichtigung.insertEventBenachrichtigung(eveID, eventRegel.getEventBen());
-//		
-//		return "ausgefuehrt";
-//	}
 	
 	@POST		//Update
 	@Consumes(MediaType.APPLICATION_JSON)

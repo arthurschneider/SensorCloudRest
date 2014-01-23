@@ -1,6 +1,7 @@
 package de.sensorcloud.httprequest;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -57,7 +58,7 @@ public class HttpNutzerSicherheit {
 	@POST
 	@Path("/delete")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String deleteNutzerSicherheit(String data) {
+	public String deleteNutzerSicherheitPOST(String data) {
 		Gson gson = new Gson();
 		String nutSicID = gson.fromJson(data, String.class);
 	
@@ -75,6 +76,17 @@ public class HttpNutzerSicherheit {
 		String uuID = DBNutzerSicherheit.insertNutzerSicherheit(nutzerSicherheit);
 
 		return uuID;
+	}
+	
+	@DELETE
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String deleteNutzerSicherheit(String data) {
+		Gson gson = new Gson();
+		String nutSicID = gson.fromJson(data, String.class);
+	
+		DBNutzerSicherheit.deleteNutzerSicherheit(nutSicID);
+
+		return "ausgefuehrt";
 	}
 
 }

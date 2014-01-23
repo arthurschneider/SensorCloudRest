@@ -1,7 +1,5 @@
 package de.sensorcloud.httprequest;
 
-import java.sql.SQLException;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -50,7 +48,7 @@ public class HttpNutzerStammdaten {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String updateNutzerStammdaten(String data) throws SQLException {
+	public String updateNutzerStammdaten(String data) {
 		Gson gson = new Gson();
 		NutzerStammdaten nutzerStammdaten = gson.fromJson(data, NutzerStammdaten.class);
 	
@@ -61,7 +59,7 @@ public class HttpNutzerStammdaten {
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String registriereNutzer(String data) throws SQLException {
+	public String registriereNutzer(String data){
 		Gson gson = new Gson();
 		Registrieren regist = gson.fromJson(data, Registrieren.class);
 	

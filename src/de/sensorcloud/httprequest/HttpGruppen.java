@@ -1,9 +1,9 @@
 package de.sensorcloud.httprequest;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -19,13 +19,13 @@ import de.sensorcloud.db.crud.DBGruppen;
 import de.sensorcloud.db.crud.DBGruppenMitglieder;
 import de.sensorcloud.db.crud.DBNutzerEmail;
 import de.sensorcloud.db.crud.DBNutzerStammdaten;
-import de.sensorcloud.entitaet.NutStaIDAndGruID;
 import de.sensorcloud.entitaet.Gruppen;
 import de.sensorcloud.entitaet.GruppenList;
 import de.sensorcloud.entitaet.GruppenMitglied;
 import de.sensorcloud.entitaet.Mitglied;
 import de.sensorcloud.entitaet.MitgliederList;
 import de.sensorcloud.entitaet.NeueGruppeMitNutzer;
+import de.sensorcloud.entitaet.NutStaIDAndGruID;
 import de.sensorcloud.entitaet.NutzerEmail;
 import de.sensorcloud.helpertools.Helper;
 
@@ -36,7 +36,7 @@ public class HttpGruppen {
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
-		return "Gruppen Service lauft";
+		return "Gruppen Service laeuft";
 	}
 	
 	@GET
@@ -91,7 +91,7 @@ public class HttpGruppen {
 	@PUT
 	@Path("/inviteMitglied")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String insertMitglied(String data) throws SQLException {
+	public String insertMitglied(String data){
 		Gson gson = new Gson();
 		GruppenMitglied mitglied = gson.fromJson(data, GruppenMitglied.class);
 	
@@ -106,7 +106,7 @@ public class HttpGruppen {
 	@PUT
 	@Path("/createGruppe")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String insertGruppe(String data) throws SQLException {
+	public String insertGruppe(String data){
 		Gson gson = new Gson();
 		
 		NeueGruppeMitNutzer gruMitNutzer = gson.fromJson(data, NeueGruppeMitNutzer.class);
@@ -118,6 +118,16 @@ public class HttpGruppen {
 	
 	@POST
 	@Path("/delete")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String deleteGruppePOST(String data) {
+		Gson gson = new Gson();
+		NutStaIDAndGruID gruNut = gson.fromJson(data, NutStaIDAndGruID.class);
+		String key = DBGruppenMitglieder.getKeyByGruIDAndGruNutStaID(gruNut.getNutStaID(), gruNut.getGruID());
+		DBGruppenMitglieder.verlassenGruppe(key);
+		return "Gruppe verlassen";
+	}
+	
+	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String deleteGruppe(String data) {
 		Gson gson = new Gson();

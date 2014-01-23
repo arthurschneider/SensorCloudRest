@@ -57,7 +57,7 @@ public class HttpNutzerTelefon {
 	@POST
 	@Path("/delete")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String delAppNutzerTelefon(String data) {
+	public String deleteNutzerTelefonPOST(String data) {
 		Gson gson = new Gson();
 		String nutTelID = gson.fromJson(data, String.class);
 	

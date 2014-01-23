@@ -25,8 +25,7 @@ public class HttpAktor {
     public String test(){
         return "Aktor Service laeuft";
     }
-    
-
+ 
     @GET
     @Path("/NutStaID/{nutStaID}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -40,6 +39,7 @@ public class HttpAktor {
         return jsonElement.toString();
     }
     
+  
     @GET
     @Path("/AktSerID/{aktSerID}")
 	 @Produces(MediaType.APPLICATION_JSON)

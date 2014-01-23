@@ -24,21 +24,19 @@ public class HttpAdresse {
 		return "Adresse Service laeuft";
 	}
 	
-	
 	@GET
     @Path("/AdrID/{adrID}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getAdresseByAdrID(@PathParam("adrID") String adrID) {
 		Adresse adresse = new Adresse();
 		JsonElement jsonElement = null;
-		
 		adresse = DBAdresse.getAdresseByAdrID(adrID);
-		
 		Gson gson = new Gson();
 		jsonElement = gson.toJsonTree(adresse);
         return jsonElement.toString();
 	}
 	
+
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String updateAdresse(String data) {
@@ -47,6 +45,6 @@ public class HttpAdresse {
 	
 		DBAdresse.updateAdresse(adresse);
 
-		return "Update der Ressource"+adresse.getAdrID();
+		return "Update der Ressource "+adresse.getAdrID();
 	}
 }
